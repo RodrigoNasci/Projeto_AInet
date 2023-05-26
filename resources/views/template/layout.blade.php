@@ -68,6 +68,9 @@
             </div>
         </div>
     </section>
+
+    @yield('main_pagination')
+
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">

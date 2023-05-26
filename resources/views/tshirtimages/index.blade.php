@@ -61,9 +61,16 @@
             </div>
         </div>
     @endforeach
-    <div>
-        {{ $tshirtimages->withQueryString()->links() }}
-    </div>
+@endsection
+
+@section("main_pagination")
+    <section class="py-5">
+            <div class="container">
+                {{ $tshirtimages->withQueryString()->links() }}
+            </div>
+    </section>
+@endsection
+
     {{-- <div class="col mb-5">
         <div class="card h-100">
             <!-- Sale badge-->
@@ -252,4 +259,4 @@
             </div>
         </div>
     </div> --}}
-@endsection
+
