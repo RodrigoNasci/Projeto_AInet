@@ -61,9 +61,9 @@
             </div>
         </div>
     @endforeach
-    {{-- <div>
+    <div>
         {{ $tshirtimages->withQueryString()->links() }}
-    </div> --}}
+    </div>
     {{-- <div class="col mb-5">
         <div class="card h-100">
             <!-- Sale badge-->
