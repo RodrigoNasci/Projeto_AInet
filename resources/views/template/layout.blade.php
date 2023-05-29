@@ -60,6 +60,7 @@
             </div>
         </div>
     </header>
+    @yield('filters')
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">

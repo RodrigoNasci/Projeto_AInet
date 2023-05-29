@@ -7,17 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Color extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'categories';
+    protected $primaryKey = 'code';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
-        'name',
+        'code', 'name',
     ];
 
-    public function tshirtImages(): HasMany
+    public function orderItems(): HasMany
     {
-        return $this->hasMany(TshirtImage::class);
+        return $this->hasMany(OrderItem::class, 'color_code', 'code');
     }
 }

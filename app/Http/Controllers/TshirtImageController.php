@@ -19,8 +19,9 @@ class TshirtImageController extends Controller
 
         $filterByDescription = $request->description ?? '';
 
-        // Apenas mostra as imagens que são do catálogo da loja
+        // Apenas imagens que fazem parte do catálogo da loja (não são de clientes)
         $tshirtImageQuery = TshirtImage::query()->whereNull('customer_id');
+
         if ($filterByCategory !== '') {
             $categoryIds = Category::where('name', 'like', "%$filterByCategory%")->pluck('id');
             $tshirtImageQuery->whereIntegerInRaw('category_id', $categoryIds);
@@ -33,9 +34,11 @@ class TshirtImageController extends Controller
         if ($filterByDescription !== '') {
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
-        $tshirtimages = $tshirtImageQuery->paginate(10);
-        //$tshirtimages = $tshirtimages->with('departamentoRef', 'user')->paginate(10);
+        $tshirt_images = $tshirtImageQuery->paginate(10);
 
-        return view('tshirtimages.index', compact('tshirtimages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
+        // Caso seja necessário fazer “eager loading” dos relacionamentos (em princípio não é necessário)
+        //$tshirt_images = $tshirt_images->with('', '')->paginate(10);
+
+        return view('tshirt_images.index', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
     }
 }
