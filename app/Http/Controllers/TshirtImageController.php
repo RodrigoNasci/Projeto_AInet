@@ -41,4 +41,9 @@ class TshirtImageController extends Controller
 
         return view('tshirt_images.index', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
     }
+
+    public function show(TshirtImage $tshirt_image): View
+    {
+        return view('tshirt_images.show')->with('tshirt_image', $tshirt_image);
+    }
 }

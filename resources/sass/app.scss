@@ -21,8 +21,9 @@
 }
 
 .header_background{
-    background-image: url("storage/Images/top_background.jpg") !important;
+    background-image: url('/public/storage/images/background.jpg') !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    background-position: center !important;
+    //background-position: center !important;
+    background-position-y: 85% !important;
 }
