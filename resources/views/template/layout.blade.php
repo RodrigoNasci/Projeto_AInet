@@ -60,14 +60,10 @@
             </div>
         </div>
     </header>
-<<<<<<< HEAD
 
     <br>
     @yield('main_filters')
 
-=======
-    @yield('filters')
->>>>>>> d7cfb071a324e83789e21375148f024e966da269
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
