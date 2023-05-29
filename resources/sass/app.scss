@@ -9,3 +9,20 @@
 
 // Shop Homepage template
 @import 'shop-homepage';
+
+#filter_container{
+    display: flex;
+    align-items: center;
+    font-size: small !important;
+}
+
+#FilterinputCategory, #FilterinputName, #FilterinputDescription{
+    font-size: smaller !important;
+}
+
+.header_background{
+    background-image: url("storage/Images/top_background.jpg") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
