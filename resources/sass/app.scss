@@ -10,9 +10,9 @@
 // Shop Homepage template
 @import 'shop-homepage';
 
-#filter_container{
+#filters_container{
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     font-size: small !important;
 }
 
@@ -26,4 +26,9 @@
     background-size: cover !important;
     //background-position: center !important;
     background-position-y: 85% !important;
+}
+
+.filter_container{
+    margin-right: 10px;
+    //flex: 1;
 }

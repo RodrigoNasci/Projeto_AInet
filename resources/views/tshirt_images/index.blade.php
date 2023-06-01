@@ -10,24 +10,33 @@
         </div>
     </header>
     <form method="GET" action="{{ route('tshirt_images.index') }}">
-        <div class="container px-4 px-lg-5 mt-5" id="filter_container">
-            <label for="inputCategory" class="form-label">Categoria</label>
-            <select class="form-select" name="category" id="FilterinputCategory">
-                <option {{ old('category', $filterByCategory) === '' ? 'selected' : '' }} value=""> Todas as
-                    Categorias </option>
-                @foreach ($categories as $category)
-                    <option {{ old('departamento', $filterByCategory) == $category->name ? 'selected' : '' }}
-                        value="{{ $category->name }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
-            <label for="inputName" class="form-label">Nome</label>
-            <input type="text" class="form-control" name="name" id="FilterinputName"
-                value="{{ old('name', $filterByName) }}">
-            <label for="inputDescription" class="form-label">Descrição</label>
-            <input type="text" class="form-control" name="description" id="FilterinputDescription"
-                value="{{ old('description', $filterByDescription) }}">
-            <button type="submit" class="btn btn-info mb-3 px-4 flex-grow-1" name="filtrar">Filtrar</button>
-            <a href="{{ route('tshirt_images.index') }}" class="btn btn-secondary mb-3 px-4 flex-grow-1">Limpar</a>
+        <div class="container px-4 px-lg-5 mt-5" id="filters_container">
+            <div class="filter_container">
+                <label for="inputCategory" class="form-label"><b>CATEGORIA</b></label>
+                <br>
+                <select class="form-select" name="category" id="FilterinputCategory">
+                    <option {{ old('category', $filterByCategory) === '' ? 'selected' : '' }} value=""> Todas as
+                        Categorias </option>
+                    @foreach ($categories as $category)
+                        <option {{ old('departamento', $filterByCategory) == $category->name ? 'selected' : '' }}
+                            value="{{ $category->name }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter_container">
+                <label for="inputName" class="form-label"><b>NOME</b></label>
+                <br>
+                <input type="text" class="form-control" name="name" id="FilterinputName"
+                    value="{{ old('name', $filterByName) }}">
+            </div>
+            <div class="filter_container">
+                <label for="inputDescription" class="form-label"><b>DESCRIÇÃO</b></label>
+                <br>
+                <input type="text" class="form-control" name="description" id="FilterinputDescription"
+                    value="{{ old('description', $filterByDescription) }}">
+                <button type="submit" class="btn btn-outline-dark mb-3 px-4 flex-grow-1" name="filtrar">Filtrar</button>
+                <a href="{{ route('tshirt_images.index') }}" class="btn btn-outline-dark mb-3 px-4 flex-grow-1">Limpar</a>
+            </div>
         </div>
     </form>
 
