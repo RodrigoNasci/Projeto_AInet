@@ -34,7 +34,7 @@ class TshirtImageController extends Controller
         if ($filterByDescription !== '') {
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
-        $tshirt_images = $tshirtImageQuery->paginate(10);
+        $tshirt_images = $tshirtImageQuery->paginate(12);
 
         // Caso seja necessário fazer “eager loading” dos relacionamentos (em princípio não é necessário)
         //$tshirt_images = $tshirt_images->with('', '')->paginate(10);

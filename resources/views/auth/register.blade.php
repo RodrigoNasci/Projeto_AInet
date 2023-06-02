@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('template.layout')
 
-@section('content')
-<div class="container">
+@section('main')
+<div class="container py-5" style="margin-bottom:12%">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
