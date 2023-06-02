@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,6 +51,15 @@ class User extends Authenticatable
     public function customer()
     {
         return $this->hasOne(Customer::class, 'id');
+    }
+
+    protected function fullPhotoUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return $this->url_foto ? asset('storage/fotos/' . $this->url_foto) : asset('/img/avatar_unknown.png');
+            },
+        );
     }
 
 
