@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\StoreCreateUserRequest;
 use App\Http\Requests\StoreUpdateUserRequest;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -26,9 +27,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
-        return new UserResource($user);
+        $user->load('customer');
+        return view('users.show', compact('user'));
+    }
+
+    public function edit(User $user): View
+    {
+        return view('users.edit', compact('user'));
     }
 
     /**

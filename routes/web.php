@@ -27,9 +27,9 @@ Route::resource('/', TshirtImageController::class);
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
-Route::resource('user', UserController::class);
+Route::resource('users', UserController::class);
 
-Route::resource('customer', CustomerController::class);
+Route::resource('customers', CustomerController::class);
 
 Route::get('/password/change', [ChangePasswordController::class, 'show'])
     ->name('password.change.show');
