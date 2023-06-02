@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TshirtImageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +26,15 @@ Auth::routes();
 Route::resource('/', TshirtImageController::class);
 
 Route::resource('tshirt_images', TshirtImageController::class);
+
+Route::resource('user', UserController::class);
+
+Route::resource('customer', CustomerController::class);
+
+Route::get('/password/change', [ChangePasswordController::class, 'show'])
+    ->name('password.change.show');
+
+Route::post('/password/change', [ChangePasswordController::class, 'store'])
+    ->name('password.change.store');
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
