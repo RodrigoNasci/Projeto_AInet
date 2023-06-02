@@ -74,9 +74,11 @@
                                 <img src="{{ Auth::user()->fullPhotoUrl }}" alt="Avatar" class="bg-dark rounded-circle" width="45" height="45">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <!--<a class="dropdown-item"href="{#{ route('user.show', ['user' => Auth::user()->user])}}">Perfil</a>-->
-                                </li>
+                                @if ((Auth::user() ?? ''))
+                                    <li>
+                                        <a class="dropdown-item"href="{{ route('user.show', ['user' => Auth::user()])}}">Perfil</a>
+                                    </li>
+                                @endif
                                 <li><a class="dropdown-item" href="{{route('password.change.show')}}">Alterar Senha</a></li>
                                 <li>
                                     <hr class="dropdown-divider" />
