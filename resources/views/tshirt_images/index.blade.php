@@ -9,80 +9,64 @@
             </div>
         </div>
     </header>
-    <form method="GET" action="{{ route('tshirt_images.index') }}">
-        <div class="container px-4 px-lg-5 mt-5" id="filters_container">
+
+    <section class="py-5 filter-section">
+    <form method="GET" class="form" action="{{ route('tshirt_images.index') }}">
+        <div class="container px-4 px-lg-5 mt-5 filter_container">
             <ul class="me-auto mb-2 mb-lg-0 ms-lg-4 ul_filters">
                 <li class="dropdown li_filter">
-                    <a class="dropdown-toggle btn btn-outline-dark" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">CATEGORIA</a>
-                    <ul class="dropdown-menu" name="category">
-                        <li {{ old('category', $filterByCategory) === '' ? 'selected' : '' }}><a class="dropdown-item" href="#!">Todas as categorias</a></li>
-                        <li> <hr class="dropdown-divider" /> </li>
+                    <a class="dropdown-toggle btn dropdown-btn" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Nome</a>
+                    <ul class="dropdown-menu dropdown_ul">
+                        <li class="li_drop">
+                            <div class="input-group rounded">
+                                <input type="text" name="name" class="form-control rounded filter_txtinput" placeholder="Pesquisar por Nome" aria-label="Search" aria-describedby="search-addon"
+                                value="{{ old('name', $filterByName) }}"/>
+                                <button type="submit" class="btn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown li_filter input_group form-outline">
+                    <a class="dropdown-toggle btn dropdown-btn" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Descrição</a>
+                    <ul class="dropdown-menu dropdown_ul">
+                        <div class="input-group rounded">
+                            <input type="text" name="description" class="form-control rounded filter_txtinput" placeholder="Pesquisar por Descrição" aria-label="Search" aria-describedby="search-addon"
+                            value="{{ old('description', $filterByDescription) }}"/>
+                            <button type="submit" class="btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown li_filter input_group form-outline">
+                    <a class="dropdown-toggle btn dropdown-btn" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Categoria</a>
+                    <ul class="dropdown-menu dropdown_ul">
+                        <div class="input-group rounded div_cat_option">
+                            <button type="submit" class="btn category_option" value="" > Todas as Categorias</button>
+                        </div>
                         @foreach ($categories as $category)
-                            <li {{ old('departamento', $filterByCategory) == $category->name ? 'selected' : '' }}>
-                                <a class="dropdown-item" href="#!">{{ $category->name }}</a>
-                            </li>
+                            <div class="input-group rounded div_cat_option">
+                                <button value="{{ $category->name }}" type="submit" class="btn category_option" name="category">{{ $category->name }}</button>
+                            </div>
                         @endforeach
                     </ul>
                 </li>
-                <li class="dropdown li_filter">
-                    <a class="dropdown-toggle btn btn-outline-dark" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">NOME</a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item li_drop"><input type="text" class="form-control filter_input" name="name"
-                            value="{{ old('name', $filterByName) }}"></li>
-                    </ul>
-                </li>
-                <li class="dropdown li_filter">
-                    <a class="dropdown-toggle btn btn-outline-dark " href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">DESCRIÇÃO</a>
-                    <ul class="dropdown-menu">
-                        <input type="text" class="form-control filter_input" name="description"
-                    value="{{ old('description', $filterByDescription) }}">
-                    </ul>
-                </li>
             </ul>
-
-            <div class="filter_container">
-                <select class="form-select" name="category" id="FilterinputCategory">
-                    <option {{ old('category', $filterByCategory) === '' ? 'selected' : '' }} value=""> Todas as
-                        Categorias </option>
-                    @foreach ($categories as $category)
-                        <option {{ old('category', $filterByCategory) == $category->name ? 'selected' : '' }}
-                            value="{{ $category->name }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <!--
-            <div class="filter_container">
-                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  NOME
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-            </div>
-            <div class="filter_container">
-                <label for="inputName" class="form-label"><b>NOME</b></label>
-                <br>
-                <input type="text" class="form-control" name="name" id="FilterinputName"
-                    value="{{ old('name', $filterByName) }}">
-            </div>
-            <div class="filter_container">
-                <label for="inputDescription" class="form-label"><b>DESCRIÇÃO</b></label>
-                <br>
-                <input type="text" class="form-control" name="description" id="FilterinputDescription"
-                    value="{{ old('description', $filterByDescription) }}">
-                <button type="submit" class="btn btn-outline-dark mb-3 px-4 flex-grow-1" name="filtrar">Filtrar</button>
-                <a href="{{ route('tshirt_images.index') }}" class="btn btn-outline-dark mb-3 px-4 flex-grow-1">Limpar</a>
-            </div>-->
-            <button type="submit" class="btn btn-outline-dark mb-3 px-4 flex-grow-1" name="filtrar">Filtrar</button>
         </div>
     </form>
+    <!--
+    <div class="filter_info_container">
+            <h5 class="filters_h"><span class="badge bg-light filter-badge">Nome:{{$filterByName}}</span></h5>
+            <h5 class="filters_h"><span class="badge bg-light filter-badge">Descrição:{{$filterByDescription}}</span></h5>
+            <h5 class="filters_h"><span class="badge bg-light filter-badge">Categoria:{{$filterByCategory}}</span></h5>
+    </div>
+    -->
+    </section>
 
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
