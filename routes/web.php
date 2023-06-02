@@ -6,6 +6,7 @@ use App\Http\Controllers\TshirtImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,10 @@ Auth::routes();
 Route::resource('/', TshirtImageController::class);
 
 Route::resource('tshirt_images', TshirtImageController::class);
+
+Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+
+Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::resource('users', UserController::class);
 

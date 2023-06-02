@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\TshirtImage;
 use App\Models\Category;
+use App\Models\Color;
+use App\Models\OrderItem;
+use App\Models\Order;
 
 class TshirtImageController extends Controller
 {
@@ -34,16 +37,18 @@ class TshirtImageController extends Controller
         if ($filterByDescription !== '') {
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
-        $tshirt_images = $tshirtImageQuery->paginate(12);
+        $tshirt_images = $tshirtImageQuery->paginate(10);
 
         // Caso seja necessário fazer “eager loading” dos relacionamentos (em princípio não é necessário)
-        //$tshirt_images = $tshirt_images->with('', '')->paginate(10);
+        //$tshirt_images = $tshirt_images->with('nomeDaRelação', 'nomeDaRelação', '...')->paginate(10);
 
         return view('tshirt_images.index', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
     }
 
+
     public function show(TshirtImage $tshirt_image): View
     {
-        return view('tshirt_images.show')->with('tshirt_image', $tshirt_image);
+        $colors = Color::all();
+        return view('tshirt_images.show', compact('tshirt_image', 'colors'));
     }
 }
