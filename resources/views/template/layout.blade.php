@@ -39,7 +39,7 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex" action="{{ route('cart.show') }}">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
@@ -49,6 +49,9 @@
             </div>
         </div>
     </nav>
+    @if (session('alert-msg'))
+        @include('shared.messages')
+    @endif
     @yield('main')
     <footer class="py-5 bg-dark">
         <div class="container">
