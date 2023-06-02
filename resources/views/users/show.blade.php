@@ -19,10 +19,10 @@
                     <button type="button" name="delete" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmationModal"
                         data-msgLine1="Quer realmente apagar a conta <strong>&quot;{{ $user->name }}&quot;</strong>?"
-                        data-action="{{ route('user.destroy', ['user' => $user]) }}">
+                        data-action="{{ route('users.destroy', ['user' => $user]) }}">
                         Apagar User
                     </button>
-                    <a href="{{ route('user.edit', ['user' => $user]) }}" class="btn btn-secondary ms-3">
+                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-secondary ms-3">
                         Alterar User
                     </a>
                 </div>

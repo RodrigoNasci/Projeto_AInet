@@ -43,9 +43,11 @@
 <div class="mb-3">
     <div class="form-check form-switch" {{ $disabledStr }}>
         <input type="hidden" name="admin" value="0">
-        <input type="checkbox" class="form-check-input @error('admin') is-invalid @enderror" name="admin"
-            id="inputOpcional" {{ $disabledStr }} {{ old('admin', $user->admin) ? 'checked' : '' }} value="1">
+        @if((Auth::user()->user_type ?? '') == 'A')
+            <input type="checkbox" class="form-check-input @error('admin') is-invalid @enderror" name="admin"
+                id="inputOpcional" {{ $disabledStr }} {{ old('admin', $user->admin) ? 'checked' : '' }} value="1">
         <label for="inputOpcional" class="form-check-label">Administrador</label>
+        @endif
         @error('admin')
             <div class="invalid-feedback">
                 {{ $message }}
