@@ -18,10 +18,10 @@ use App\Http\Controllers\TshirtImageController;
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::view('/', 'home')->name('root');
+
+Route::resource('/', TshirtImageController::class);
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -15,16 +15,15 @@
 <body>
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5">
+        <div class="container-fluid px-3 px-lg-2 mx-3">
             <a class="navbar-brand" href="{{ route('tshirt_images.index') }}">ImagineShirt</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page"
-                            href="{{ route('tshirt_images.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>                               <!-- about page-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -45,6 +44,29 @@
                         <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </button>
                 </form>
+                 <!-- Sidebar Toggle-->
+                @guest
+                    <ul class="navbar-nav ms-2 me-1 me-lg-3">
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">
+                                    {{ __('Login') }}
+                                </a>
+                            </li>
+                        @endif
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">
+                                    {{ __('Register') }}
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                @else
+                <div class="ms-auto me-0 me-md-2 my-2 my-md-0 navbar-text">
+                    {{ Auth::user()->name }}
+                </div>
+                @endguest
             </div>
         </div>
     </nav>
