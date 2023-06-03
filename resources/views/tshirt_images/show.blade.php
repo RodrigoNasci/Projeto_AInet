@@ -14,15 +14,38 @@
                         <span>$40.00</span>
                     </div>
                     <p class="lead">{{ $tshirt_image->description }}</p>
-                    <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
-                            style="max-width: 3rem" />
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Add to cart
-                        </button>
-                    </div>
+                    <form method="POST" action="{{ route('cart.add', ['tshirt_image' => $tshirt_image]) }}">
+                        @csrf
+                        <div>
+                            <select class="form-select" name="color_code" id="inputColor">
+                                {{-- FICA ASSIM POR ENQUANTO, SÓ PARA TESTAR O CARRINHO --}}
+                                @foreach ($colors as $color)
+                                    <option> {{ $color->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="d-flex">
+                            <select class="form-select" name="size" id="inputSize">
+                                <option> XS </option>
+                                <option> S </option>
+                                <option> M </option>
+                                <option> L </option>
+                                <option> XL </option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex">
+                            <input class="form-control text-center me-3" name="qty" id="inputQty" type="number"
+                                style="max-width: 3rem" value="1" />
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="addToCart">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                    </form>
                 </div>
+                </form>
             </div>
         </div>
     </section>
