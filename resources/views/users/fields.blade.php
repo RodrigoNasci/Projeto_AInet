@@ -25,15 +25,21 @@
 </div>
 
 <div class="mb-3 form-floating">
-    <select class="form-select @error('genero') is-invalid @enderror" name="genero" id="inputGenero"
-        {{ $disabledStr }}>
-        <option {{ old('genero', $user->genero) == 'M' ? 'selected' : '' }} value="M">Masculino
-        </option>
-        <option {{ old('genero', $user->genero) == 'F' ? 'selected' : '' }} value="F">Feminino
-        </option>
-    </select>
-    <label for="inputGenero" class="form-label">Gênero</label>
-    @error('genero')
+    <input type="text" class="form-control @error('nif') is-invalid @enderror" name="nif" id="inputNif"
+        {{ $disabledStr }} value="{{ old('name', $user->customer->nif) }}">
+    <label for="inputNif" class="form-label">Nif</label>
+    @error('nif')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+<div class="mb-3 form-floating">
+    <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="inputAddress"
+        {{ $disabledStr }} value="{{ old('name', $user->customer->address) }}">
+    <label for="inputAddress" class="form-label">Morada</label>
+    @error('address')
         <div class="invalid-feedback">
             {{ $message }}
         </div>

@@ -26,7 +26,7 @@ class StoreCreateUserRequest extends FormRequest
         return [
             'name'=>'required|string|max:255',
             'email'=>'required|unique:users,email|string|max:255',
-            'user_type'=>'required|in:C,EC,ED,EM',
+            'user_type'=>'required|in:C,A,E|default:C',
             'password'=>'required|string|max:255',
             'blocked'=>'required|integer|min:0|max:1',
             'photo_url'=>'nullable|string|max:255',

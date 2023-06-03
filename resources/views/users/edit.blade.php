@@ -11,7 +11,7 @@
 @endsection
 
 @section('main')
-    <div class="container py-5" style="margin-bottom:11%">
+    <div class="container py-5" style="margin-bottom:17%">
         <form id="form_user" novalidate class="needs-validation" method="POST"
             action="{{ route('users.update', ['user' => $user]) }}" enctype="multipart/form-data">
             @csrf

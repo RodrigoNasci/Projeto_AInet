@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Customer;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\StoreCreateUserRequest;
 use App\Http\Requests\StoreUpdateUserRequest;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,18 +39,34 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
+        $user->load('customer');
         return view('users.edit', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCreateUserRequest $request)
+    public function store(StoreCreateUserRequest $request): RedirectResponse
     {
-        $newUser = User::create($request->validated());
-        $newUser->password = bcrypt($request->validated()['password']);
-        $newUser->save();
-        return new UserResource($newUser);
+        $formData = $request->validated();
+        $user = DB::transaction(function () use ($formData) {
+            $newUser = new User();
+            $newUser->user_type = 'C';
+            $newUser->name = $formData['name'];
+            $newUser->email = $formData['email'];
+            $newUser->password = Hash::make($formData['password']);
+            $newUser->save();
+            $newCustomer = new Customer();
+            $newCustomer->id = $newUser->id;
+            $newCustomer->save();
+
+            return $newUser;
+        });
+        $url = route('users.show', ['user' => $user]);
+        $htmlMessage = "User <a href='$url'>#{$user->id}</a> <strong>\"{$user->name}\"</strong> foi criado com sucesso!";
+        return redirect()->route('tshirt_images.index')
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
     }
 
     /**
@@ -61,9 +81,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
-        return true;
+        $htmlMessage = "User #{$user->id} <strong>\"{$user->name}\"</strong> foi apagado com sucesso!";
+        return redirect()->route('tshirt_images.index')
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
     }
 }
