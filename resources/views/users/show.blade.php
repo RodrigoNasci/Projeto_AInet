@@ -11,7 +11,7 @@
 @endsection
 
 @section('main')
-    <div class="container py-5" style="margin-bottom:12%">
+    <div class="container py-4">
         <div class="d-flex flex-column flex-sm-row justify-content-start align-items-start">
             <div class="flex-grow-1 pe-2">
                 @include('users.fields', ['user' => $user, 'readonlyData' => true])
