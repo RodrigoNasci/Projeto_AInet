@@ -1,36 +1,36 @@
 @extends('template.layout')
 
-@section('titulo', 'User')
+@section('titulo', 'Cliente')
 
 @section('subtitulo')
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">Users</li>
-        <li class="breadcrumb-item"><strong>{{ $user->name }}</strong></li>
+        <li class="breadcrumb-item">Clientes</li>
+        <li class="breadcrumb-item"><strong>{{ $customer->user->name }}</strong></li>
         <li class="breadcrumb-item active">Consultar</li>
     </ol>
 @endsection
 
 @section('main')
-    <div class="container py-5" style="margin-bottom:17%">
+    <div class="container py-4">
         <div class="d-flex flex-column flex-sm-row justify-content-start align-items-start">
             <div class="flex-grow-1 pe-2">
-                @include('users.fields', ['user' => $user, 'readonlyData' => true])
+                @include('customers.fields', ['customer' => $customer, 'readonlyData' => true])
                 <div class="my-1 d-flex justify-content-end">
                     <button type="button" name="delete" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#confirmationModal"
-                        data-msgLine1="Quer realmente apagar a conta <strong>&quot;{{ $user->name }}&quot;</strong>?"
-                        data-action="{{ route('users.destroy', ['user' => $user]) }}">
-                        Apagar User
+                        data-msgLine1="Quer realmente apagar a conta <strong>&quot;{{ $customer->user->name }}&quot;</strong>?"
+                        data-action="{{ route('customers.destroy', ['customer' => $customer]) }}">
+                        Apagar Cliente
                     </button>
-                    <a href="{{ route('users.edit', ['user' => $user]) }}" class="btn btn-secondary ms-3">
-                        Alterar User
+                    <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="btn btn-secondary ms-3">
+                        Alterar Cliente
                     </a>
                 </div>
             </div>
             <div class="ps-2 mt-5 mt-md-1 d-flex mx-auto flex-column align-items-center justify-content-between"
                 style="min-width:260px; max-width:260px;">
-                @include('users.fields_foto', [
-                    'user' => $user,
+                @include('customers.fields_foto', [
+                    'customer' => $customer,
                     'allowUpload' => false,
                     'allowDelete' => false,
                 ])
@@ -38,7 +38,7 @@
         </div>
     </div>
     @include('shared.confirmationDialog', [
-        'title' => 'Apagar User',
+        'title' => 'Apagar Cliente',
         'confirmationButton' => 'Apagar',
         'formMethod' => 'DELETE',
     ])

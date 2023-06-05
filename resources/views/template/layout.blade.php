@@ -76,10 +76,13 @@
                                     width="45" height="45">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @if (Auth::user() ?? '')
+                                @if ((Auth::user()->user_type ?? '') == 'C')
                                     <li>
-                                        <a
-                                            class="dropdown-item"href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>
+                                        <a class="dropdown-item" href="{{ route('customers.show', ['customer' => Auth::user()->customer]) }}">Perfil</a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>
                                     </li>
                                 @endif
                                 <li><a class="dropdown-item" href="{{ route('password.change.show') }}">Alterar Senha</a>
@@ -111,6 +114,8 @@
             @if ($errors->any())
                 @include('shared.alertValidation')
             @endif
+            <br>
+            @yield('subtitulo')
             <div class="mt-4">
                 @yield('main')
             </div>

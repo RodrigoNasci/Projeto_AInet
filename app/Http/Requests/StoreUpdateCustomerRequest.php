@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUpdateCustomerRequest extends FormRequest
 {
@@ -25,10 +26,34 @@ class StoreUpdateCustomerRequest extends FormRequest
     {
         return [
             'id'=>'required|exists:users,id',
-            'nif'=>'nullable|string|max:9',
+            'nif'=>'nullable|digits:9',
             'address'=>'nullable|string|max:60',
             'default_payment_type'=>'nullable|in:VISA,PAYPAL,MC',
-            'default_payment_reference'=>'nullable|string|max:255',
+            'default_payment_ref'=>'nullable|string|max:255',
+            'name'=>'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->id),
+            ],
+            'user_type'=>'required|in:C,A,E',
+            'blocked'=>'required|integer|min:0|max:1',
+            'file_photo'=>'sometimes|image|max:4096',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nif.integer' => 'O nif tem de ter só numeros',
+            'nif.digits' => 'O nif tem de ter 9 numeros',
+            'name.required' =>  'O nome é obrigatório',
+            'name.unique' =>    'O nome tem que ser único',
+            'email.required' => 'O email é obrigatório',
+            'email.email' =>    'O formato do email é inválido',
+            'email.unique' =>   'O email tem que ser único',
+            'file_foto.image' => 'O ficheiro com a foto não é uma imagem',
+            'file_foto.size' => 'O tamanho do ficheiro com a foto tem que ser inferior a 4 Mb',
         ];
     }
 }

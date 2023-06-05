@@ -12,8 +12,9 @@ class Customer extends Model
 {
     use HasFactory, SoftDeletes;
     public $incrementing = false;
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id', //TODO
+        //'id', //TODO
         'nif',
         'address',
         'default_payment_type',
