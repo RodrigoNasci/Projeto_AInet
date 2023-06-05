@@ -81,8 +81,10 @@
                         <div class="card h-100">
                             <div class="card-height">
                                 <!-- Product image-->
-                                <img class="card-img-top max-height-img" src="{{ $tshirt_image->fullImageUrl }}"
-                                    alt="..." />
+                                <div class="image-container">
+                                    <img class="card-img-top max-height-img" id="tshirt-color" src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
+                                    <img class="card-img-top max-height-img overlay-image" src="{{ $tshirt_image->fullImageUrl }}" alt="Overlay Image" />
+                                </div>
                             </div>
                             <!-- Product details-->
                             <div class="card-body p-4">
