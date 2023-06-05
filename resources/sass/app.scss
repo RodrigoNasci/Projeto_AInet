@@ -35,7 +35,7 @@
 }
 
 .header_background {
-    background-image: url('/public/storage/images/background.jpg') !important;
+    background-image: url('/public/storage/images/backgr.png') !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
     //background-position: center !important;
@@ -129,4 +129,20 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
+}
+
+//Image preview
+.image-container {
+    position: relative;
+    display: inline-block;
+  }
+
+.overlay-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    width: 40%;
+    left: 30%;
+    top: 20%;
 }

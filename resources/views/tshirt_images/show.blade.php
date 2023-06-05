@@ -4,8 +4,12 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ $tshirt_image->fullImageUrl }}"
-                        alt="..." /></div>
+                <div class="col-md-6">
+                    <div class="image-container">
+                        <img class="card-img-top mb-5 mb-md-0" id="tshirt-color" src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
+                        <img class="card-img-top mb-5 mb-md-0 overlay-image" src="{{ $tshirt_image->fullImageUrl }}" alt="Overlay Image" />
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="small mb-1">SKU: BST-498</div>
                     <h1 class="display-5 fw-bolder">{{ $tshirt_image->name }}</h1>
@@ -17,10 +21,11 @@
                     <form method="POST" action="{{ route('cart.add', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
                         <div>
-                            <select class="form-select" name="color_code" id="inputColor">
+                            <select class="form-select" name="color_code" id="input-color">
                                 {{-- FICA ASSIM POR ENQUANTO, SÓ PARA TESTAR O CARRINHO --}}
                                 @foreach ($colors as $color)
-                                    <option> {{ $color->name }}
+                                    <option value="{{ $color->fullImageUrl }}">
+                                        {{ $color->name }}
                                     </option>
                                 @endforeach
                             </select>
