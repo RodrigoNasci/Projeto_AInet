@@ -6,8 +6,10 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
                     <div class="image-container">
-                        <img class="card-img-top mb-5 mb-md-0" id="tshirt-color" src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
-                        <img class="card-img-top mb-5 mb-md-0 overlay-image" src="{{ $tshirt_image->fullImageUrl }}" alt="Overlay Image" />
+                        <img class="card-img-top mb-5 mb-md-0" id="tshirt-color" src="/storage/tshirt_base/fafafa.jpg"
+                            alt="Background Image" />
+                        <img class="card-img-top mb-5 mb-md-0 overlay-image" src="{{ $tshirt_image->fullImageUrl }}"
+                            alt="Overlay Image" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -24,7 +26,7 @@
                             <select class="form-select" name="color_code" id="input-color">
                                 {{-- FICA ASSIM POR ENQUANTO, SÓ PARA TESTAR O CARRINHO --}}
                                 @foreach ($colors as $color)
-                                    <option value="{{ $color->fullImageUrl }}">
+                                    <option value="{{ $color->code }}">
                                         {{ $color->name }}
                                     </option>
                                 @endforeach
