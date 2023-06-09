@@ -20,11 +20,16 @@ use App\Http\Controllers\CartController;
 */
 
 
+
+
 Auth::routes();
 
 //Route::view('/', 'home')->name('root');
 
 Route::resource('/', TshirtImageController::class);
+
+Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])
+    ->name('tshirt_images.minhas');
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
@@ -43,6 +48,9 @@ Route::get('/password/change', [ChangePasswordController::class, 'show'])
 
 Route::post('/password/change', [ChangePasswordController::class, 'store'])
     ->name('password.change.store');
+
+
+
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

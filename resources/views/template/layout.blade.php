@@ -24,7 +24,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     @if ((Auth::user()->user_type ?? '') == 'A')
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('users.showAdmin') }}">Admin Panel</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                href="{{ route('users.showAdmin') }}">Admin Panel</a></li>
                     @endif
                     <li class="nav-item"><a class="nav-link" href="#!">About</a></li> <!-- about page-->
                     <li class="nav-item dropdown">
@@ -80,14 +81,18 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 @if ((Auth::user()->user_type ?? '') == 'C')
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('customers.show', ['customer' => Auth::user()->customer]) }}">Perfil</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('customers.show', ['customer' => Auth::user()->customer]) }}">Perfil</a>
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>
                                     </li>
                                 @endif
                                 <li><a class="dropdown-item" href="{{ route('password.change.show') }}">Alterar Senha</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas Imagens</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />

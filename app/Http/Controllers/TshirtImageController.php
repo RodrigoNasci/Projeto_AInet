@@ -51,4 +51,9 @@ class TshirtImageController extends Controller
         $colors = Color::all();
         return view('tshirt_images.show', compact('tshirt_image', 'colors'));
     }
+
+    public function minhasTshirtImages(): View
+    {
+        return view('tshirt_images.minhas');
+    }
 }
