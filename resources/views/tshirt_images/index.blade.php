@@ -5,12 +5,12 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-left text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                <p class="lead fw-normal text-white-50 mb-0">With this awesome t-shirt designs</p>
             </div>
         </div>
     </header>
 
-    <section class="py-5 filter-section">
+    <section class="py-2 filter-section">
         <form method="GET" class="form" action="{{ route('tshirt_images.index') }}">
             <div class="container px-4 px-lg-5 mt-5 filter_container">
                 <ul class="me-auto mb-2 mb-lg-0 ms-lg-4 ul_filters">
@@ -73,7 +73,7 @@
         -->
     </section>
 
-    <section class="py-5">
+    <section class="py-2">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @foreach ($tshirt_images as $tshirt_image)
@@ -109,8 +109,8 @@
             </div>
         </div>
     </section>
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
+    <section class="py-2">
+        <div class="container px-4 px-lg-5 mt-3">
             {{ $tshirt_images->withQueryString()->links() }}
         </div>
     </section>

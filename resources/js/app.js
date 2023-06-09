@@ -2,6 +2,8 @@ import './bootstrap';
 
 import './shop-homepage'
 
+import './modal'
+
 //select color
 document.getElementById('input-color').addEventListener('change', function () {
     var colorSelect = document.getElementById('input-color');

@@ -27,7 +27,6 @@ class CartController extends Controller
         $orderItem->qty = $request->qty;
         $orderItem->unit_price = 10;
         $orderItem->sub_total = 10 * $request->qty;
-
         $cart = session('cart', []);
         $key = $tshirt_image->id . '-' . $request->color_code . '-' . $request->size;
         if (array_key_exists($key, $cart)) {

@@ -33,13 +33,16 @@ Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
 Route::resource('users', UserController::class);
+Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');
 
 Route::resource('customers', CustomerController::class);
+Route::delete('customers/{customer}/foto', [CustomerController::class, 'destroy_foto'])->name('customers.foto.destroy');
 
 Route::get('/password/change', [ChangePasswordController::class, 'show'])
     ->name('password.change.show');
 
 Route::post('/password/change', [ChangePasswordController::class, 'store'])
     ->name('password.change.store');
+
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
