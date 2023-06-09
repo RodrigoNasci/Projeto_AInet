@@ -19,9 +19,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View
     {
-        return UserResource::collection(User::all()->where('deleted_at','IS', null));
+        $filterByType = $request->user_tye ?? '';
+
+        $filterByName = $request->name ?? '';
+
+        return view('users.index', compact('filterByType', 'filterByName'));
     }
 
     public function showUsersPaginated()
@@ -36,6 +40,12 @@ class UserController extends Controller
     {
         $user->load('customer');
         return view('users.show', compact('user'));
+    }
+
+    public function showAdmin(User $user): View
+    {
+        $user->load('customer');
+        return view('users.index', compact('user'));
     }
 
     public function edit(User $user): View
