@@ -28,12 +28,20 @@ Auth::routes();
 
 Route::resource('/', TshirtImageController::class);
 
+Route::middleware('auth')->group(function () {
+    Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar');
+    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+});
+
 Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])
     ->name('tshirt_images.minhas');
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
 Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+
+// Remove a item from the cart:
+Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
@@ -48,9 +56,5 @@ Route::get('/password/change', [ChangePasswordController::class, 'show'])
 
 Route::post('/password/change', [ChangePasswordController::class, 'store'])
     ->name('password.change.store');
-
-
-
-
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

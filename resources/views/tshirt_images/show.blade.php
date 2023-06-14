@@ -23,7 +23,7 @@
                     <form method="POST" action="{{ route('cart.add', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
                         <div>
-                            <select class="form-select" name="color_code" id="input-color">
+                            <select class="form-select" name="code" id="input-color">
                                 {{-- FICA ASSIM POR ENQUANTO, SÓ PARA TESTAR O CARRINHO --}}
                                 @foreach ($colors as $color)
                                     <option value="{{ $color->code }}">
