@@ -23,8 +23,12 @@
                                             <div class="row mb-4 d-flex align-items-center">
                                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                                     <div class="image-container">
-                                                        <img class="card-img-top max-height-img" id="tshirt-color" src="/storage/tshirt_base/{{$item->color->code}}.jpg" alt="Background Image" />
-                                                        <img class="card-img-top max-height-img overlay-image" src="{{ $item->tshirtImage->fullImageUrl }}" alt="Overlay Image" />
+                                                        <img class="card-img-top max-height-img" id="tshirt-color"
+                                                            src="/storage/tshirt_base/{{ $item->color->code }}.jpg"
+                                                            alt="Background Image" />
+                                                        <img class="card-img-top max-height-img overlay-image"
+                                                            src="{{ $item->tshirtImage->fullImageUrl }}"
+                                                            alt="Overlay Image" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -56,10 +60,13 @@
                                                     <form method="POST" action="{{ route('cart.remove', $item) }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input type="hidden" name="item" value="{{ json_encode($item) }}">
-                                                        <button type="submit" class="btn text-muted"><i class="fas fa-times"></i></button>
+                                                        <input type="hidden" name="item"
+                                                            value="{{ json_encode($item) }}">
+                                                        <button type="submit" class="btn text-muted"><i
+                                                                class="fas fa-times"></i></button>
                                                     </form>
-                                                    <button type="submit" class="btn text-muted"><i class="bi bi-pencil-fill"></i></button>
+                                                    <button type="submit" class="btn text-muted"><i
+                                                            class="bi bi-pencil-fill"></i></button>
                                                 </div>
 
                                                 {{-- <div class="col-md-2" style="white-space: nowrap !important;">
@@ -130,8 +137,9 @@
                                                 <h5>{{ $total . '€' }}</h5>
                                             </h5>
                                         </div>
-                                        <a href="{{ route('cart.confirmar') }}" >
-                                            <button class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Confirmar</button>
+                                        <a href="{{ route('cart.confirmar') }}">
+                                            <button class="btn btn-dark btn-block btn-lg"
+                                                data-mdb-ripple-color="dark">Confirmar</button>
                                         </a>
                                     </div>
                                 </div>

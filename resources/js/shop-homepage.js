@@ -8,9 +8,30 @@
 
 
 //select color
-document.getElementById('input-color').addEventListener('change', function () {
+// document.getElementById('input-color').addEventListener('change', function () {
+//     var colorSelect = document.getElementById('input-color');
+//     var tshirtImage = document.getElementById('tshirt-color');
+//     tshirtImage.src = "/storage/tshirt_base/" + colorSelect.value + ".jpg";
+//     console.log(colorSelect.value);
+// });
+
+
+window.addEventListener('DOMContentLoaded', function () {
     var colorSelect = document.getElementById('input-color');
     var tshirtImage = document.getElementById('tshirt-color');
-    tshirtImage.src = "/storage/tshirt_base/" + colorSelect.value + ".jpg";
-    console.log(colorSelect.value);
+
+    // Função para atualizar a cor da tshirt
+    function updateTshirtColor() {
+        tshirtImage.src = "/storage/tshirt_base/" + colorSelect.value + ".jpg";
+    }
+
+    // Atualiza a cor da tshirt quando a página é carregada
+    updateTshirtColor();
+
+    // Atualiza a cor da t-shirt quando o user muda a cor
+    colorSelect.addEventListener('change', function () {
+        updateTshirtColor();
+    });
 });
+
+

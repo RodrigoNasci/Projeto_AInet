@@ -11,7 +11,7 @@ class TshirtImageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,10 +19,31 @@ class TshirtImageRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
+
+
     public function rules(): array
     {
         return [
-            //
+            'category_id' => 'nullable|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'file_image' =>  'required|image|max:4096',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'category_id.exists' => 'O campo category_id deve ser um valor existente na tabela categories.',
+            'name.required' => 'É obrigatório indicar o nome da imagem',
+            'name.string' => 'O nome da imagem deve ser uma string',
+            'name.max' => 'O nome da imagem não deve ter mais de 255 caracteres',
+            'description.required' => 'É obrigatório indicar a descrição da imagem',
+            'description.string' => 'A descrição da imagem deve ser uma string',
+            'description.max' => 'A descrição da imagem não deve ter mais de 255 caracteres',
+            'file_image.required' => 'É obrigatório indicar o ficheiro da imagem',
+            'file_image.image' => 'O ficheiro deve ser uma imagem',
+            'file_image.max' => 'O ficheiro não deve ter mais de 4MB',
         ];
     }
 }

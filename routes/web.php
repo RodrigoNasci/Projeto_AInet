@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])
-    ->name('tshirt_images.minhas');
+    ->name('tshirt_images.minhas')
+    ->middleware('auth');
 
 Route::resource('tshirt_images', TshirtImageController::class);
 

@@ -49,8 +49,7 @@ class CartController extends Controller
             $htmlMessage = "Item adicionado ao <a href='$url'>carrinho</a>";
         }
         $alertType = 'success';
-        //$request->session()->forget('cart');
-        return back()
+        return back()->withInput()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);
     }

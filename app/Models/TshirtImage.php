@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
+
 
 class TshirtImage extends Model
 {
@@ -17,13 +22,31 @@ class TshirtImage extends Model
         'image_url', 'extra_info',
     ];
 
+    // protected function fullImageUrl(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: function () {
+    //             return $this->image_url ? asset('storage/tshirt_images/' . $this->image_url) :
+    //                 asset('/img/plain_white.png');
+    //         },
+    //     );
+    // }
+
     protected function fullImageUrl(): Attribute
     {
         return Attribute::make(
             get: function () {
+                if ($this->customer_id != null && $this->image_url /* && $this->customer->id == auth()->user()->id */) {
+                    $privatePath = storage_path('app/tshirt_images_private/' . $this->image_url);
+                    if (!File::exists($privatePath)) {
+                        abort(404);
+                    }
+                    $file = File::get($privatePath);
+                    return "data:image/png;base64," . base64_encode($file);
+                }
                 return $this->image_url ? asset('storage/tshirt_images/' . $this->image_url) :
                     asset('/img/plain_white.png');
-            },
+            }
         );
     }
 
