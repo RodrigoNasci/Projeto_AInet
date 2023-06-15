@@ -20,7 +20,7 @@
                                         </div>
                                         <hr class="my-4">
                                         @foreach ($cart as $item)
-                                            <div class="row mb-4 d-flex align-items-center">
+                                            <div class="row mb-4 d-flex align-items-center justify-content-between">
                                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                                     <div class="image-container">
                                                         <img class="card-img-top max-height-img" id="tshirt-color" src="/storage/tshirt_base/{{$item->color->code}}.jpg" alt="Background Image" />
@@ -31,12 +31,21 @@
                                                     <h6 class="text-muted"> {{ $item->tshirtImage->name }}</h6>
                                                     <h6 class="text-black mb-0"> {{ $item->color->name }}</h6>
                                                 </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center justify-content-around">
+                                                    <form method="POST" action="{{ route('cart.editCartItem') }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="editOnlyQty" value="{{ json_encode($item) }}">
+                                                        <button class="btn px">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <h6 class="text-black mb-0 form-control bg-light border-secondary"> {{ $item->qty }} </h6>
 
-                                                <div class="col-md-2">
-                                                    <h6 class="text-muted">Quantidade</h6>
-                                                    <h6 class="text-black mb-0"> {{ $item->qty }}</h6>
+                                                         <button class="btn px">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
-
                                                 <div class="col-md-1">
                                                     <h6 class="text-muted">Size</h6>
                                                     <h6 class="text-black mb-0"> {{ $item->size }}</h6>
@@ -59,7 +68,7 @@
                                                         <input type="hidden" name="item" value="{{ json_encode($item) }}">
                                                         <button type="submit" class="btn text-muted"><i class="fas fa-times"></i></button>
                                                     </form>
-                                                    <form method="POST" action="{{ route('cart.remove') }}">
+                                                    <form method="POST" action="{{ route('cart.editCartItem') }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <button type="submit" class="btn text-muted"><i class="bi bi-pencil-fill"></i></button>

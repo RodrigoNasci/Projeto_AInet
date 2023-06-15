@@ -19,8 +19,7 @@ use App\Http\Controllers\CartController;
 |
 */
 
-
-
+Route::view('teste', 'template_admin.layout');
 
 Auth::routes();
 
@@ -43,6 +42,8 @@ Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 
 // Remove a item from the cart:
 Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+Route::put('cart', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
 
 Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
