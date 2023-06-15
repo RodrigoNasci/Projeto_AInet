@@ -24,6 +24,7 @@ class TshirtImageRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'costumer_id' => 'nullable|exists:costumers,id',
             'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -34,6 +35,7 @@ class TshirtImageRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'costumer_id.exists' => 'O campo costumer_id deve ser um valor existente na tabela costumers.',
             'category_id.exists' => 'O campo category_id deve ser um valor existente na tabela categories.',
             'name.required' => 'É obrigatório indicar o nome da imagem',
             'name.string' => 'O nome da imagem deve ser uma string',

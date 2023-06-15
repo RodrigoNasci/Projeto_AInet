@@ -8,7 +8,7 @@
                 @csrf
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                        id="inputName">
+                        id="inputName" value="{{ old('name') }}">
                     <label for="inputName" class="form-label">Nome</label>
                     @error('name')
                         <div class="invalid-feedback">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control @error('description') is-invalid @enderror" name="description"
-                        id="inputDescription">
+                        id="inputDescription" value="{{ old('description') }}">
                     <label for="inputDescription" class="form-label">Descrição</label>
                     @error('description')
                         <div class="invalid-feedback">
