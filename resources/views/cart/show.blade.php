@@ -31,20 +31,22 @@
                                                     <h6 class="text-muted"> {{ $item->tshirtImage->name }}</h6>
                                                     <h6 class="text-black mb-0"> {{ $item->color->name }}</h6>
                                                 </div>
-                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center justify-content-around">
+                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center justify-content-between">
                                                     <form method="POST" action="{{ route('cart.editCartItem') }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" name="editOnlyQty" value="{{ json_encode($item) }}">
-                                                        <button class="btn px">
+
+                                                        <button type="submit" class="btn px">
                                                             <i class="fas fa-minus"></i>
                                                         </button>
+
                                                         <h6 class="text-black mb-0 form-control bg-light border-secondary"> {{ $item->qty }} </h6>
 
-                                                         <button class="btn px">
+                                                         <button type="submit" class="btn px">
                                                             <i class="fas fa-plus"></i>
                                                         </button>
-                                                    </form>
+                                                     </form>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <h6 class="text-muted">Size</h6>

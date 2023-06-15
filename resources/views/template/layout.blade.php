@@ -10,7 +10,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    @vite('resources/sass/app.scss')
+    @vite('resources/sass/shoptemplate/app.scss')
 </head>
 
 <body>
@@ -136,7 +136,7 @@
             </div>
         </div>
     </footer>
-    @vite('resources/js/app.js')
+    @vite('resources/js/shoptemplate/app.js')
 </body>
 
 </html>
