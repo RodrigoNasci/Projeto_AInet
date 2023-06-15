@@ -72,6 +72,24 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
+    public function editCartItem(Request $request): RedirectResponse
+    {
+
+        $item = json_decode($request->input('item'));
+
+        $cart = session('cart', []);
+        $key = $item->tshirt_image_id . '-' . $item->color_code . '-' . $item->size;
+
+        if (array_key_exists($key, $cart)) {
+            unset($cart[$key]);
+        }
+        $request->session()->put('cart', $cart);
+        $htmlMessage = "Item removido do carrinho.";
+        return back()
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
+    }
+
     public function store(Request $request): RedirectResponse
     {
         try {
