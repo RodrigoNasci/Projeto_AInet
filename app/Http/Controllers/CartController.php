@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\OrderItem;
 use App\Models\TshirtImage;
+use App\Models\Color;
 
 class CartController extends Controller
 {
@@ -72,22 +73,43 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function editCartItem(Request $request): RedirectResponse
+    public function editCartItem(Request $request)
     {
-
-        $item = json_decode($request->input('item'));
-
         $cart = session('cart', []);
-        $key = $item->tshirt_image_id . '-' . $item->color_code . '-' . $item->size;
 
-        if (array_key_exists($key, $cart)) {
-            unset($cart[$key]);
-        }
-        $request->session()->put('cart', $cart);
-        $htmlMessage = "Item removido do carrinho.";
-        return back()
+        //!= editar todos os atributos
+        if (!isset($request->editAll)) {
+
+            if (isset($request->minusQty)) {
+                $item = json_decode($request->input('minusQty'));
+                $qty = -1;
+            }elseif (isset($request->plusQty)) {
+                $item = json_decode($request->input('plusQty'));
+                $qty = 1;
+            }
+
+            $key = $item->tshirt_image_id . '-' . $item->color_code . '-' . $item->size;
+
+            if (array_key_exists($key, $cart)) {
+                $cart[$key]->qty += $qty;
+                $cart[$key]->sub_total = 10 * $cart[$key]->qty;
+                $request->session()->put('cart', $cart);
+            }
+
+            $htmlMessage = "A quantidade do item foi atualizada.";
+            return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
+
+        }else{
+            $item = json_decode($request->input('editAll'));
+
+            $color = $item->color;
+            $tshirt_image = $item->tshirtImage;
+
+            $colors = Color::all();
+            return view('tshirt_images.show', compact('tshirt_image','colors'));
+        }
     }
 
     public function store(Request $request): RedirectResponse
