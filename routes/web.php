@@ -20,7 +20,7 @@ use App\Http\Controllers\CartController;
 */
 
 
-
+Route::view('teste', 'template_admin.layout');
 
 Auth::routes();
 
