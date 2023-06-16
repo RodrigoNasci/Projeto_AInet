@@ -22,10 +22,16 @@ class OrderController extends Controller
 
         $orders = Order::query()->paginate(10);
 
-        if ($filterByStatus != ''){
+        if ($filterByStatus != '') {
             $orders = Order::query()->where('status', $filterByStatus)->paginate(10);
         }
 
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus'));
+    }
+
+    public function minhasEncomendas(Request $request): View
+    {
+        $orders = $request->user()->customer->orders;
+        return view('orders.minhas')->with('orders', $orders);
     }
 }

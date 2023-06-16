@@ -102,9 +102,12 @@
                                 </li>
                                 @if ((Auth::user()->user_type ?? '') == 'C')
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas Imagens</a>
+                                        <a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas
+                                            Imagens</a>
                                     </li>
                                 @endif
+                                <li><a class="dropdown-item" href="{{ route('orders.minhas') }}">Encomendas</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
@@ -146,6 +149,12 @@
             </div>
         </div>
     </footer>
+    <!-- Footer-->
+    {{-- <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy;Politécnico de Leiria 2023</p>
+        </div>
+    </footer> --}}
     @vite('resources/js/shoptemplate/app.js')
 </body>
 

@@ -68,6 +68,8 @@ Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.c
 
 Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 
+Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas');
+
 
 
 
