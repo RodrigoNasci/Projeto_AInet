@@ -27,7 +27,7 @@ class OrderRequest extends FormRequest
             'address' => 'required|string|max:60',
             'payment_type' => 'required|in:VISA,PAYPAL,MC',
             'payment_ref' => [
-                'nullable',
+                'required',
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) {
@@ -56,6 +56,7 @@ class OrderRequest extends FormRequest
             'address.max' => 'O campo "Endereço" não pode ter mais de 60 caracteres.',
             "address.required" => 'O campo "Endereço" é obrigatório',
             'address.string' => 'O campo "Endereço" deve ser uma string',
+            'payment_ref.required' => 'O campo "Referência de pagamento" é obrigatório',
             'payment_type.in' => 'O campo "Tipo de pagamento" deve ser um dos seguintes: VISA, PAYPAL, MC.',
             'payment_ref.max' => 'O campo "Referência de pagamento" não pode ter mais de 255 caracteres.',
         ];
