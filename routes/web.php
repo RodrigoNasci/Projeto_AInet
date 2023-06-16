@@ -19,6 +19,8 @@ use App\Http\Controllers\CartController;
 |
 */
 
+
+
 Route::view('teste', 'template_admin.layout');
 
 Auth::routes();
@@ -38,14 +40,39 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
-Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 
-// Remove a item from the cart:
+
+
+
+
+// Vai para a página de edição do item do carrinho de compras
+//Route::get('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
+// POST para esconder o url
+Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
+
+// Adiciona um item ao carrinho de compras
+Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
+
+// Remove um item do carrinho de compras
 Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::put('cart', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
+// Mostrar o carrinho de compras
+Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 
-Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
+// Atualiza a quantidade de um item do carrinho de compras
+Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateItemQuantity');
+
+// Atualiza um item do carrinho de compras
+Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
+
+
+
+
+
+
+
+
+
 
 Route::resource('users', UserController::class);
 Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');

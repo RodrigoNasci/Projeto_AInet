@@ -1,6 +1,3 @@
-@php
-    $total = 0;
-@endphp
 @extends('template.layout')
 
 @section('main')
@@ -19,37 +16,45 @@
                                             <h6 class="mb-0 text-muted">{{ count($cart) . ' items' }}</h6>
                                         </div>
                                         <hr class="my-4">
-                                        @foreach ($cart as $item)
+                                        @foreach ($cart as $orderItem)
                                             <div class="row mb-4 d-flex align-items-center justify-content-between">
                                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                                     <div class="image-container">
-                                                        <img class="card-img-top max-height-img" id="tshirt-color" src="/storage/tshirt_base/{{$item->color->code}}.jpg" alt="Background Image" />
-                                                        <img class="card-img-top max-height-img overlay-image" src="{{ $item->tshirtImage->fullImageUrl }}" alt="Overlay Image" />
+                                                        <img class="card-img-top max-height-img" id="tshirt-color"
+                                                            src="/storage/tshirt_base/{{ $orderItem->color->code }}.jpg"
+                                                            alt="Background Image" />
+                                                        <img class="card-img-top max-height-img overlay-image"
+                                                            src="{{ $orderItem->tshirtImage->fullImageUrl }}"
+                                                            alt="Overlay Image" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <h6 class="text-muted"> {{ $item->tshirtImage->name }}</h6>
-                                                    <h6 class="text-black mb-0"> {{ $item->color->name }}</h6>
+                                                    <h6 class="text-muted"> {{ $orderItem->tshirtImage->name }}</h6>
+                                                    <h6 class="text-black mb-0"> {{ $orderItem->color->name }}</h6>
                                                 </div>
-                                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center justify-content-between">
+                                                <div
+                                                    class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center justify-content-between">
 
-                                                    <form method="POST" action="{{ route('cart.editCartItem') }}">
+                                                    <form method="POST" action="{{ route('cart.updateItemQuantity') }}">
                                                         @csrf
                                                         @method('PUT')
-                                                        <input type="hidden" name="minusQty" value="{{ json_encode($item) }}">
+                                                        <input type="hidden" name="minusQty"
+                                                            value="{{ json_encode($orderItem) }}">
 
                                                         <button type="submit" class="btn px">
                                                             <i class="fas fa-minus"></i>
                                                         </button>
                                                     </form>
 
-                                                    <h6 class="text-black mb-0 form-control bg-light border-secondary"> {{ $item->qty }} </h6>
+                                                    <h6 class="text-black mb-0 form-control bg-light border-secondary">
+                                                        {{ $orderItem->qty }} </h6>
 
-                                                    <form method="POST" action="{{ route('cart.editCartItem') }}">
+                                                    <form method="POST" action="{{ route('cart.updateItemQuantity') }}">
                                                         @csrf
                                                         @method('PUT')
-                                                        <input type="hidden" name="plusQty" value="{{ json_encode($item) }}">
-                                                         <button type="submit" class="btn px">
+                                                        <input type="hidden" name="plusQty"
+                                                            value="{{ json_encode($orderItem) }}">
+                                                        <button type="submit" class="btn px">
                                                             <i class="fas fa-plus"></i>
                                                         </button>
                                                     </form>
@@ -57,50 +62,53 @@
                                                 </div>
                                                 <div class="col-md-1">
                                                     <h6 class="text-muted">Size</h6>
-                                                    <h6 class="text-black mb-0"> {{ $item->size }}</h6>
+                                                    <h6 class="text-black mb-0"> {{ $orderItem->size }}</h6>
                                                 </div>
 
                                                 <div class="col-md-2 text-nowrap">
                                                     <h6 class="text-muted">Preço Unitario</h6>
-                                                    <h6 class="text-black mb-0">{{ $item->unit_price . '€' }}</h6>
+                                                    <h6 class="text-black mb-0">{{ $orderItem->unit_price . '€' }}</h6>
                                                 </div>
 
                                                 <div class="col-md-2">
                                                     <h6 class="text-muted">Subtotal</h6>
-                                                    <h6 class="text-black mb-0">{{ $item->sub_total . '€' }}</h6>
+                                                    <h6 class="text-black mb-0">{{ $orderItem->sub_total . '€' }}</h6>
                                                 </div>
 
                                                 <div class="col-md-1">
                                                     <form method="POST" action="{{ route('cart.remove') }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input type="hidden" name="item" value="{{ json_encode($item) }}">
-                                                        <button type="submit" class="btn text-muted"><i class="fas fa-times"></i></button>
+                                                        <input type="hidden" name="item"
+                                                            value="{{ json_encode($orderItem) }}">
+                                                        <button type="submit" class="btn text-muted"><i
+                                                                class="fas fa-times"></i></button>
                                                     </form>
+                                                    {{-- POST para esconder o URL (deve de haver outra forma para fazer isso)) --}}
                                                     <form method="POST" action="{{ route('cart.editCartItem') }}">
                                                         @csrf
-                                                        @method('PUT')
-                                                        <input type="hidden" name="editAll" value="{{ json_encode($item) }}">
-                                                        <button type="submit" class="btn text-muted"><i class="bi bi-pencil-fill"></i></button>
+                                                        <input type="hidden" name="item"
+                                                            value="{{ json_encode($orderItem) }}">
+                                                        <button type="submit" class="btn text-muted"><i
+                                                                class="bi bi-pencil-fill"></i></button>
                                                     </form>
                                                 </div>
-
                                                 {{-- <div class="col-md-2" style="white-space: nowrap !important;">
                                                     <div>
                                                         Preço Unitario
-                                                        <h6 class="mb-0">{{ $item->unit_price . '€' }}</h6>
+                                                        <h6 class="mb-0">{{ $orderItem->unit_price . '€' }}</h6>
                                                     </div>
                                                     <br>
                                                     <div>
                                                         Subtotal
-                                                        <h6 class="mb-0">{{ $item->sub_total . '€' }}</h6>
+                                                        <h6 class="mb-0">{{ $orderItem->sub_total . '€' }}</h6>
                                                     </div>
                                                 </div> --}}
                                                 {{-- <div class="col-md-1 col-lg-1 col-xl-1 text-end" style="float:right !important;">
                                                     <form method="POST" action="{{ route('cart.remove') }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input type="hidden" name="item" value="{{ json_encode($item) }}">
+                                                        <input type="hidden" name="orderItem" value="{{ json_encode($orderItem) }}">
                                                         <button type="submit" class="btn text-muted"><i class="fas fa-times"></i></button>
                                                     </form>
                                                  <a href="#!" class="text-muted"><i class="bi bi-pencil-fill"></i></a>
@@ -110,7 +118,8 @@
                                         @endforeach
                                         <div class="pt-5">
                                             <h6 class="mb-0"><a href="#!" class="text-body"><i
-                                                        class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                                                        class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>
@@ -153,8 +162,9 @@
                                                 <h5>{{ $total . '€' }}</h5>
                                             </h5>
                                         </div>
-                                        <a href="{{ route('cart.confirmar') }}" >
-                                            <button class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Confirmar</button>
+                                        <a href="{{ route('cart.confirmar') }}">
+                                            <button class="btn btn-dark btn-block btn-lg"
+                                                data-mdb-ripple-color="dark">Confirmar</button>
                                         </a>
                                     </div>
                                 </div>

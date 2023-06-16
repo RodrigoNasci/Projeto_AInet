@@ -63,7 +63,7 @@ class TshirtImageController extends Controller
 
         // Apenas mostra as tshirts do user autenticado.
         // Ainda faltam verificações para o caso de o user não ser um cliente
-        // Porque se não isto manda as cenas a null.
+        // Porque se não as relações dão null.
         $tshirt_images = $request->user()->customer->tshirtImages;
         return view('tshirt_images.minhas')->with('tshirt_images', $tshirt_images);
     }

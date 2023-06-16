@@ -22,35 +22,11 @@
                     <p class="lead">{{ $tshirt_image->description }}</p>
                     <form method="POST" action="{{ route('cart.add', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
-                        <div>
-                            <select class="form-select" name="code" id="input-color">
-                                {{-- FICA ASSIM POR ENQUANTO, SÓ PARA TESTAR O CARRINHO --}}
-                                @foreach ($colors as $color)
-                                    <option value="{{ $color->code }}"
-                                        {{ old('code', 'fafafa') == $color->code ? 'selected' : '' }}>
-                                        {{ $color->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="d-flex">
-                            <select class="form-select" name="size" id="inputSize">
-                                <option value="XS" {{ old('size') === 'XS' ? 'selected' : '' }}>XS</option>
-                                <option value="S" {{ old('size') === 'S' ? 'selected' : '' }}>S</option>
-                                <option value="M" {{ old('size') === 'M' ? 'selected' : '' }}>M</option>
-                                <option value="L" {{ old('size') === 'L' ? 'selected' : '' }}>L</option>
-                                <option value="XL" {{ old('size') === 'XL' ? 'selected' : '' }}>XL</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="d-flex">
-                            <input class="form-control text-center me-3" name="qty" id="inputQty" type="number"
-                                style="max-width: 3rem" value="{{ old('qty', 1) }}" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="addToCart">
-                                <i class="bi-cart-fill me-1"></i>
-                                Add to cart
-                            </button>
-                        </div>
+                        @include('tshirt_images.shared.fields')
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="addToCart">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
                     </form>
                 </div>
                 </form>

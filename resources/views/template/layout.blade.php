@@ -41,14 +41,20 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" action="{{ route('cart.show') }}">
+                {{-- <form class="d-flex" action="{{ route('cart.show') }}">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span
                             class="badge bg-dark text-white ms-1 rounded-pill">{{ count($cart = session('cart', [])) }}</span>
                     </button>
-                </form>
+                </form> --}}
+                <a class="btn btn-outline-dark" href="{{ route('cart.show') }}">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span
+                        class="badge bg-dark text-white ms-1 rounded-pill">{{ count($cart = session('cart', [])) }}</span>
+                </a>
                 <!-- Sidebar Toggle-->
                 @guest
                     <ul class="navbar-nav ms-2 me-1 me-lg-3">
