@@ -42,11 +42,6 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function showAdmin(User $user): View
-    {
-        $user->load('customer');
-        return view('users.index', compact('user'));
-    }
 
     public function edit(User $user): View
     {

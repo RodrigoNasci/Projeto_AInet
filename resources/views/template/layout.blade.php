@@ -25,7 +25,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     @if ((Auth::user()->user_type ?? '') == 'A')
                         <li class="nav-item"><a class="nav-link active" aria-current="page"
-                                href="{{ route('users.showAdmin') }}">Admin Panel</a></li>
+                                href="{{ route('users.index') }}">Admin Panel</a></li>
                     @endif
                     <li class="nav-item"><a class="nav-link" href="#!">About</a></li> <!-- about page-->
                     <li class="nav-item dropdown">
@@ -97,10 +97,14 @@
                                             href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>
                                     </li>
                                 @endif
-                                <li><a class="dropdown-item" href="{{ route('password.change.show') }}">Alterar Senha</a>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('password.change.show') }}">Alterar Senha</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas Imagens</a>
-                                </li>
+                                @if ((Auth::user()->user_type ?? '') == 'C')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas Imagens</a>
+                                    </li>
+                                @endif
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>

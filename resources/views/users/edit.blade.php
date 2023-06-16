@@ -3,7 +3,7 @@
 @section('titulo', 'Alterar User')
 
 @section('subtitulo')
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="padding-left: 1%">
         <li class="breadcrumb-item">Users</li>
         <li class="breadcrumb-item"><strong>{{ $user->name }}</strong></li>
         <li class="breadcrumb-item active">Alterar</li>
