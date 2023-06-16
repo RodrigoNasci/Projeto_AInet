@@ -202,7 +202,7 @@ class CartController extends Controller
                 } else {
                     $customer = $request->user()->customer;
 
-                    DB::transaction(function () use ($customer, $cart) {
+                    DB::transaction(function () use ($customer, $cart, $request) {
                         $order = new Order();
                         $order->customer_id = $customer->id;
                         $order->date = date('Y-m-d');
