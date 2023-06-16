@@ -4,14 +4,10 @@
 @section('main')
 
     <body class="bg-light">
-
-        @dump($customer)
-
         <div class="container">
             <div class="py-5 text-center">
                 <h2>Checkout</h2>
             </div>
-
             <div class="row">
                 <div class="col-md-4 order-md-2 mb-4">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -46,28 +42,31 @@
                         @endforeach
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (EUR)</span>
-                            <strong>{{ $item->unit_price . '€' }}</strong>
+                            <strong>{{ $total . '€' }}</strong>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Billing address</h4>
                     <form method="POST" action="{{ route('cart.store') }}">
+                        @csrf
                         <div class="row">
                             <div class="mb-3">
                                 <label for="address">Address</label>
-                                <input nome="endereco" type="text" class="form-control" id="address"
-                                    placeholder="1234 Main St" required>
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
+                                <input name="address" type="text"
+                                    class="form-control @error('address') is-invalid @enderror" id="address"
+                                    value="{{ old('address', $customer->address) }}">
+                                @error('address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-md-5 mb-3">
+                            {{-- <div class="col-md-5 mb-3">
                                 <label for="country">Country</label>
-                                <select name="pais" class="custom-select d-block w-100" id="country" required>
+                                <select name="pais" class="custom-select d-block w-100" id="country">
                                     <option value="">Choose...</option>
                                     <option>United States</option>
                                 </select>
@@ -78,7 +77,7 @@
 
                             <div class="col-md-4 mb-3">
                                 <label for="state">State</label>
-                                <select name="distrito" class="custom-select d-block w-100" id="state" required>
+                                <select name="distrito" class="custom-select d-block w-100" id="state">
                                     <option value="">Choose...</option>
                                     <option>California</option>
                                 </select>
@@ -89,16 +88,21 @@
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Zip</label>
                                 <input name="codpostal" type="text" class="form-control" id="zip" placeholder=""
-                                    required>
+                                    >
                                 <div class="invalid-feedback">
-                                    Zip code required.
+                                    Zip code.
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="mb-3">
+                            <div class="mb-3 ">
                                 <label for="email">Notas <span class="text-muted">(Optional)</span></label>
-                                <input name="notes" type="text" class="form-control" id="address" placeholder=""
-                                    required>
+                                <input name="notes" type="text"
+                                    class="form-control @error('notes') is-invalid @enderror" id="notes" placeholder="">
+                                @error('notes')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
 
@@ -106,48 +110,57 @@
 
                         <div class="row">
                             <h4 class="mb-3">Payment</h4>
-                            <div class="d-block my-3">
+                            <div class="d-block my-3 form-control @error('payment_type') is-invalid @enderror">
                                 <div class="custom-control custom-radio">
                                     <input id="credit" name="payment_type" type="radio" class="custom-control-input"
-                                        value="VISA" checked required>
+                                        value="VISA"
+                                        {{ old('payment_type', $customer->default_payment_type) == 'VISA' ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="credit">Cartão de crédito VISA</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="debit" name="payment_type" type="radio" class="custom-control-input"
-                                        value="MC" required>
+                                        value="MC"
+                                        {{ old('payment_type', $customer->default_payment_type) == 'MC' ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="debit">Cartão de crédito Master Card</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="paypal" name="payment_type" type="radio" class="custom-control-input"
-                                        value="PAYPAL" required>
+                                        value="PAYPAL"
+                                        {{ old('payment_type', $customer->default_payment_type) == 'PAYPAL' ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="paypal">Paypal</label>
                                 </div>
                             </div>
+                            @error('payment_type')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="cc-number">Referência de pagamento</label>
-                                <input name="payment_ref" type="text" class="form-control" id="NIF"
-                                    placeholder="" required>
-                                <div class="invalid-feedback">
-                                    Payment ref is required
-                                </div>
+                                <input name="payment_ref" type="text"
+                                    class="form-control @error('payment_ref') is-invalid @enderror" id="payment_ref"
+                                    placeholder="" value="{{ old('payment_ref', $customer->default_payment_ref) }}">
+                                @error('payment_ref')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="cc-number">NIF</label>
-                                <input name="nif" type="text" class="form-control" id="NIF" placeholder=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    NIF is required
-                                </div>
+                                <input name="nif" type="text" class="form-control @error('nif') is-invalid @enderror"
+                                    id="nif" placeholder="" value="{{ old('nif', $customer->nif) }}">
+                                @error('nif')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
-
                         <hr class="mb-4">
-
-                        @csrf
-                        <input type="hidden" name="item" value="{{ json_encode($item) }}">
+                        <input type="hidden" name="total" value="{{ $total }}">
                         <button class="btn btn-dark btn-lg btn-block">Finalizar encomenda</button>
                     </form>
                 </div>

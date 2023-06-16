@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -24,8 +25,8 @@ class CartController extends Controller
     public function confirmar(Request $request)
     {
         $cart = session('cart', []);
-        // dd($cart);
-        // Contar com a variável total
+        $total = $this->getCartTotal($cart);
+        // Verifica se o carrinho está vazio
         if (count($cart) < 1) {
             $htmlMessage = "Não existem itens no carrinho de compras.";
             $alertType = 'warning';
@@ -34,7 +35,7 @@ class CartController extends Controller
                 ->with('alert-type', $alertType);
         }
         $customer = $request->user()->customer;
-        return view('cart.confirmar', compact('cart', 'customer'));
+        return view('cart.confirmar', compact('cart', 'customer', 'total'));
     }
 
     public function addToCart(TshirtImage $tshirt_image, Request $request): RedirectResponse
@@ -186,10 +187,11 @@ class CartController extends Controller
         return $total;
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
+        //dd($request->all());
         try {
-            $userType = $request->user()->user_type ?? 'O';
+            $userType = $request->user()->user_type;
             if ($userType != 'C') {
                 $alertType = 'warning';
                 $htmlMessage = 'Apenas clientes podem confirmar encomendas';
@@ -201,32 +203,33 @@ class CartController extends Controller
                     $htmlMessage = 'O carrinho está vazio';
                 } else {
                     $customer = $request->user()->customer;
-
-                    DB::transaction(function () use ($customer, $cart, $request) {
+                    $formData = $request->validated();
+                    DB::transaction(function () use ($customer, $cart, $formData) {
                         $order = new Order();
                         $order->customer_id = $customer->id;
                         $order->date = date('Y-m-d');
                         $order->status = 'pending';
-                        $order->notes = $request->notes;
-                        $order->nif = $request->nif;
-                        $order->address = $request->endereco . ", " . $request->distrito . ", " . $request->codpostal;
-                        $order->payment_type = $request->payment_type;
-                        $order->payment_ref = $request->payment_ref;
-                        $order->total_price = 125;
+                        $order->notes = $formData['notes'] ?? null;
+                        $order->nif = $formData['nif'];
+                        $order->address = $formData['address'];
+                        $order->payment_type = $formData['payment_type'];
+                        $order->payment_ref = $formData['payment_ref'];
+                        $total = $this->getCartTotal($cart);
+                        $order->total_price = $total;
                         $order->save();
-
                         foreach ($cart as $item) {
                             $orderItem = new OrderItem();
-                            $orderItem->fill(json_decode($request->input('item'), true));
+                            $orderItem->fill($item->toArray());
                             $orderItem->order_id = $order->id;
                             $orderItem->save();
                         }
                     });
-
                     $htmlMessage = "Carrinho confirmado com sucesso.";
-
                     $request->session()->forget('cart');
 
+                    return redirect()->route('cart.show')
+                        ->with('alert-msg', $htmlMessage)
+                        ->with('alert-type', 'success');
                     // return redirect()->route('orders.minhas')
                     //     ->with('alert-msg', $htmlMessage)
                     //     ->with('alert-type', 'success');

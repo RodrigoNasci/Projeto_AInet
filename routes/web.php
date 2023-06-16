@@ -30,6 +30,7 @@ Auth::routes();
 
 Route::resource('/', TshirtImageController::class);
 
+
 Route::middleware('auth')->group(function () {
     Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar');
     Route::post('cart', [CartController::class, 'store'])->name('cart.store');
@@ -62,6 +63,17 @@ Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateI
 
 // Atualiza um item do carrinho de compras
 Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
+
+Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar');
+
+Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+
+
+
+
+
+
+
 
 Route::resource('users', UserController::class);
 Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');

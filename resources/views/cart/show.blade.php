@@ -1,7 +1,6 @@
 @extends('template.layout')
 
 @section('main')
-    @dump($cart)
     <section class="h-100 h-custom">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -117,8 +116,9 @@
                                             <hr class="my-4">
                                         @endforeach
                                         <div class="pt-5">
-                                            <h6 class="mb-0"><a href="#!" class="text-body"><i
-                                                        class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a>
+                                            <h6 class="mb-0"><a href="{{ route('tshirt_images.index') }}"
+                                                    class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to
+                                                    shop</a>
                                             </h6>
                                         </div>
                                     </div>
