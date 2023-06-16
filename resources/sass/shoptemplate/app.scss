@@ -35,11 +35,12 @@
 }
 
 .header_background {
-    background-image: url('/public/img/background.jpg') !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
+    // background-image: url('/public/img/background.jpg') !important;
+    // background-repeat: no-repeat !important;
+    // background-size: cover !important;
     //background-position: center !important;
-    background-position-y: 85% !important;
+    // background-position-y: 85% !important;
+    background-color: #212529 !important;
 }
 
 .filter-section{
@@ -91,6 +92,8 @@
 
 .filter_info_container{
     text-align: left;
+    // margin-top: 2%;
+    transform: scale(1.2);
 }
 
 .filters_h{
@@ -147,3 +150,13 @@
     top: 20%;
 }
 
+
+.pagination-container .page-link {
+    color: #212529 !important;
+  }
+
+  .pagination-container .page-item.active .page-link {
+    background-color: #212529 !important; /* Change to your desired color for the active page number */
+    border-color: #212529;
+    color: white !important;
+  }

@@ -1,7 +1,7 @@
 @extends('template.layout')
 
 @section('main')
-    <header class="py-5 header_background">
+    <header class="py-5 header_background text-center p-0 m-0">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-left text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
@@ -10,7 +10,7 @@
         </div>
     </header>
 
-    <section class="py-2 filter-section">
+    <section class="py-2 filter-section m-0 p-0">
         <form method="GET" class="form" action="{{ route('tshirt_images.index') }}">
             <div class="container px-4 px-lg-5 mt-5 filter_container">
                 <ul class="me-auto mb-2 mb-lg-0 ms-lg-4 ul_filters">
@@ -55,29 +55,24 @@
                             </div>
                             @foreach ($categories as $category)
                                 <div class="input-group rounded div_cat_option">
-                                    <button value="{{ $category->name }}" type="submit" class="btn category_option"
-                                        name="category">{{ $category->name }}</button>
+                                    <button  name="category" value="{{ $category->name }}" type="submit" class="btn category_option"
+                                       >{{ $category->name }}</button>
                                 </div>
                             @endforeach
                         </ul>
                     </li>
                 </ul>
+
+
             </div>
         </form>
-        <!--
-        <div class="filter_info_container">
-                <h5 class="filters_h"><span class="badge bg-light filter-badge">Nome:{{ $filterByName }}</span></h5>
-                <h5 class="filters_h"><span class="badge bg-light filter-badge">Descrição:{{ $filterByDescription }}</span></h5>
-                <h5 class="filters_h"><span class="badge bg-light filter-badge">Categoria:{{ $filterByCategory }}</span></h5>
-        </div>
-        -->
     </section>
 
-    <section class="py-2">
+    <section class="py-2 p-0 m-0">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @foreach ($tshirt_images as $tshirt_image)
-                    <div class="col mb-5">
+                    <div class="col mb-4">
                         <div class="card h-100">
                             <div class="card-height">
                                 <!-- Product image-->
@@ -111,7 +106,9 @@
     </section>
     <section class="py-2">
         <div class="container px-4 px-lg-5 mt-3">
-            {{ $tshirt_images->withQueryString()->links() }}
+            <div class="pagination-container">
+                {{ $tshirt_images->withQueryString()->links() }}
+            </div>
         </div>
     </section>
 @endsection

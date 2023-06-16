@@ -13,9 +13,9 @@
     @vite('resources/sass/shoptemplate/app.scss')
 </head>
 
-<body>
+<body class="m-0 b-0">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 b-0">
         <div class="container-fluid px-3 px-lg-2 mx-3">
             <a class="navbar-brand" href="{{ route('tshirt_images.index') }}">ImagineShirt</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -115,7 +115,7 @@
         </div>
     </nav>
     <main>
-        <div class="container-fluid px-4">
+        <div class="container-fluid p-0 m-0">
             @if (session('alert-msg'))
                 @include('shared.messages')
             @endif
@@ -124,7 +124,7 @@
             @endif
             <br>
             @yield('subtitulo')
-            <div class="mt-4">
+            <div class="p-0 m-0">
                 @yield('main')
             </div>
         </div>

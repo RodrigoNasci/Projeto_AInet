@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\TshirtImage;
 use App\Models\Color;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -73,13 +75,14 @@ class CartController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function editCartItem(Request $request)
+    public function editCartItem(Request $request):RedirectResponse
     {
         $cart = session('cart', []);
 
-        //!= editar todos os atributos
+
         if (!isset($request->editAll)) {
 
+            //Editar a quantidade de um item
             if (isset($request->minusQty)) {
                 $item = json_decode($request->input('minusQty'));
                 $qty = -1;
@@ -102,17 +105,23 @@ class CartController extends Controller
             ->with('alert-type', 'success');
 
         }else{
+            //Editar todos os atributos
             $item = json_decode($request->input('editAll'));
 
             $color = $item->color;
-            $tshirt_image = $item->tshirtImage;
+            $color_code = $color->code;
+            $tshirt_image_name = $item->tshirtImage->name;
 
-            $colors = Color::all();
-            return view('tshirt_images.show', compact('tshirt_image','colors'));
+            // $colors = Color::all();
+            // return view('tshirt_images.show', compact('tshirt_image','colors'));
+            $htmlMessage = $color_code;
+            return back()
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
         }
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         try {
             $userType = $request->user()->user_type ?? 'O';
@@ -127,25 +136,45 @@ class CartController extends Controller
                     $htmlMessage = 'O carrinho está vazio';
                 } else {
                     $customer = $request->user()->customer;
-                    // DB::transaction(function () use ($costumer, $cart) {
-                    //     //TODO
-                    // });
 
-                    $htmlMessage = "Carrinho confirmado com sucesso!";
+                    DB::transaction(function () use ($customer, $cart) {
+                        $order = new Order();
+                        $order->customer_id = $customer->id;
+                        $order->date = date('Y-m-d');
+                        $order->status = 'pending';
+                        $order->notes = $request->notes;
+                        $order->nif = $request->nif;
+                        $order->address = $request->endereco . ", " . $request->distrito . ", " . $request->codpostal;
+                        $order->payment_type = $request->payment_type;
+                        $order->payment_ref = $request->payment_ref;
+                        $order->total_price = 125;
+                        $order->save();
+
+                        foreach ($cart as $item) {
+                            $orderItem = new OrderItem();
+                            $orderItem->fill(json_decode($request->input('item'), true));
+                            $orderItem->order_id = $order->id;
+                            $orderItem->save();
+                        }
+                    });
+
+                    $htmlMessage = "Carrinho confirmado com sucesso.";
 
                     $request->session()->forget('cart');
-                    return redirect()->route('orders.minhas')
-                        ->with('alert-msg', $htmlMessage)
-                        ->with('alert-type', 'success');
+
+                    // return redirect()->route('orders.minhas')
+                    //     ->with('alert-msg', $htmlMessage)
+                    //     ->with('alert-type', 'success');
                 }
             }
 
         } catch (\Exception $error) {
-            $htmlMessage = "Não foi possível confirmar o carrinho, porque ocorreu um erro!";
+            $htmlMessage = $error->getMessage();
             $alertType = 'danger';
         }
         return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);
     }
+
 }
