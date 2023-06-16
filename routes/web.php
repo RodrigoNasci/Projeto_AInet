@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TshirtImageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -40,10 +41,7 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
-
-
-
-
+Route::resource('orders', OrderController::class);
 
 // Vai para a página de edição do item do carrinho de compras
 //Route::get('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
@@ -64,15 +62,6 @@ Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateI
 
 // Atualiza um item do carrinho de compras
 Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
-
-
-
-
-
-
-
-
-
 
 Route::resource('users', UserController::class);
 Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');

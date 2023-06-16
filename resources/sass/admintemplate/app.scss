@@ -10,5 +10,16 @@
 // Admin Homepage template
 @import 'adminkit';
 
+.pagination-container .page-link {
+    color: #646a6f !important;
+  }
 
+.pagination-container .page-item.active .page-link {
+    background-color: #3b7ddd !important; /* Change to your desired color for the active page number */
+    border-color: #3b7ddd;
+    color: white !important;
+}
 
+.form-select-sm{
+    border: 1px solid #ced4da;
+}
