@@ -136,7 +136,7 @@
                             <tr>
                                 <th>Estado</th>
                                 <th class="d-none d-xl-table-cell">ID cliente</th>
-                                <th class="d-none d-xl-table-cell">Nome cliente</th>
+                                {{-- <th class="d-none d-xl-table-cell">Nome cliente</th> --}}
                                 <th class="d-none d-xl-table-cell">Data</th>
                                 <th>Preço Total</th>
                                 <th class="d-none d-md-table-cell">Tipo Pagamento</th>
@@ -160,7 +160,7 @@
                                         @endif
                                     </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                                    <td class="d-none d-xl-table-cell">{{ $order->customer->user->name }}</td>
+                                    {{-- <td class="d-none d-xl-table-cell">{{ $order->customer->user->name }}</td> --}}
                                     <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
                                     <td>{{ $order->total_price }}</td>
                                     <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>

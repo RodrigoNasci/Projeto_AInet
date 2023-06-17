@@ -15,6 +15,7 @@ class Customer extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         //'id', //TODO
+        'id',
         'nif',
         'address',
         'default_payment_type',

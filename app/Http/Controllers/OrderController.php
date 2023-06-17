@@ -33,6 +33,12 @@ class OrderController extends Controller
         //Query para a tabela de encomendas
         $orderQuery = Order::query();
 
+        //Filtrar por cliente (tabela)
+        if ($filterByCustomer != ''){
+            $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
+            $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
+        }
+
         //Filtrar por status (tabela)
         if ($filterByStatus != ''){
             $orderQuery->where('status', 'LIKE' ,$filterByStatus);
@@ -41,12 +47,6 @@ class OrderController extends Controller
         //Filtrar por data (tabela)
         if ($filterByDate != ''){
             $orderQuery->where('date', 'LIKE', $filterByDate);
-        }
-
-        //Filtrar por cliente (tabela)
-        if ($filterByCustomer != ''){
-            $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
-            $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
         }
 
         //Filtrar por ano (query para o gráfico)
