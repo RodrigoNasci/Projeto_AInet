@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Customer;
+use App\Models\Order;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\StoreCreateUserRequest;
 use App\Http\Requests\StoreUpdateUserRequest;
@@ -22,10 +22,56 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $filterByType = $request->user_tye ?? '';
-
         $filterByName = $request->name ?? '';
+        $filterByYear = $request->year ?? '';
+        $filterByStatus = $request->status ?? '';
+        $filterByDate = $request->date ?? '';
+        $filterByCustomer = $request->customer ?? '';
 
-        return view('users.index', compact('filterByType', 'filterByName'));
+        $closedOrders = Order::query()->where('status', 'closed')->count();
+        $paidOrders = Order::query()->where('status', 'paid')->count();
+        $pendingOrders = Order::query()->where('status', 'pending')->count();
+        $canceledOrders = Order::query()->where('status', 'canceled')->count();
+
+
+        //Query para o gráfico de encomendas fechadas por mês
+        $closedOrdersPerMonthQuery = Order::selectRaw('COUNT(*) as count, MONTH(date) as month')
+            ->where('status', 'closed')
+            ->groupBy('month')
+            ->orderBy('month');
+
+        //Query para a tabela de encomendas
+        $orderQuery = Order::query();
+
+        //Filtrar por status (tabela)
+        if ($filterByStatus != ''){
+            $orderQuery->where('status', 'LIKE' ,$filterByStatus);
+        }
+
+        //Filtrar por data (tabela)
+        if ($filterByDate != ''){
+            $orderQuery->where('date', 'LIKE', $filterByDate);
+        }
+
+        //Filtrar por cliente (tabela)
+        if ($filterByCustomer != ''){
+            $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
+            $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
+        }
+
+        //Filtrar por ano (query para o gráfico)
+        if ($filterByYear != '') {
+            $closedOrdersPerMonthQuery->whereYear('date', $filterByYear);
+        }
+
+        //Paginação (tabela)
+        $orders = $orderQuery->orderBy('date', 'desc')->take(10)->get();
+
+        //orders por mês (gráfico)
+        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->get();
+        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth); //converter para json (usado no gráfico (js))
+
+        return view('users.index', compact('orders', 'filterByType', 'filterByName', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
     }
 
     public function showUsersPaginated()

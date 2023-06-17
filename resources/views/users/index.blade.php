@@ -70,69 +70,61 @@
         <div class="bg-white text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Recent Sales</h6>
-                <a href="">Show All</a>
+                <div class="card-header d-flex align-items-center justify-content-start">
+                    <form id="formFilters" method="GET" class="form" action="{{ route('users.index') }}">
+
+                        <select class="form-select-sm" name="status"
+                            onChange="document.getElementById('formFilters').submit()">
+                            <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os Estados</option>
+                            <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>Fechado</option>
+                            <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Pago</option>
+                            <option value="pending"{{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Pendente</option>
+                            <option value="canceled"{{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Cancelado</option>
+                        </select>
+
+                        <input type="text" name="customer" class="form-select-sm rounded mr-0"
+                            placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}" />
+
+                        <button type="submit" class="btn m-0 p-1">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
+
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Customer Id</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Cliente Id</th>
+                            <th scope="col">Cliente Nome</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Detalhes</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>01 Jan 2045</td>
-                            <td>123</td>
-                            <td>Jhon Doe</td>
-                            <td>$123</td>
-                            <td>
-                                <span class="badge bg-info">Paid</span>
-                            </td>
-                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                        </tr>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>01 Jan 2045</td>
-                            <td>123</td>
-                            <td>Jhon Doe</td>
-                            <td>$123</td>
-                            <td><span class="badge bg-info">Paid</span></td>
-                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                        </tr>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>01 Jan 2045</td>
-                            <td>123</td>
-                            <td>Jhon Doe</td>
-                            <td>$123</td>
-                            <td><span class="badge bg-info">Paid</span></td>
-                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                        </tr>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>01 Jan 2045</td>
-                            <td>123</td>
-                            <td>Jhon Doe</td>
-                            <td>$123</td>
-                            <td><span class="badge bg-info">Paid</span></td>
-                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                        </tr>
-                        <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>01 Jan 2045</td>
-                            <td>123</td>
-                            <td>Jhon Doe</td>
-                            <td>$123</td>
-                            <td><span class="badge bg-info">Paid</span></td>
-                            <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                        </tr>
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td>{{ $order->date}}</td>
+                                <td>{{ $order->customer_id }}</td>
+                                <td>{{ $order->customer->user->name ?? 'null' }}</td>
+                                <td>{{ $order->total_price }}€</td>
+                                <td>
+                                    @if ($order->status == 'closed')
+                                        <span class="badge bg-success">{{ $order->status }}</span>
+                                    @elseif ($order->status == 'canceled')
+                                        <span class="badge bg-danger">{{ $order->status }}</span>
+                                    @elseif ($order->status == 'paid')
+                                        <span class="badge bg-info">{{ $order->status }}</span>
+                                    @elseif ($order->status == 'pending')
+                                        <span class="badge bg-warning">{{ $order->status }}</span>
+                                    @endif
+                                </td>
+                                <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
