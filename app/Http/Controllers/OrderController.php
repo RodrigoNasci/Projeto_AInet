@@ -20,13 +20,19 @@ class OrderController extends Controller
 
         $filterByStatus = $request->status ?? '';
 
-        $orders = Order::query()->paginate(10);
+        $filterByDate = $request->date ?? '';
 
+        $orderQuery = Order::query();
         if ($filterByStatus != '') {
-            $orders = Order::query()->where('status', $filterByStatus)->paginate(10);
+            $orderQuery->where('status', $filterByStatus);
         }
 
-        return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus'));
+        if ($filterByDate != '') {
+            $orderQuery->where('date', 'LIKE', $filterByDate);
+        }
+
+        $orders = $orderQuery->paginate(10);
+        return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate'));
     }
 
     public function minhasEncomendas(Request $request): View

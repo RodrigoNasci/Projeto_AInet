@@ -1,123 +1,122 @@
 @extends('template_admin.layout')
 
 @section('main')
+    <div class="container-fluid p-0">
 
-<div class="container-fluid p-0">
+        <h1 class="h3 mb-3"><strong>Análise</strong> Encomendas</h1>
 
-    <h1 class="h3 mb-3"><strong>Análise</strong> Encomendas</h1>
+        <div class="row">
+            <div class="col-xl-6 col-xxl-5 d-flex">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Encomendas Fechadas</h5>
+                                        </div>
 
-    <div class="row">
-        <div class="col-xl-6 col-xxl-5 d-flex">
-            <div class="w-100">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Encomendas Fechadas</h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="truck"></i>
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="truck"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">{{ $closedOrders }}</h1>
-                                {{-- <div class="mb-0">
+                                    <h1 class="mt-1 mb-3">{{ $closedOrders }}</h1>
+                                    {{-- <div class="mb-0">
                                     <span class="text-danger"> <i
                                             class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
                                     <span class="text-muted">Since last week</span>
                                 </div> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Encomendas Pagas</h5>
-                                    </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Encomendas Pagas</h5>
+                                        </div>
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="truck"></i>
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="truck"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">{{ $paidOrders }}</h1>
-                                {{-- <div class="mb-0">
+                                    <h1 class="mt-1 mb-3">{{ $paidOrders }}</h1>
+                                    {{-- <div class="mb-0">
                                     <span class="text-success"> <i
                                             class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
                                     <span class="text-muted">Since last week</span>
                                 </div> --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Encomendas Pendentes</h5>
-                                    </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Encomendas Pendentes</h5>
+                                        </div>
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="truck"></i>
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="truck"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">{{ $pendingOrders }}</h1>
-                                {{-- <div class="mb-0">
+                                    <h1 class="mt-1 mb-3">{{ $pendingOrders }}</h1>
+                                    {{-- <div class="mb-0">
                                     <span class="text-success"> <i
                                             class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
                                     <span class="text-muted">Since last week</span>
                                 </div> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Encomendas Canceladas</h5>
-                                    </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Encomendas Canceladas</h5>
+                                        </div>
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="truck"></i>
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="truck"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">{{ $canceledOrders }}</h1>
-                                {{-- <div class="mb-0">
+                                    <h1 class="mt-1 mb-3">{{ $canceledOrders }}</h1>
+                                    {{-- <div class="mb-0">
                                     <span class="text-danger"> <i
                                             class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
                                     <span class="text-muted">Since last week</span>
                                 </div> --}}
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-xxl-7">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Encomendas por dia</h5>
+                    </div>
+                    <div class="card-body py-3">
+                        <div class="chart chart-sm">
+                            <canvas id="chartjs-dashboard-line"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-6 col-xxl-7">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-
-                    <h5 class="card-title mb-0">Encomendas por dia</h5>
-                </div>
-                <div class="card-body py-3">
-                    <div class="chart chart-sm">
-                        <canvas id="chartjs-dashboard-line"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- <div class="row">
+        {{-- <div class="row">
         <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
             <div class="card flex-fill w-100">
                 <div class="card-header">
@@ -180,55 +179,65 @@
         </div>
     </div> --}}
 
-    <div class="row">
-        <div class="col-12 col-lg-8 col-xxl-9 d-flex">
-            <div class="card flex-fill">
-                <div class="card-header d-flex align-items-center pl-0">
-                    <form id="myForm" method="GET" class="form" action="{{ route('orders.index') }}">
-                        <select class="form-select-sm" name="status" onChange="document.getElementById('myForm').submit()">
-                            <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os Estados</option>
-                            <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>Estado Fechado</option>
-                            <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Estado Pago</option>
-                            <option value="pending" {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente</option>
-                            <option value="canceled" {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado</option>
-                        </select>
-                        <input type="date" id="date" name="date" class="form-select-sm">
-                    </form>
-                </div>
-                <table class="table table-hover my-0">
-                    <thead>
-                        <tr>
-                            <th>Estado</th>
-                            <th class="d-none d-xl-table-cell">ID cliente</th>
-                            <th class="d-none d-xl-table-cell">Data</th>
-                            <th>Preço Total</th>
-                            <th class="d-none d-md-table-cell">Tipo Pagamento</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($orders as $order)
+        <div class="row">
+            <div class="col-12 col-lg-8 col-xxl-9 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header d-flex align-items-center pl-0">
+                        <form id="myForm" method="GET" class="form" action="{{ route('orders.index') }}">
+                            <select class="form-select-sm" name="status"
+                                onChange="document.getElementById('myForm').submit()">
+                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos
+                                    os Estados</option>
+                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                    Estado Fechado</option>
+                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
+                                    Estado Pago</option>
+                                <option value="pending"
+                                    {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente
+                                </option>
+                                <option value="canceled"
+                                    {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado
+                                </option>
+                            </select>
+                            <input type="date" id="date" name="date" class="form-select-sm"
+                                value="{{ old('date', $filterByDate) }}"
+                                onChange="document.getElementById('myForm').submit()">
+                        </form>
+                    </div>
+                    <table class="table table-hover my-0">
+                        <thead>
                             <tr>
-                                <td>
-                                    @if ($order->status == 'closed')
-                                        <span class="badge bg-success">{{ $order->status }}</span>
-                                    @endif
-                                    @if ($order->status == 'canceled')
-                                        <span class="badge bg-danger">{{ $order->status }}</span>
-                                    @endif
-                                    @if ($order->status == 'paid')
-                                        <span class="badge bg-success">{{ $order->status }}</span>
-                                    @endif
-                                    @if ($order->status == 'pending')
-                                        <span class="badge bg-info">{{ $order->status }}</span>
-                                    @endif
-                                </td>
-                                <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                                <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
-                                <td>{{ $order->total_price }}</td>
-                                <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
+                                <th>Estado</th>
+                                <th class="d-none d-xl-table-cell">ID cliente</th>
+                                <th class="d-none d-xl-table-cell">Data</th>
+                                <th>Preço Total</th>
+                                <th class="d-none d-md-table-cell">Tipo Pagamento</th>
                             </tr>
-                        @endforeach
-                        {{--
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td>
+                                        @if ($order->status == 'closed')
+                                            <span class="badge bg-success">{{ $order->status }}</span>
+                                        @endif
+                                        @if ($order->status == 'canceled')
+                                            <span class="badge bg-danger">{{ $order->status }}</span>
+                                        @endif
+                                        @if ($order->status == 'paid')
+                                            <span class="badge bg-success">{{ $order->status }}</span>
+                                        @endif
+                                        @if ($order->status == 'pending')
+                                            <span class="badge bg-info">{{ $order->status }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
+                                    <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
+                                    <td>{{ $order->total_price }}</td>
+                                    <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
+                                </tr>
+                            @endforeach
+                            {{--
                         <tr>
                             <td>Project Apollo</td>
                             <td class="d-none d-xl-table-cell">01/01/2021</td>
@@ -285,11 +294,11 @@
                             <td><span class="badge bg-warning">In progress</span></td>
                             <td class="d-none d-md-table-cell">William Harris</td>
                         </tr> --}}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        {{-- <div class="col-12 col-lg-4 col-xxl-3 d-flex">
+            {{-- <div class="col-12 col-lg-4 col-xxl-3 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
 
@@ -303,30 +312,29 @@
             </div>
         </div> --}}
 
-        <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-            <div class="card flex-fill">
-                <div class="card-header">
+            <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+                <div class="card flex-fill">
+                    <div class="card-header">
 
-                    {{-- <h5 class="card-title mb-0">Calendar</h5> --}}
-                </div>
-                <div class="card-body d-flex">
-                    {{-- <div class="align-self-center w-100">
+                        {{-- <h5 class="card-title mb-0">Calendar</h5> --}}
+                    </div>
+                    <div class="card-body d-flex">
+                        {{-- <div class="align-self-center w-100">
                         <div class="chart">
                             <div id="datetimepicker-dashboard"></div>
                         </div>
                     </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="pagination-container">
-            {{ $orders->withQueryString()->links() }}
+        <div class="row">
+            <div class="pagination-container">
+                {{ $orders->withQueryString()->links() }}
+            </div>
         </div>
+
+
     </div>
-
-
-</div>
-
 @endsection
