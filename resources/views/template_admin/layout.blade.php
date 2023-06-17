@@ -36,8 +36,8 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item {{ Route::currentRouteName() == 'dashboard.index' ? 'active' : '' }}">
-                        <a class="sidebar-link" href="index.html">
+                    <li class="sidebar-item {{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('users.index') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
                                 class="align-middle">Dashboard</span>
                         </a>
@@ -88,6 +88,13 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="pages-blank.html">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item" style="padding-top: 70%">
+                        <hr>
+                        <a class="sidebar-link" href="{{ route('tshirt_images.index') }}">
+                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à Loja</span>
                         </a>
                     </li>
             </div>
