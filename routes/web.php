@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -75,10 +77,9 @@ Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('or
 
 
 
-
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::resource('users', UserController::class);
-Route::get('dashboard', [UserController::class, 'index'])->name('dashboard.index');
 Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');
 
 Route::resource('customers', CustomerController::class);
