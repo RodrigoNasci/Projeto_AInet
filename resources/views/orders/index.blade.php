@@ -163,27 +163,27 @@
                                 </tr>
                             @endif
                             @foreach ($orders as $order)
-                                <tr>
+                                <tr onClick="window.location='{{ route('orders.show', ['order' => $order]) }}'" class="cursor-pointer">
                                     <td>
                                         @switch($order->status)
                                             @case('closed')
                                                 <span class="badge bg-success">{{ $order->status }}</span> @break
                                             @case('canceled')
                                                 <span class="badge bg-danger">{{ $order->status }}</span> @break
-                                            @case('paid')
+                                             @case('paid')
                                                 <span class="badge bg-info">{{ $order->status }}</span> @break
                                             @case('pending')
                                                 <span class="badge bg-warning">{{ $order->status }}</span> @break
                                         @endswitch
                                     </td>
-                                    <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                                    {{-- TODO --}}
-                                    <td class="d-none d-xl-table-cell">
-                                        {{ $order->customer->user->name ?? 'null' }}
-                                    </td>
-                                    <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
-                                    <td>{{ $order->total_price }}</td>
-                                    <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
+                                        <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
+                                        {{-- TODO --}}
+                                        <td class="d-none d-xl-table-cell">
+                                            {{ $order->customer->user->name ?? 'null' }}
+                                        </td>
+                                        <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
+                                        <td>{{ $order->total_price }}</td>
+                                        <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

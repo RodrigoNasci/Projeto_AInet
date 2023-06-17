@@ -68,6 +68,11 @@ class OrderController extends Controller
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
     }
 
+    public function show(Order $order): View
+    {
+        return view('orders.show', compact('order'));
+    }
+
     public function minhasEncomendas(Request $request): View
     {
         $orders = $request->user()->customer->orders;
