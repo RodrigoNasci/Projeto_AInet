@@ -21,22 +21,24 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $filterByType = $request->user_tye ?? '';
-        $filterByName = $request->name ?? '';
-        $filterByYear = $request->year ?? '';
+        $filterByYearRevenue = $request->year ?? '';
+        $filterByYearOrders = $request->year ?? '';
         $filterByStatus = $request->status ?? '';
-        $filterByDate = $request->date ?? '';
         $filterByCustomer = $request->customer ?? '';
 
-        $closedOrders = Order::query()->where('status', 'closed')->count();
-        $paidOrders = Order::query()->where('status', 'paid')->count();
-        $pendingOrders = Order::query()->where('status', 'pending')->count();
-        $canceledOrders = Order::query()->where('status', 'canceled')->count();
+        $todayOrders = Order::query()->whereRaw('Date(date) = CURDATE()')->count();
+        $totalOrders = Order::query()->count();
+        $todayRevenue = Order::query()->whereRaw('Date(date) = CURDATE()')->get('total_price')->count();
+        $totalRevenue = Order::query()->sum('total_price');
 
 
-        //Query para o gráfico de encomendas fechadas por mês
-        $closedOrdersPerMonthQuery = Order::selectRaw('COUNT(*) as count, MONTH(date) as month')
-            ->where('status', 'closed')
+        //Query para o gráfico de encomendas por mês
+        $ordersPerMonthQuery = Order::selectRaw('COUNT(*) as count, MONTH(date) as month')
+            ->groupBy('month')
+            ->orderBy('month');
+
+        //Query para o gráfico de receitas por mês
+        $revenuePerMonthQuery = Order::selectRaw('SUM(total_price) as count, MONTH(date) as month')
             ->groupBy('month')
             ->orderBy('month');
 
@@ -48,11 +50,6 @@ class UserController extends Controller
             $orderQuery->where('status', 'LIKE' ,$filterByStatus);
         }
 
-        //Filtrar por data (tabela)
-        if ($filterByDate != ''){
-            $orderQuery->where('date', 'LIKE', $filterByDate);
-        }
-
         //Filtrar por cliente (tabela)
         if ($filterByCustomer != ''){
             $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
@@ -60,18 +57,27 @@ class UserController extends Controller
         }
 
         //Filtrar por ano (query para o gráfico)
-        if ($filterByYear != '') {
-            $closedOrdersPerMonthQuery->whereYear('date', $filterByYear);
+        if ($filterByYearOrders != '') {
+            $ordersPerMonthQuery->whereYear('date', $filterByYearOrders);
+        }
+
+        //Filtrar por ano (query para o gráfico)
+        if ($filterByYearRevenue != '') {
+            $revenuePerMonthQuery->whereYear('date', $filterByYearRevenue);
         }
 
         //Paginação (tabela)
         $orders = $orderQuery->orderBy('date', 'desc')->take(10)->get();
 
         //orders por mês (gráfico)
-        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->get();
-        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth); //converter para json (usado no gráfico (js))
+        $ordersPerMonth = $ordersPerMonthQuery->get();
+        $jsonOrdersPerMonth = json_encode($ordersPerMonth); //converter para json (usado no gráfico (js))
 
-        return view('users.index', compact('orders', 'filterByType', 'filterByName', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
+        //orders por mês (gráfico)
+        $revenuePerMonth = $revenuePerMonthQuery->get();
+        $jsonRevenuePerMonth = json_encode($revenuePerMonth); //converter para json (usado no gráfico (js))
+
+        return view('users.index', compact('orders', 'totalOrders', 'todayOrders', 'totalRevenue', 'todayRevenue', 'filterByStatus', 'filterByCustomer', 'filterByYearOrders', 'filterByYearRevenue', 'jsonOrdersPerMonth', 'jsonRevenuePerMonth'));
     }
 
     public function showUsersPaginated()

@@ -9,7 +9,7 @@
                     <i class="text-primary" data-feather="trending-up" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Vendas de Hoje</p>
-                        <h6 class="mb-0">$123</h6>
+                        <h6 class="mb-0">{{$todayOrders}}</h6>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     <i class="text-primary" data-feather="bar-chart-2" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Vendas Totais</p>
-                        <h6 class="mb-0">$1234</h6>
+                        <h6 class="mb-0">{{$totalOrders}}</h6>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <i class="text-primary" data-feather="bar-chart" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Receita de Hoje</p>
-                        <h6 class="mb-0">$234</h6>
+                        <h6 class="mb-0">{{$todayRevenue}}€</h6>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <i class="text-primary" data-feather="pie-chart" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Receita Total</p>
-                        <h6 class="mb-0">$13234</h6>
+                        <h6 class="mb-0">{{$totalRevenue}}€</h6>
                     </div>
                 </div>
             </div>
@@ -48,19 +48,55 @@
             <div class="col-sm-12 col-xl-6">
                 <div class="bg-white text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Worldwide Sales</h6>
-                        <a href="">Show All</a>
+                        <h6 class="mb-0">Numero de Vendas</h6>
+                        <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('dashboard.index') }}">
+                            {{-- Input hidden para mandar a variável para o javascript --}}
+                            <input type="hidden" id="jsonOrdersPerMonth" value="{{ $jsonOrdersPerMonth }}">
+                            <select class="form-select-sm " name="year" id="year"
+                                onChange="document.getElementById('formGraph').submit()">
+                                <option value="" {{ old('year', $filterByYearOrders) === '' ? 'selected' : '' }}>All
+                                </option>
+                                @for ($year = date('Y'); $year >= 2020; $year--)
+                                    <option value="{{ $year }}"
+                                        {{ old('year', $filterByYearOrders) == $year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                @endfor
+                            </select>
+                        </form>
                     </div>
-                    <canvas id="worldwide-sales"></canvas>
+                    <div class="card-body py-3">
+                        <div class="chart chart-sm">
+                            <canvas id="line-chart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12 col-xl-6">
                 <div class="bg-white text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Sales & Revenue</h6>
-                        <a href="">Show All</a>
+                        <h6 class="mb-0">Receita</h6>
+                        <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('dashboard.index') }}">
+                            {{-- Input hidden para mandar a variável para o javascript --}}
+                            <input type="hidden" id="jsonRevenuePerMonth" value="{{ $jsonRevenuePerMonth }}">
+                            <select class="form-select-sm " name="year" id="year"
+                                onChange="document.getElementById('formGraph').submit()">
+                                <option value="" {{ old('year', $filterByYearRevenue) === '' ? 'selected' : '' }}>All
+                                </option>
+                                @for ($year = date('Y'); $year >= 2020; $year--)
+                                    <option value="{{ $year }}"
+                                        {{ old('year', $filterByYearRevenue) == $year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                @endfor
+                            </select>
+                        </form>
                     </div>
-                    <canvas id="salse-revenue"></canvas>
+                    <div class="card-body py-3">
+                        <div class="chart chart-sm">
+                            <canvas id="line-chart2"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
