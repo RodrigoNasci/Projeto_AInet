@@ -19,6 +19,7 @@
 
     {{-- <link href="css/app.css" rel="stylesheet"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     @vite('resources/sass/admintemplate/app.scss')
 </head>
 
@@ -150,7 +151,7 @@
     {{-- <script src="js/app.js"></script> --}}
     @vite('resources/js/admintemplate/app.js')
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
             var gradient = ctx.createLinearGradient(0, 0, 0, 225);
@@ -374,7 +375,7 @@
                 defaultDate: defaultDate
             });
         });
-    </script>
+    </script> --}}
 
 </body>
 
