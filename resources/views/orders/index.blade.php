@@ -89,10 +89,13 @@
                             <form id="formGraph" method="GET" class="form" action="{{ route('orders.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="jsonClosedOrdersPerMonth" value="{{ $jsonClosedOrdersPerMonth }}">
-                                <select class="form-select-sm " name="year" onChange="document.getElementById('formGraph').submit()">
-                                    <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All</option>
+                                <select class="form-select-sm " name="year"
+                                    onChange="document.getElementById('formGraph').submit()">
+                                    <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
+                                    </option>
                                     @for ($year = date('Y'); $year >= 2020; $year--)
-                                        <option value="{{ $year }}" {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
+                                        <option value="{{ $year }}"
+                                            {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
                                             {{ $year }}
                                         </option>
                                     @endfor
@@ -114,17 +117,28 @@
                     <div class="card-header d-flex align-items-center justify-content-start">
                         <form id="formFilters" method="GET" class="form" action="{{ route('orders.index') }}">
 
-                            <select class="form-select-sm" name="status" onChange="document.getElementById('formFilters').submit()">
-                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os Estados</option>
-                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>Estado Fechado</option>
-                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Estado Pago</option>
-                                <option value="pending" {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente</option>
-                                <option value="canceled" {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado</option>
+                            <select class="form-select-sm" name="status"
+                                onChange="document.getElementById('formFilters').submit()">
+                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos
+                                    os Estados</option>
+                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                    Estado Fechado</option>
+                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
+                                    Estado Pago</option>
+                                <option value="pending"
+                                    {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente
+                                </option>
+                                <option value="canceled"
+                                    {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado
+                                </option>
                             </select>
 
-                            <input type="date" id="date" name="date" class="form-select-sm" value="{{ old('date', $filterByDate) }}" onChange="document.getElementById('formFilters').submit()">
+                            <input type="date" id="date" name="date" class="form-select-sm"
+                                value="{{ old('date', $filterByDate) }}"
+                                onChange="document.getElementById('formFilters').submit()">
 
-                            <input type="text" name="customer" class="form-select-sm rounded mr-0" placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}"/>
+                            <input type="text" name="customer" class="form-select-sm rounded mr-0"
+                                placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}" />
 
                             <button type="submit" class="btn m-0 p-1">
                                 <i class="bi bi-search"></i>
@@ -160,7 +174,10 @@
                                         @endif
                                     </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                                    <td class="d-none d-xl-table-cell">{{ $order->customer->user->name }}</td>
+                                    {{-- TODO --}}
+                                    <td class="d-none d-xl-table-cell">
+                                        {{ $order->customer->user->name ?? 'null' }}
+                                    </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
                                     <td>{{ $order->total_price }}</td>
                                     <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
