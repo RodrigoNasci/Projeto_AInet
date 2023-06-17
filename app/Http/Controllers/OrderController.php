@@ -57,9 +57,13 @@ class OrderController extends Controller
         //Paginação (tabela)
         $orders = $orderQuery->paginate(10);
 
-        //orders por mês (gráfico)
-        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->get();
-        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth); //converter para json (usado no gráfico (js))
+        //Array com o número de encomendas fechadas por mês
+        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->pluck('count', 'month')->toArray();
+        $closedOrdersPerMonth = array_replace(array_fill(1, 12, 0), $closedOrdersPerMonth);
+        $closedOrdersPerMonth = array_values($closedOrdersPerMonth);
+
+        //converter para json (usado no gráfico (js))
+        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth);
 
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
     }

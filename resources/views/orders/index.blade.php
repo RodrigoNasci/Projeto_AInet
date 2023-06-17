@@ -85,14 +85,17 @@
                 <div class="card flex-fill w-100">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title mb-0">Encomendas por mês</h5>
-                            <form id="formGraph" method="GET" class="form" action="{{ route('orders.index') }}">
+                            <h5 class="card-title mb-0">Encomendas fechadas por mês</h5>
+                            <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="jsonClosedOrdersPerMonth" value="{{ $jsonClosedOrdersPerMonth }}">
-                                <select class="form-select-sm " name="year" onChange="document.getElementById('formGraph').submit()">
-                                    <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All</option>
+                                <select class="form-select-sm " name="year" id="year"
+                                    onChange="document.getElementById('formGraph').submit()">
+                                    <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
+                                    </option>
                                     @for ($year = date('Y'); $year >= 2020; $year--)
-                                        <option value="{{ $year }}" {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
+                                        <option value="{{ $year }}"
+                                            {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
                                             {{ $year }}
                                         </option>
                                     @endfor
@@ -110,21 +113,32 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 w-100">
-                <div class="card flex-fill d-flex">
+                <div class="card flex-fill d-flex min-height">
                     <div class="card-header d-flex align-items-center justify-content-start">
-                        <form id="formFilters" method="GET" class="form" action="{{ route('orders.index') }}">
+                        <form id="formFilters" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
 
-                            <select class="form-select-sm" name="status" onChange="document.getElementById('formFilters').submit()">
-                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os Estados</option>
-                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>Estado Fechado</option>
-                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Estado Pago</option>
-                                <option value="pending" {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente</option>
-                                <option value="canceled" {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado</option>
+                            <select class="form-select-sm" name="status"
+                                onChange="document.getElementById('formFilters').submit()">
+                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos
+                                    os Estados</option>
+                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                    Estado Fechado</option>
+                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
+                                    Estado Pago</option>
+                                <option value="pending"
+                                    {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente
+                                </option>
+                                <option value="canceled"
+                                    {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado
+                                </option>
                             </select>
 
-                            <input type="date" id="date" name="date" class="form-select-sm" value="{{ old('date', $filterByDate) }}" onChange="document.getElementById('formFilters').submit()">
+                            <input type="date" id="date" name="date" class="form-select-sm"
+                                value="{{ old('date', $filterByDate) }}"
+                                onChange="document.getElementById('formFilters').submit()">
 
-                            <input type="text" name="customer" class="form-select-sm rounded mr-0" placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}"/>
+                            <input type="text" name="customer" class="form-select-sm rounded mr-0"
+                                placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}" />
 
                             <button type="submit" class="btn m-0 p-1">
                                 <i class="bi bi-search"></i>
@@ -136,31 +150,37 @@
                             <tr>
                                 <th>Estado</th>
                                 <th class="d-none d-xl-table-cell">ID cliente</th>
-                                {{-- <th class="d-none d-xl-table-cell">Nome cliente</th> --}}
+                                <th class="d-none d-xl-table-cell">Nome cliente</th>
                                 <th class="d-none d-xl-table-cell">Data</th>
                                 <th>Preço Total</th>
                                 <th class="d-none d-md-table-cell">Tipo Pagamento</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @if($orders->count() == 0)
+                                <tr>
+                                    <td colspan="6" class="text-center">Não existem encomendas</td>
+                                </tr>
+                            @endif
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>
-                                        @if ($order->status == 'closed')
-                                            <span class="badge bg-success">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'canceled')
-                                            <span class="badge bg-danger">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'paid')
-                                            <span class="badge bg-info">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'pending')
-                                            <span class="badge bg-warning">{{ $order->status }}</span>
-                                        @endif
+                                        @switch($order->status)
+                                            @case('closed')
+                                                <span class="badge bg-success">{{ $order->status }}</span> @break
+                                            @case('canceled')
+                                                <span class="badge bg-danger">{{ $order->status }}</span> @break
+                                            @case('paid')
+                                                <span class="badge bg-info">{{ $order->status }}</span> @break
+                                            @case('pending')
+                                                <span class="badge bg-warning">{{ $order->status }}</span> @break
+                                        @endswitch
                                     </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                                    {{-- <td class="d-none d-xl-table-cell">{{ $order->customer->user->name }}</td> --}}
+                                    {{-- TODO --}}
+                                    <td class="d-none d-xl-table-cell">
+                                        {{ $order->customer->user->name ?? 'null' }}
+                                    </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
                                     <td>{{ $order->total_price }}</td>
                                     <td class="d-none d-md-table-cell">{{ $order->payment_type }}</td>
