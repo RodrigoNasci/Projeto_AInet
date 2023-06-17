@@ -33,6 +33,12 @@ class OrderController extends Controller
         //Query para a tabela de encomendas
         $orderQuery = Order::query();
 
+        //Filtrar por cliente (tabela)
+        if ($filterByCustomer != ''){
+            $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
+            $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
+        }
+
         //Filtrar por status (tabela)
         if ($filterByStatus != ''){
             $orderQuery->where('status', 'LIKE' ,$filterByStatus);
@@ -43,12 +49,6 @@ class OrderController extends Controller
             $orderQuery->where('date', 'LIKE', $filterByDate);
         }
 
-        //Filtrar por cliente (tabela)
-        if ($filterByCustomer != ''){
-            $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
-            $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
-        }
-
         //Filtrar por ano (query para o gráfico)
         if ($filterByYear != '') {
             $closedOrdersPerMonthQuery->whereYear('date', $filterByYear);
@@ -57,9 +57,13 @@ class OrderController extends Controller
         //Paginação (tabela)
         $orders = $orderQuery->paginate(10);
 
-        //orders por mês (gráfico)
-        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->get();
-        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth); //converter para json (usado no gráfico (js))
+        //Array com o número de encomendas fechadas por mês
+        $closedOrdersPerMonth = $closedOrdersPerMonthQuery->pluck('count', 'month')->toArray();
+        $closedOrdersPerMonth = array_replace(array_fill(1, 12, 0), $closedOrdersPerMonth);
+        $closedOrdersPerMonth = array_values($closedOrdersPerMonth);
+
+        //converter para json (usado no gráfico (js))
+        $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth);
 
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
     }

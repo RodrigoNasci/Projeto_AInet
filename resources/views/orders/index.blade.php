@@ -85,11 +85,11 @@
                 <div class="card flex-fill w-100">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title mb-0">Encomendas por mês</h5>
-                            <form id="formGraph" method="GET" class="form" action="{{ route('orders.index') }}">
+                            <h5 class="card-title mb-0">Encomendas fechadas por mês</h5>
+                            <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="jsonClosedOrdersPerMonth" value="{{ $jsonClosedOrdersPerMonth }}">
-                                <select class="form-select-sm " name="year"
+                                <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
                                     <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
                                     </option>
@@ -113,9 +113,9 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 w-100">
-                <div class="card flex-fill d-flex">
+                <div class="card flex-fill d-flex min-height">
                     <div class="card-header d-flex align-items-center justify-content-start">
-                        <form id="formFilters" method="GET" class="form" action="{{ route('orders.index') }}">
+                        <form id="formFilters" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
 
                             <select class="form-select-sm" name="status"
                                 onChange="document.getElementById('formFilters').submit()">
@@ -157,21 +157,24 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($orders->count() == 0)
+                                <tr>
+                                    <td colspan="6" class="text-center">Não existem encomendas</td>
+                                </tr>
+                            @endif
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>
-                                        @if ($order->status == 'closed')
-                                            <span class="badge bg-success">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'canceled')
-                                            <span class="badge bg-danger">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'paid')
-                                            <span class="badge bg-info">{{ $order->status }}</span>
-                                        @endif
-                                        @if ($order->status == 'pending')
-                                            <span class="badge bg-warning">{{ $order->status }}</span>
-                                        @endif
+                                        @switch($order->status)
+                                            @case('closed')
+                                                <span class="badge bg-success">{{ $order->status }}</span> @break
+                                            @case('canceled')
+                                                <span class="badge bg-danger">{{ $order->status }}</span> @break
+                                            @case('paid')
+                                                <span class="badge bg-info">{{ $order->status }}</span> @break
+                                            @case('pending')
+                                                <span class="badge bg-warning">{{ $order->status }}</span> @break
+                                        @endswitch
                                     </td>
                                     <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
                                     {{-- TODO --}}

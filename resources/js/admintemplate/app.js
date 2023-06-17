@@ -2,12 +2,18 @@ import './adminkit';
 
 // Gráfico de encomendas
 document.addEventListener("DOMContentLoaded", function() {
-    // var jsonClosedOrdersPerMonth = {!! $jsonClosedOrdersPerMonth !!};
-    var jsonClosedOrdersPerMonth = JSON.parse(document.getElementById('jsonClosedOrdersPerMonth').value);
+    var orders = JSON.parse(document.getElementById('jsonClosedOrdersPerMonth').value);
 
-    var orders = jsonClosedOrdersPerMonth.map(function(item) {
-        return item.count;
-    });
+    //ver se o ano é o atual
+    var currentYear = new Date().getFullYear();
+    if (document.getElementById('year').value == currentYear) {
+        //remover os meses que ainda não passaram
+        var currentMonth = new Date().getMonth() + 1;
+
+        orders = orders.slice(0, currentMonth);
+    }
+
+    //console.log(orders);
 
     var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 225);
