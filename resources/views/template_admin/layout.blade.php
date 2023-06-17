@@ -36,8 +36,8 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item {{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('users.index') }}">
+                    <li class="sidebar-item {{ Route::currentRouteName() == 'dashboard.index' ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('dashboard.index') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
                                 class="align-middle">Dashboard</span>
                         </a>

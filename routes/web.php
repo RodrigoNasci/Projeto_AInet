@@ -78,6 +78,7 @@ Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('or
 
 
 Route::resource('users', UserController::class);
+Route::get('dashboard', [UserController::class, 'index'])->name('dashboard.index');
 Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy');
 
 Route::resource('customers', CustomerController::class);

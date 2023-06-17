@@ -71,7 +71,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Recent Sales</h6>
                 <div class="card-header d-flex align-items-center justify-content-start">
-                    <form id="formFilters" method="GET" class="form" action="{{ route('users.index') }}">
+                    <form id="formFilters" method="GET" class="form" action="{{ route('dashboard.index') }}">
 
                         <select class="form-select-sm" name="status"
                             onChange="document.getElementById('formFilters').submit()">
