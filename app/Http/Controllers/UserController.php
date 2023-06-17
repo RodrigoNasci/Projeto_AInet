@@ -69,12 +69,16 @@ class UserController extends Controller
         //Paginação (tabela)
         $orders = $orderQuery->orderBy('date', 'desc')->take(10)->get();
 
-        //orders por mês (gráfico)
-        $ordersPerMonth = $ordersPerMonthQuery->get();
+        //Array com o número de encomendas por mês
+        $ordersPerMonth = $ordersPerMonthQuery->pluck('count', 'month')->toArray();
+        $ordersPerMonth = array_replace(array_fill(1, 12, 0), $ordersPerMonth);
+        $ordersPerMonth = array_values($ordersPerMonth);
         $jsonOrdersPerMonth = json_encode($ordersPerMonth); //converter para json (usado no gráfico (js))
 
-        //orders por mês (gráfico)
-        $revenuePerMonth = $revenuePerMonthQuery->get();
+        //Array com o número de receita por mês
+        $revenuePerMonth = $revenuePerMonthQuery->pluck('count', 'month')->toArray();
+        $revenuePerMonth = array_replace(array_fill(1, 12, 0), $revenuePerMonth);
+        $revenuePerMonth = array_values($revenuePerMonth);
         $jsonRevenuePerMonth = json_encode($revenuePerMonth); //converter para json (usado no gráfico (js))
 
         return view('users.index', compact('orders', 'totalOrders', 'todayOrders', 'totalRevenue', 'todayRevenue', 'filterByStatus', 'filterByCustomer', 'filterByYearOrders', 'filterByYearRevenue', 'jsonOrdersPerMonth', 'jsonRevenuePerMonth'));
