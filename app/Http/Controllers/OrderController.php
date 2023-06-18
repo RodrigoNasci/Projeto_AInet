@@ -107,15 +107,14 @@ class OrderController extends Controller
         return $response;
     }
 
-    public function update(OrderRequest $request, Order $order): View {
-
-
+    public function update(OrderRequest $request, Order $order): RedirectResponse
+    {
         $order->update($request->all());
 
         // $url = route('orders.show', ['order' => $order]);
-        $htmlMessage = "Encomenda " . $order->id ." foi alterada com sucesso!";
+        $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
 
-        return view('orders.show', compact('order'))
+        return redirect()->route('orders.show', ['order' => $order])
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
     }

@@ -64,39 +64,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{-- <div class="col-md-5 mb-3">
-                                <label for="country">Country</label>
-                                <select name="pais" class="custom-select d-block w-100" id="country">
-                                    <option value="">Choose...</option>
-                                    <option>United States</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a valid country.
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="state">State</label>
-                                <select name="distrito" class="custom-select d-block w-100" id="state">
-                                    <option value="">Choose...</option>
-                                    <option>California</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="zip">Zip</label>
-                                <input name="codpostal" type="text" class="form-control" id="zip" placeholder=""
-                                    >
-                                <div class="invalid-feedback">
-                                    Zip code.
-                                </div>
-                            </div> --}}
-
                             <div class="mb-3 ">
                                 <label for="email">Notas <span class="text-muted">(Optional)</span></label>
-                                <input name="notes" type="text"
+                                <input name="notes" type="text" value="{{ old('notes') }}"
                                     class="form-control @error('notes') is-invalid @enderror" id="notes" placeholder="">
                                 @error('notes')
                                     <div class="invalid-feedback">
@@ -105,9 +75,7 @@
                                 @enderror
                             </div>
                         </div>
-
                         <hr class="mb-4">
-
                         <div class="row">
                             <h4 class="mb-3">Payment</h4>
                             <div class="d-block my-3 form-control @error('payment_type') is-invalid @enderror">
