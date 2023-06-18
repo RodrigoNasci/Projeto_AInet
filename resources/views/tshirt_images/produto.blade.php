@@ -22,7 +22,7 @@
                     <p class="lead">{{ $tshirt_image->description }}</p>
                     <form method="POST" action="{{ route('cart.add', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
-                        @include('tshirt_images.shared.fields')
+                        @include('tshirt_images.shared.fieldsProduto')
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="addToCart">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart

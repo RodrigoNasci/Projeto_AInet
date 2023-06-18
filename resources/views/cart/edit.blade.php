@@ -23,7 +23,7 @@
                     <form method="POST" action="{{ route('cart.update', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
                         @method('PUT')
-                        @include('tshirt_images.shared.fields')
+                        @include('tshirt_images.shared.fieldsProduto')
                         <input type="hidden" name="item" value="{{ json_encode($orderItem) }}">
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="updateCartItem">
                             <i class="bi-cart-fill me-1"></i>

@@ -14,22 +14,15 @@
             <div class="col-12 col-lg-6">
                 <div class="card">
                     <form id="form_tshirt_images" novalidate class="needs-validation" method="POST"
-                        action="{{ route('tshirt_images.store') }}" enctype="multipart/form-data">
+                        action="{{ route('tshirt_images.update', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
-                        @include('tshirt_images.shared.fields', ['readonlyData' => true])
+                        @method('PUT')
+                        @include('tshirt_images.shared.fields')
                         <div class="card-body text-left">
                             <div class="mb-3">
-                                <a href="{{ route('tshirt_images.edit', ['tshirt_image' => $tshirt_image]) }}"
-                                    class="btn btn-primary">Editar
-                                </a>
-                                <form method="POST"
-                                    action="{{ route('tshirt_images.destroy', ['tshirt_image' => $tshirt_image]) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" name="delete" class="btn btn-danger">
-                                        Eliminar
-                                    </button>
-                                </form>
+                                <button type="submit" class="btn btn-primary" name="ok">Guardar Alterações</button>
+                                <a href="{{ route('tshirt_images.show', ['tshirt_image' => $tshirt_image]) }}"
+                                    class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
                     </form>

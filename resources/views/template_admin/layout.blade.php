@@ -142,6 +142,12 @@
             </nav>
 
             <main class="content">
+                @if (session('alert-msg'))
+                    @include('shared.messages')
+                @endif
+                @if ($errors->any())
+                    @include('shared.alertValidation')
+                @endif
                 @yield('main')
             </main>
 

@@ -23,7 +23,6 @@ use App\Http\Controllers\DashboardController;
 */
 
 
-
 Route::view('teste', 'template_admin.layout');
 
 Route::view('home', 'home');

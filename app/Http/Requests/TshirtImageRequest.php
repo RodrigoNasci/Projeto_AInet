@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TshirtImageRequest extends FormRequest
 {
@@ -28,7 +29,13 @@ class TshirtImageRequest extends FormRequest
             'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'file_image' =>  'required|image|max:4096',
+            'file_image' => [
+                Rule::requiredIf(function () {
+                    return $this->isMethod('post');
+                }),
+                'image',
+                'max:4096',
+            ],
         ];
     }
 

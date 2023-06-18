@@ -58,11 +58,17 @@ class TshirtImageController extends Controller
         return view('tshirt_images.catalogo', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
     }
 
+    public function edit(TshirtImage $tshirt_image)
+    {
+        $categories = Category::all();
+        return view('tshirt_images.edit', compact('tshirt_image', 'categories'));
+    }
+
 
     public function show(TshirtImage $tshirt_image): View
     {
-        $colors = Color::all();
-        return view('tshirt_images.show', compact('tshirt_image', 'colors'));
+        $categories = Category::all();
+        return view('tshirt_images.show', compact('tshirt_image', 'categories'));
     }
 
     public function showProduto(TshirtImage $tshirt_image): View
@@ -82,6 +88,17 @@ class TshirtImageController extends Controller
         // Porque se não as relações dão null.
         $tshirt_images = $request->user()->customer->tshirtImages;
         return view('tshirt_images.minhas')->with('tshirt_images', $tshirt_images);
+    }
+
+    public function update(TshirtImageRequest $request, TshirtImage $tshirt_image): RedirectResponse
+    {
+        $tshirt_image->update($request->validated());
+        $url = route('tshirt_images.show', ['tshirt_image' => $tshirt_image]);
+        $htmlMessage = "Imagem de Tshirt <a href='$url'>#{$tshirt_image->id}</a>
+                        <strong>\"{$tshirt_image->name}\"</strong> foi alterada com sucesso!";
+        return redirect()->route('tshirt_images.index')
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
     }
 
     public function store(TshirtImageRequest $request): RedirectResponse
@@ -107,5 +124,9 @@ class TshirtImageController extends Controller
         return redirect()->route('tshirt_images.minhas')
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
+    }
+
+    public function destroy()
+    {
     }
 }
