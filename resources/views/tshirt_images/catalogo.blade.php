@@ -1,6 +1,7 @@
 @extends('template.layout')
 
 @section('main')
+<div class="p-0 m-0">
     <header class="py-5 header_background text-center p-0 m-0">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-left text-white">
@@ -46,24 +47,18 @@
                         </ul>
                     </li>
                     <li class="dropdown li_filter input_group form-outline">
-                        <a class="dropdown-toggle btn dropdown-btn" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Categoria</a>
-                        <ul class="dropdown-menu dropdown_ul">
-                            <div class="input-group rounded div_cat_option">
-                                <button type="submit" class="btn category_option" value=""> Todas as
-                                    Categorias</button>
-                            </div>
+                        <select class="form-select" name="category" onChange="document.getElementById('formFilters').submit()">
+                            <option value="" {{ old('category', $filterByCategory) === '' ? 'selected' : '' }}>Todos as Categorias</option>
+
                             @foreach ($categories as $category)
                                 <div class="input-group rounded div_cat_option">
                                     <button name="category" value="{{ $category->name }}" type="submit"
                                         class="btn category_option">{{ $category->name }}</button>
                                 </div>
                             @endforeach
-                        </ul>
+                        </select>
                     </li>
                 </ul>
-
-
             </div>
         </form>
     </section>
@@ -113,4 +108,5 @@
             </div>
         </div>
     </section>
+</div>
 @endsection

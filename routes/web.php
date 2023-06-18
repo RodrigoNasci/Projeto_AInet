@@ -26,6 +26,8 @@ use App\Http\Controllers\DashboardController;
 
 Route::view('teste', 'template_admin.layout');
 
+Route::view('home', 'home');
+
 Auth::routes();
 
 //Route::view('/', 'home')->name('root');

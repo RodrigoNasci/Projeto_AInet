@@ -128,19 +128,14 @@
         </div>
     </nav>
     <main>
-        <div class="container-fluid p-0 m-0">
             @if (session('alert-msg'))
                 @include('shared.messages')
             @endif
             @if ($errors->any())
                 @include('shared.alertValidation')
             @endif
-            <br>
             @yield('subtitulo')
-            <div class="p-0 m-0">
-                @yield('main')
-            </div>
-        </div>
+            @yield('main')
     </main>
     <footer class="py-2 bg-light mt-auto" style="bottom:0; width:100%;">
         <div class="container-fluid px-4">

@@ -56,7 +56,7 @@ class OrderController extends Controller
         }
 
         //Paginação (tabela)
-        $orders = $orderQuery->paginate(10);
+        $orders = $orderQuery->paginate(15);
 
         //Array com o número de encomendas fechadas por mês
         $closedOrdersPerMonth = $closedOrdersPerMonthQuery->pluck('count', 'month')->toArray();

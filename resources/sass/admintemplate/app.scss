@@ -24,6 +24,31 @@
     border: 1px solid #ced4da;
 }
 
-.min-height {
-    min-height: 80vh;
+
+.fatura-preview{
+    height: 80vh;
+    width: 90%;
+    border: 2px solid #000;
+}
+
+//Image preview
+.image-container {
+    position: relative;
+    display: inline-block;
+  }
+
+.overlay-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    width: 40%;
+    left: 30%;
+    top: 20%;
+}
+
+.pdf-icon {
+    font-size:18px;
+    color:red;
+    margin-right:4px;
 }

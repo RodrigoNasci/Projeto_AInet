@@ -113,37 +113,40 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 w-100">
-                <div class="card flex-fill d-flex min-height">
-                    <div class="card-header d-flex align-items-center justify-content-start">
-                        <form id="formFilters" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
+                <div class="card flex-fill d-flex">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="card-title mb-0">Encomendas</h5>
+                        <div>
+                            <form id="formFilters" method="GET" class="form prevent-scroll" action="{{ route('orders.index') }}">
 
-                            <select class="form-select-sm" name="status"
-                                onChange="document.getElementById('formFilters').submit()">
-                                <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos
-                                    os Estados</option>
-                                <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
-                                    Estado Fechado</option>
-                                <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
-                                    Estado Pago</option>
-                                <option value="pending"
-                                    {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente
-                                </option>
-                                <option value="canceled"
-                                    {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado
-                                </option>
-                            </select>
+                                <select class="form-select-sm" name="status"
+                                    onChange="document.getElementById('formFilters').submit()">
+                                    <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos
+                                        os Estados</option>
+                                    <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                        Estado Fechado</option>
+                                    <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
+                                        Estado Pago</option>
+                                    <option value="pending"
+                                        {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado Pendente
+                                    </option>
+                                    <option value="canceled"
+                                        {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado Cancelado
+                                    </option>
+                                </select>
 
-                            <input type="date" id="date" name="date" class="form-select-sm"
-                                value="{{ old('date', $filterByDate) }}"
-                                onChange="document.getElementById('formFilters').submit()">
+                                <input type="date" id="date" name="date" class="form-select-sm"
+                                    value="{{ old('date', $filterByDate) }}"
+                                    onChange="document.getElementById('formFilters').submit()">
 
-                            <input type="text" name="customer" class="form-select-sm rounded mr-0"
-                                placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}" />
+                                <input type="text" name="customer" class="form-select-sm rounded mr-0"
+                                    placeholder="Pesquisar por cliente" value="{{ old('customer', $filterByCustomer) }}" />
 
-                            <button type="submit" class="btn m-0 p-1">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
+                                <button type="submit" class="btn m-0 p-1">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <table class="table table-hover my-0">
                         <thead>
