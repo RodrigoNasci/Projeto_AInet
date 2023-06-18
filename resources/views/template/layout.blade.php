@@ -17,7 +17,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 b-0">
         <div class="container-fluid px-3 px-lg-2 mx-3">
-            <a class="navbar-brand" href="{{ route('tshirt_images.index') }}">ImagineShirt</a>
+            <a class="navbar-brand" href="{{ route('tshirt_images.catalogo') }}">ImagineShirt</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>

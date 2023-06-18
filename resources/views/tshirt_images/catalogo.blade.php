@@ -11,7 +11,7 @@
     </header>
 
     <section class="py-2 filter-section m-0 p-0">
-        <form method="GET" class="form" action="{{ route('tshirt_images.index') }}">
+        <form method="GET" class="form" action="{{ route('tshirt_images.catalogo') }}">
             <div class="container px-4 px-lg-5 mt-5 filter_container">
                 <ul class="me-auto mb-2 mb-lg-0 ms-lg-4 ul_filters">
                     <li class="dropdown li_filter">
@@ -55,8 +55,8 @@
                             </div>
                             @foreach ($categories as $category)
                                 <div class="input-group rounded div_cat_option">
-                                    <button  name="category" value="{{ $category->name }}" type="submit" class="btn category_option"
-                                       >{{ $category->name }}</button>
+                                    <button name="category" value="{{ $category->name }}" type="submit"
+                                        class="btn category_option">{{ $category->name }}</button>
                                 </div>
                             @endforeach
                         </ul>
@@ -77,8 +77,10 @@
                             <div class="card-height">
                                 <!-- Product image-->
                                 <div class="image-container">
-                                    <img class="card-img-top max-height-img" id="tshirt-color" src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
-                                    <img class="card-img-top max-height-img overlay-image" src="{{ $tshirt_image->fullImageUrl }}" alt="Overlay Image" />
+                                    <img class="card-img-top max-height-img" id="tshirt-color"
+                                        src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
+                                    <img class="card-img-top max-height-img overlay-image"
+                                        src="{{ $tshirt_image->fullImageUrl }}" alt="Overlay Image" />
                                 </div>
                             </div>
                             <!-- Product details-->

@@ -46,12 +46,12 @@ class UserController extends Controller
         $orderQuery = Order::query();
 
         //Filtrar por status (tabela)
-        if ($filterByStatus != ''){
-            $orderQuery->where('status', 'LIKE' ,$filterByStatus);
+        if ($filterByStatus != '') {
+            $orderQuery->where('status', 'LIKE', $filterByStatus);
         }
 
         //Filtrar por cliente (tabela)
-        if ($filterByCustomer != ''){
+        if ($filterByCustomer != '') {
             $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
             $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
         }
@@ -86,7 +86,7 @@ class UserController extends Controller
 
     public function showUsersPaginated()
     {
-        return UserResource::collection(User::paginate(20)->where('deleted_at','IS', null));
+        return UserResource::collection(User::paginate(20)->where('deleted_at', 'IS', null));
     }
 
     /**
@@ -125,7 +125,7 @@ class UserController extends Controller
 
             $url = route('users.show', ['user' => $user]);
             $htmlMessage = "User <a href='$url'>#{$user->id}</a> <strong>\"{$user->name}\"</strong> foi criado com sucesso!";
-            return redirect()->route('tshirt_images.index')
+            return redirect()->route('tshirt_images.catalogo')
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
         } catch (\Exception $error) {
@@ -137,7 +137,7 @@ class UserController extends Controller
         return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);
-}
+    }
 
     /**
      * Update the specified resource in storage.
@@ -175,15 +175,15 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        if($user->customer){
+        if ($user->customer) {
             $customer = $user->customer;
             $customer->delete();
         }
         $user->delete();
         $htmlMessage = "User #{$user->id} <strong>\"{$user->name}\"</strong> foi apagado com sucesso!";
-        return redirect()->route('tshirt_images.index')
-                ->with('alert-msg', $htmlMessage)
-                ->with('alert-type', 'success');
+        return redirect()->route('tshirt_images.catalogo')
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
     }
 
     public function destroy_foto(User $user): RedirectResponse

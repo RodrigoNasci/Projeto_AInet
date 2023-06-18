@@ -24,7 +24,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer):View
+    public function show(Customer $customer): View
     {
         $customer->load('user');
         return view('customers.show', compact('customer'));
@@ -90,9 +90,9 @@ class CustomerController extends Controller
         $customer->delete();
         $user->delete();
         $htmlMessage = "User #{$customer->id} <strong>\"{$customer->user->name}\"</strong> foi apagado com sucesso!";
-        return redirect()->route('tshirt_images.index')
-                ->with('alert-msg', $htmlMessage)
-                ->with('alert-type', 'success');
+        return redirect()->route('tshirt_images.catalogo')
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
     }
 
     public function destroy_foto(Customer $customer): RedirectResponse

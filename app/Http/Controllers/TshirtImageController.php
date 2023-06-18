@@ -17,6 +17,12 @@ class TshirtImageController extends Controller
 {
     public function index(Request $request): View
     {
+        // TODO
+        return view('nada');
+    }
+
+    public function catalogo(Request $request): View
+    {
         $categories = Category::all();
 
         $filterByCategory = $request->category ?? '';
@@ -45,7 +51,7 @@ class TshirtImageController extends Controller
         // Caso seja necessário fazer “eager loading” dos relacionamentos (em princípio não é necessário)
         //$tshirt_images = $tshirt_images->with('nomeDaRelação', 'nomeDaRelação', '...')->paginate(10);
 
-        return view('tshirt_images.index', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
+        return view('tshirt_images.catalogo', compact('tshirt_images', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
     }
 
 

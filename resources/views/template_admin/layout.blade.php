@@ -51,7 +51,7 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-sign-in.html">
+                        <a href="#" class="sidebar-link" href="pages-sign-in.html">
                             <i class="align-middle" data-feather="image"></i> <span class="align-middle">Imagens
                                 T-Shirt</span>
                         </a>
@@ -93,8 +93,9 @@
 
                     <li class="sidebar-item" style="padding-top: 70%">
                         <hr>
-                        <a class="sidebar-link" href="{{ route('tshirt_images.index') }}">
-                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à Loja</span>
+                        <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
+                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à
+                                Loja</span>
                         </a>
                     </li>
             </div>
@@ -121,8 +122,9 @@
                                     alt="" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}"><i class="align-middle me-1"
-                                        data-feather="user"></i> Profile</a>        <!-- Profile route -->
+                                <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}"><i
+                                        class="align-middle me-1" data-feather="user"></i> Profile</a>
+                                <!-- Profile route -->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -138,7 +140,7 @@
             </nav>
 
             <main class="content">
-                 @yield('main')
+                @yield('main')
             </main>
 
             <footer class="footer">
@@ -146,7 +148,8 @@
                     <div class="row text-muted">
                         <div class="col-6 text-start">
                             <p class="mb-0">
-                                <a class="text-muted" href="#"><strong>Politécnico de Leiria 2023</strong></a> &copy;
+                                <a class="text-muted" href="#"><strong>Politécnico de Leiria 2023</strong></a>
+                                &copy;
                             </p>
                         </div>
                     </div>
