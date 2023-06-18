@@ -93,6 +93,12 @@ class OrderController extends Controller
         if (!File::exists($path)) {
             abort(404);
         }
-        return response()->file($path);
+
+        cache()->forget($path);
+        $response = response()->file($path);
+        $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        return $response;
     }
 }
