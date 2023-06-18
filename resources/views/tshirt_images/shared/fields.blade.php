@@ -2,7 +2,7 @@
     $disabledStr = $readonlyData ?? false ? 'disabled' : '';
 @endphp
 <div class="card-header">
-    <h5 class="card-title mb-0">Nome</h5>
+    <h5 class="card-title">Nome</h5>
 </div>
 <div class="card-body">
     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName"
@@ -15,7 +15,7 @@
 </div>
 
 <div class="card-header">
-    <h5 class="card-title mb-0">Descrição</h5>
+    <h5 class="card-title">Descrição</h5>
 </div>
 <div class="card-body">
     <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="inputDescription"
@@ -28,7 +28,7 @@
 </div>
 
 <div class="card-header">
-    <h5 class="card-title mb-0">Categoria</h5>
+    <h5 class="card-title">Categoria</h5>
 </div>
 <div class="card-body">
     <select class="form-select mb-3 @error('category_id') is-invalid @enderror" name="category_id" id="category"

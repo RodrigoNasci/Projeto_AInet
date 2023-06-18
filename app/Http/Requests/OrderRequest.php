@@ -21,7 +21,12 @@ class OrderRequest extends FormRequest
      */
     public function rules(): array
     {
+        if($this->isMethod('put')){
+            return ['status' => 'sometimes|in:pending,paid,canceled,closed'];
+        }
+
         return [
+            'status' => 'sometimes|in:pending,paid,canceled,closed',
             'notes' => 'nullable|string|max:255',
             'nif' => 'required|digits:9',
             'address' => 'required|string|max:60',
@@ -49,6 +54,7 @@ class OrderRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'status.in' => 'O campo "Estado" deve ser um dos seguintes: pending, paid, canceled, closed.',
             'notes.max' => 'O campo "Notas" não pode ter mais de 255 caracteres.',
             'notes.string' => 'O campo "Notas" deve ser uma string',
             'nif.digits' => 'O campo "NIF" deve ter 9 dígitos.',

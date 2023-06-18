@@ -81,15 +81,18 @@
                     <tbody>
                         <tr>
                             <td>Estado da encomenda:</td>
-
+                            <form method="POST" action="{{ route('orders.update', ['order' => $order]) }}" class="needs-validation" novalidate>
+                                @csrf
+                                @method('PUT')
                                 <td class="d-none d-xl-table-cell">
-                                    @include('orders.shared.fields', ['readonlyData' => true])
+                                    @include('orders.shared.fields', ['readonlyData' => false])
                                 </td>
                                 <td>
-                                    <a href="{{ route('orders.edit', ['order' => $order]) }}" class="btn btn-primary btn-sm">
-                                        Editar
-                                    </a>
-                                </td>
+                                    <button type="submit" class="btn btn-primary btn-sm"> Confirmar</button>
+                                </form>
+                                    <a href="{{ route('orders.show', ['order' => $order]) }}" type="submit" class="btn btn-danger btn-sm">Cancelar</a>
+                            </td>
+
                         </tr>
 
                             <tr>

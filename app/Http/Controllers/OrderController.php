@@ -6,8 +6,8 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use App\Http\Requests\OrderRequest;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -74,6 +74,11 @@ class OrderController extends Controller
         return view('orders.show', compact('order'));
     }
 
+    public function edit(Order $order): View
+    {
+        return view('orders.edit', compact('order'));
+    }
+
     public function minhasEncomendas(Request $request): View
     {
         $orders = $request->user()->customer->orders;
@@ -100,5 +105,18 @@ class OrderController extends Controller
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', '0');
         return $response;
+    }
+
+    public function update(OrderRequest $request, Order $order): View {
+
+
+        $order->update($request->all());
+
+        // $url = route('orders.show', ['order' => $order]);
+        $htmlMessage = "Encomenda " . $order->id ." foi alterada com sucesso!";
+
+        return view('orders.show', compact('order'))
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', 'success');
     }
 }
