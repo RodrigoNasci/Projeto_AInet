@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class OrderController extends Controller
 {
@@ -34,18 +35,18 @@ class OrderController extends Controller
         $orderQuery = Order::query();
 
         //Filtrar por cliente (tabela)
-        if ($filterByCustomer != ''){
+        if ($filterByCustomer != '') {
             $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
             $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
         }
 
         //Filtrar por status (tabela)
-        if ($filterByStatus != ''){
-            $orderQuery->where('status', 'LIKE' ,$filterByStatus);
+        if ($filterByStatus != '') {
+            $orderQuery->where('status', 'LIKE', $filterByStatus);
         }
 
         //Filtrar por data (tabela)
-        if ($filterByDate != ''){
+        if ($filterByDate != '') {
             $orderQuery->where('date', 'LIKE', $filterByDate);
         }
 
@@ -77,5 +78,15 @@ class OrderController extends Controller
     {
         $orders = $request->user()->customer->orders;
         return view('orders.minhas')->with('orders', $orders);
+    }
+
+    public function getFatura(Request $request)
+    {
+        $receipt_url = $request->input('receipt_url');
+        $path = storage_path('app/pdf_receipts/' . $receipt_url);
+        if (!$receipt_url || !File::exists($path)) {
+            abort(404);
+        }
+        return response()->file($path);
     }
 }

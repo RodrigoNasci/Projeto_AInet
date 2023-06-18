@@ -44,7 +44,11 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
+route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
+
 Route::resource('orders', OrderController::class);
+
+
 
 // Vai para a página de edição do item do carrinho de compras
 //Route::get('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
