@@ -1,20 +1,19 @@
 @extends('template_admin.layout')
 
 @section('main')
+    <div class="container-fluid p-0">
+        <div class="row mb-2">
+            <a href="javascript:void(0);" onclick="javascript:history.back();">
+                <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
+            </a>
+        </div>
 
-<div class="container-fluid p-0">
+        <div class="row">
+            <h1 class="h3 mb-3"><strong>Detalhes</strong> Encomenda Nº <b> {{ str_pad($order->id, 2, '0', STR_PAD_LEFT) }}
+                </b> </h1>
+        </div>
 
-    <div class="row mb-2">
-        <a href="javascript:void(0);" onclick="javascript:history.back();">
-            <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
-        </a>
-    </div>
-
-    <div class="row">
-        <h1 class="h3 mb-3"><strong>Detalhes</strong> Encomenda Nº <b> {{ str_pad($order->id, 2, '0', STR_PAD_LEFT) }} </b> </h1>
-    </div>
-
-     {{-- <div class="row">
+        {{-- <div class="row">
         {{-- <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
             <div class="card flex-fill w-100">
                 <div class="card-header">
@@ -73,74 +72,81 @@
         </div>
     </div> --}}
 
-    <div class="row">
-        <div class="col-12 col-lg-8 col-xxl-9 d-flex w-100">
-            <div class="card flex-fill">
-                {{-- <div class="card-header">
+        <div class="row">
+            <div class="col-12 col-lg-8 col-xxl-9 d-flex w-100">
+                <div class="card flex-fill">
+                    {{-- <div class="card-header">
                     <h5 class="card-title mb-0">Informações</h5>
                 </div>
-                <hr>--}}
-                <table class="table table-hover my-0 mt-0 text-dark">
-                    <tbody>
-                        <tr>
-                            <td>Estado da encomenda:</td>
-                            <td class="d-none d-xl-table-cell">{{ $order->status }}</td>
-                        </tr>
+                <hr> --}}
+                    <table class="table table-hover my-0 mt-0 text-dark">
+                        <tbody>
+                            <tr>
+                                <td>Estado da encomenda:</td>
+                                <td class="d-none d-xl-table-cell">{{ $order->status }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>ID do cliente: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
-                        </tr>
+                            <tr>
+                                <td>ID do cliente: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->customer_id }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Nome do cliente: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->customer->user->name ?? 'null' }}</td>
-                        </tr>
+                            <tr>
+                                <td>Nome do cliente: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->customer->user->name ?? 'null' }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Data da encomenda: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
-                        </tr>
+                            <tr>
+                                <td>Data da encomenda: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Notas sobre a encomenda: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->notes ?? '-'}}</td>
-                        </tr>
+                            <tr>
+                                <td>Notas sobre a encomenda: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->notes ?? '-' }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>NIF:</td>
-                            <td class="d-none d-xl-table-cell">{{ $order->nif }}</td>
-                        </tr>
+                            <tr>
+                                <td>NIF:</td>
+                                <td class="d-none d-xl-table-cell">{{ $order->nif }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Endereço de envio: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->address }}</td>
-                        </tr>
+                            <tr>
+                                <td>Endereço de envio: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->address }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Tipo de pagamento: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->payment_type }}</td>
-                        </tr>
+                            <tr>
+                                <td>Tipo de pagamento: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->payment_type }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Referência de pagamento: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->payment_ref }}</td>
-                        </tr>
+                            <tr>
+                                <td>Referência de pagamento: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->payment_ref }}</td>
+                            </tr>
 
-                        <tr>
-                            <td>Preço Total: </td>
-                            <td class="d-none d-xl-table-cell">{{ $order->total_price }} €</td>
-                        </tr>
+                            <tr>
+                                <td>Preço Total: </td>
+                                <td class="d-none d-xl-table-cell">{{ $order->total_price }} €</td>
+                            </tr>
 
-                        <tr>
-                            <td><i class="fa fa-file-pdf-o pdf-icon"></i> Fatura</td>
-                            <td class="d-none d-xl-table-cell">{{ $order->receipt_url ?? '-' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <tr>
+                                <td><i class="fa fa-file-pdf-o pdf-icon"></i> Fatura</td>
+                                <td class="d-none d-xl-table-cell">
+                                    @if (isset($order->receipt_url))
+                                        <a
+                                            href="{{ route('orders.fatura', ['receipt_url' => $order->receipt_url]) }}">{{ $order->receipt_url }}</a>
+                                    @else
+                                        Sem fatura
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        {{-- <div class="col-12 col-lg-4 col-xxl-3 d-flex">
+            {{-- <div class="col-12 col-lg-4 col-xxl-3 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
 
@@ -153,8 +159,7 @@
                 </div>
             </div>
         </div> --}}
+        </div>
+
     </div>
-
-</div>
-
 @endsection

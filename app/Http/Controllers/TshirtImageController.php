@@ -17,8 +17,12 @@ class TshirtImageController extends Controller
 {
     public function index(Request $request): View
     {
-        // TODO
-        return view('nada');
+        // Apenas imagens que fazem parte do catálogo da loja (não são de clientes)
+        $tshirtImageQuery = TshirtImage::query()->whereNull('customer_id');
+
+        $tshirt_images = $tshirtImageQuery->paginate(12);
+
+        return view('tshirt_images.index', compact('tshirt_images'));
     }
 
     public function catalogo(Request $request): View
@@ -59,6 +63,12 @@ class TshirtImageController extends Controller
     {
         $colors = Color::all();
         return view('tshirt_images.show', compact('tshirt_image', 'colors'));
+    }
+
+    public function showProduto(TshirtImage $tshirt_image): View
+    {
+        $colors = Color::all();
+        return view('tshirt_images.produto', compact('tshirt_image', 'colors'));
     }
 
     public function minhasTshirtImages(Request $request): View

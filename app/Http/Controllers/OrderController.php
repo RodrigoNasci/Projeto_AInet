@@ -82,9 +82,15 @@ class OrderController extends Controller
 
     public function getFatura(Request $request)
     {
-        $receipt_url = $request->input('receipt_url');
+        $receipt_url = $request->receipt_url;
+        // Verifica se existe o nome do ficheiro na base de dados
+        if ($receipt_url == null) {
+            abort(404);
+        }
+
         $path = storage_path('app/pdf_receipts/' . $receipt_url);
-        if (!$receipt_url || !File::exists($path)) {
+        // Verifica se o ficheiro existe na pasta storage/app/pdf_receipts
+        if (!File::exists($path)) {
             abort(404);
         }
         return response()->file($path);

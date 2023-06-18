@@ -51,8 +51,8 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link" href="pages-sign-in.html">
+                    <li class="sidebar-item {{ Route::currentRouteName() == 'tshirt_images.index' ? 'active' : '' }}">
+                        <a href="{{ route('tshirt_images.index') }}" class="sidebar-link" href="pages-sign-in.html">
                             <i class="align-middle" data-feather="image"></i> <span class="align-middle">Imagens
                                 T-Shirt</span>
                         </a>
@@ -131,7 +131,8 @@
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sair
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </div>

@@ -45,14 +45,18 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
     ->name('tshirt_images.minhas')
     ->middleware('auth');
 
+// Rota para mostrar o catálogo de imagens
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
+
+// Rota para mostrar cada preview de imagem e opção para adicionar ao carrinho
+Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto');
 
 Route::resource('tshirt_images', TshirtImageController::class);
 
+// Rota para mostrar o pdf relativo a uma encomenda (fatura)
 route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
 
 Route::resource('orders', OrderController::class);
-
 
 
 // Vai para a página de edição do item do carrinho de compras
