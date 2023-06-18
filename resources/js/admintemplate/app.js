@@ -1,7 +1,7 @@
 import './adminkit';
 
 // Gráfico de encomendas
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var orders = JSON.parse(document.getElementById('jsonClosedOrdersPerMonth').value);
 
     //ver se o ano é o atual
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var orders = JSON.parse(document.getElementById('jsonOrdersPerMonth').value);
 
     //ver se o ano é o atual
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var orders = JSON.parse(document.getElementById('jsonRevenuePerMonth').value);
 
     //ver se o ano é o atual
@@ -203,3 +203,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+// Tshirts mais vendidas
+// TODO

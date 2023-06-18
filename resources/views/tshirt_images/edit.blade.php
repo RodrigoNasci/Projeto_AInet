@@ -2,8 +2,16 @@
 
 @section('main')
     <div class="container-fluid p-0">
-        <div class="mb-3">
-            <h1 class="h3 d-inline align-middle">Imagem - T-Shirt</h1>
+        <div class="row mb-2">
+            <a href="javascript:void(0);" onclick="javascript:history.back();">
+                <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="row">
+            <h1 class="h3 mb-3"><strong>Editar</strong> Imagem T-Shirt Nº <b>
+                    {{ str_pad($tshirt_image->id, 2, '0', STR_PAD_LEFT) }}
+                </b> </h1>
         </div>
         <div class="row">
             <div class="col-12 col-md-6">
