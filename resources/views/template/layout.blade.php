@@ -91,7 +91,7 @@
                                         <a class="dropdown-item"
                                             href="{{ route('customers.show', ['customer' => Auth::user()->customer]) }}">Perfil</a>
                                     </li>
-                                @else
+                                @elseif ((Auth::user()->user_type ?? '') == 'A')
                                     <li>
                                         <a class="dropdown-item"
                                             href="{{ route('users.show', ['user' => Auth::user()]) }}">Perfil</a>

@@ -58,7 +58,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" {{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}>
                         <a class="sidebar-link" href="pages-sign-up.html">
                             <i class="align-middle" data-feather="grid"></i> <span
                                 class="align-middle">Categorias</span>
@@ -66,9 +66,15 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                        <a class="sidebar-link" href="{{ route('users.index') }}">
                             <i class="align-middle" data-feather="user-plus"></i> <span
                                 class="align-middle">Pessoal</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="pages-blank.html">
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
                         </a>
                     </li>
 
@@ -83,12 +89,6 @@
                         <a class="sidebar-link" href="pages-blank.html">
                             <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cores
                                 T-Shirt</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
                         </a>
                     </li>
 

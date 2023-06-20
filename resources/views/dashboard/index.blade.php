@@ -158,7 +158,7 @@
                                         <span class="badge bg-warning">{{ $order->status }}</span>
                                     @endif
                                 </td>
-                                <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                <td><a class="btn btn-sm btn-primary" href="">Detalhes</a></td>
                             </tr>
                         @endforeach
                     </tbody>
