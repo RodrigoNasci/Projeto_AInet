@@ -24,7 +24,7 @@ class UserController extends Controller
         $filterByUser = $request->user ?? '';
 
         //Query para a tabela de users
-        $userQuery = User::query();
+        $userQuery = User::query()->where('user_type', 'NOT LIKE', 'C');
 
         //Filtrar por tipo
         if ($filterByType != '') {
@@ -37,7 +37,7 @@ class UserController extends Controller
         }
 
         //Paginação (tabela)
-        $users = $userQuery->orderBy('user_type', 'asc')->orderBy('name', 'asc')->paginate(15);
+        $users = $userQuery->orderBy('user_type', 'desc')->orderBy('name', 'asc')->paginate(15);
 
         return view('users.index', compact('users', 'filterByType', 'filterByUser'));
     }

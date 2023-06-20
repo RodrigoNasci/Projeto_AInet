@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\User;
 use App\Http\Resources\CustomerResource;
 use App\Http\Requests\StoreUpdateCustomerRequest;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,22 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): View
     {
-        return CustomerResource::collection(Customer::all());
+        $filterByUser = $request->user ?? '';
+
+        //Query para a tabela de users
+        $userQuery = User::query()->where('user_type', 'LIKE', 'C');
+
+        //Filtrar por user
+        if ($filterByUser != '') {
+            $userQuery->where('name', 'like', "%$filterByUser%");
+        }
+
+        //Paginação (tabela)
+        $users = $userQuery->orderBy('name', 'asc')->paginate(15);
+
+        return view('customers.index', compact('users', 'filterByUser'));
     }
 
     /**

@@ -3,22 +3,11 @@
 @section('main')
 
     <div class="container-fluid pt-4 px-4">
-        <a class="btn btn-sm btn-success" style="width:20%" href="{{ route('users.create') }}">Criar novo</a>
-    </div>
-
-    <div class="container-fluid pt-4 px-4">
         <div class="bg-white text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Tabela de Staff</h6>
+                <h6 class="mb-0">Tabela de Clientes</h6>
                 <div class="card-header d-flex align-items-center justify-content-start">
                     <form id="formFilters" method="GET" class="form" action="{{ route('users.index') }}">
-
-                        <select class="form-select-sm" name="user_type"
-                            onChange="document.getElementById('formFilters').submit()">
-                            <option value="" {{ old('user_type', $filterByType) === '' ? 'selected' : '' }}>Todos</option>
-                            <option value="A" {{ old('user_type', $filterByType) === 'A' ? 'selected' : '' }}>Administradores</option>
-                            <option value="E" {{ old('user_type', $filterByType) === 'E' ? 'selected' : '' }}>Funcionários</option>
-                        </select>
 
                         <input type="text" name="user" class="form-select-sm rounded mr-0"
                             placeholder="Pesquisar por staff" value="{{ old('user', $filterByUser) }}" />

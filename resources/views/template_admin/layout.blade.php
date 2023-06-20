@@ -58,22 +58,22 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item" {{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}>
+                    <li class="sidebar-item">
                         <a class="sidebar-link" href="pages-sign-up.html">
                             <i class="align-middle" data-feather="grid"></i> <span
                                 class="align-middle">Categorias</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item"{{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}>
                         <a class="sidebar-link" href="{{ route('users.index') }}">
                             <i class="align-middle" data-feather="user-plus"></i> <span
                                 class="align-middle">Pessoal</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                    <li class="sidebar-item" {{ Route::currentRouteName() == 'customers.index' ? 'active' : '' }}>
+                        <a class="sidebar-link" href="{{ route('customers.index') }}">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
                         </a>
                     </li>
