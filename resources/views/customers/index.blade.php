@@ -10,7 +10,7 @@
                     <form id="formFilters" method="GET" class="form" action="{{ route('users.index') }}">
 
                         <input type="text" name="user" class="form-select-sm rounded mr-0"
-                            placeholder="Pesquisar por staff" value="{{ old('user', $filterByUser) }}" />
+                            placeholder="Pesquisar por cliente" value="{{ old('user', $filterByUser) }}" />
 
                         <button type="submit" class="btn m-0 p-1">
                             <i class="bi bi-search"></i>
@@ -48,7 +48,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('users.show', ['user' => $user]) }}">Detalhes</a>
+                                <a class="btn btn-sm btn-primary" href="{{ route('customers.show', ['customer' => $user->customer]) }}">Detalhes</a>
                             </td>
                         </tr>
                         @endforeach
