@@ -47,8 +47,8 @@ class TshirtImageController extends Controller
             ->limit(10)
             ->get();
 
-        // Apenas imagens que fazem parte do catálogo da loja (não são de clientes)
-        $tshirtImageQuery = TshirtImage::query()->whereNull('customer_id');
+        // Todas as imagens da loja (clientes e catálogo)
+        $tshirtImageQuery = TshirtImage::query();
 
         if ($filterByCategory !== '') {
             $categoryIds = Category::where('name', 'like', "%$filterByCategory%")->pluck('id');
