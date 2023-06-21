@@ -7,7 +7,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Tabela de Clientes</h6>
                 <div class="card-header d-flex align-items-center justify-content-start">
-                    <form id="formFilters" method="GET" class="form" action="{{ route('users.index') }}">
+                    <form id="formFilters" method="GET" class="form" action="{{ route('customers.index') }}">
 
                         <input type="text" name="user" class="form-select-sm rounded mr-0"
                             placeholder="Pesquisar por cliente" value="{{ old('user', $filterByUser) }}" />
@@ -42,14 +42,20 @@
                             <td>{{ $user->user_type}}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @if ($user->blocked == 0)
-                                    <span class="badge bg-success">Não</span>
-                                @else
-                                    <span class="badge bg-danger">Sim</span>
-                                @endif
+                                <div class="text-center">
+                                    @if ($user->blocked == 0)
+                                        <span class="badge bg-success">Não</span>
+                                    @else
+                                        <span class="badge bg-danger">Sim</span>
+                                    @endif
+                                </div>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('customers.show', ['customer' => $user->customer]) }}">Detalhes</a>
+                                <div class="text-center">
+                                    <a class="btn btn-sm btn-primary" href="{{ route('customers.show', ['customer' => $user->customer]) }}">
+                                        <i class="text-white" data-feather="eye"></i>
+                                    </a>
+                                </div>
                             </td>
                             <td>
                                 @if($user->blocked == 1)
@@ -62,8 +68,10 @@
                                         <input type="hidden" name="email" value="{{ old('name', $user->email) }}">
                                         <input type="hidden" name="user_type" value="{{ old('name', $user->user_type) }}">
                                         <input type="hidden" name="blocked" value="0">
-                                        <div class="my-1 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-success" name="ok" form="form_user_{{ $user->id }}">Desbloquear</button>
+                                        <div class="my-1 d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-success" name="ok" form="form_user_{{ $user->id }}">
+                                                <i class="text-white" data-feather="lock"></i>
+                                            </button>
                                         </div>
                                     </form>
                                 @else
@@ -76,8 +84,10 @@
                                         <input type="hidden" name="email" value="{{ old('name', $user->email) }}">
                                         <input type="hidden" name="user_type" value="{{ old('name', $user->user_type) }}">
                                         <input type="hidden" name="blocked" value="1">
-                                        <div class="my-1 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-danger" name="ok" form="form_user_{{ $user->id }}">Bloquear</button>
+                                        <div class="my-1 d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-danger" name="ok" form="form_user_{{ $user->id }}">
+                                                <i class="text-white" data-feather="unlock"></i>
+                                            </button>
                                         </div>
                                     </form>
                                 @endif

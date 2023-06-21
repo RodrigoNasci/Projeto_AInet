@@ -43,12 +43,12 @@
                             <label for="type" class="col-md-4 col-form-label text-md-end">{{ __('Type') }}</label>
 
                             <div class="col-md-6">
-                                <select id="type" class="form-select" aria-label="Select type">
+                                <select id="user_type" class="form-select @error('user_type') is-invalid @enderror" name="user_type" aria-label="Select type">
                                     <option value="E" selected>Funcionário</option>
                                     <option value="A">Administrador</option>
                                 </select>
 
-                                @error('type')
+                                @error('user_type')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -77,6 +77,8 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
+                        <input type="hidden" name="blocked" value="0">
 
                         <div class="my-1 d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">
