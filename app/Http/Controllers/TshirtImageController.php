@@ -177,5 +177,7 @@ class TshirtImageController extends Controller
 
     public function destroy()
     {
+        # code...
+
     }
 }

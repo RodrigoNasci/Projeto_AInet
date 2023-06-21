@@ -120,7 +120,7 @@
                                     onChange="document.getElementById('formFilters').submit()">
                                     <option value=""
                                         {{ old('category', $filterByCategory) === '' ? 'selected' : '' }}>
-                                        Todos
+                                        Todas
                                         as Categorias</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->name }}"
