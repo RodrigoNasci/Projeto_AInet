@@ -140,7 +140,7 @@ class UserController extends Controller
         }
         $user->delete();
         $htmlMessage = "User #{$user->id} <strong>\"{$user->name}\"</strong> foi apagado com sucesso!";
-        return redirect()->route('tshirt_images.catalogo')
+        return redirect()->route('users.index')
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
     }
