@@ -52,14 +52,20 @@
                             <td>{{ $user->user_type}}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @if ($user->blocked == 0)
-                                    <span class="badge bg-success">Não</span>
-                                @else
-                                    <span class="badge bg-danger">Sim</span>
-                                @endif
+                                <div class="text-center">
+                                    @if ($user->blocked == 0)
+                                        <span class="badge bg-success">Não</span>
+                                    @else
+                                        <span class="badge bg-danger">Sim</span>
+                                    @endif
+                                </div>
                             </td>
                             <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('users.show', ['user' => $user]) }}">Detalhes</a>
+                                <div class="text-center">
+                                    <a class="btn btn-sm btn-primary" href="{{ route('users.show', ['user' => $user]) }}">
+                                        <i class="text-white" data-feather="eye"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
