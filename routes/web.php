@@ -40,9 +40,15 @@ Route::middleware('auth')->group(function () {
     Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 });
 
+
+
+
 Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])
     ->name('tshirt_images.minhas')
     ->middleware('auth');
+
+// Rota para obter cada imagem privada do cliente
+Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha');
 
 // Rota para mostrar o catálogo de imagens
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
@@ -53,7 +59,7 @@ Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class
 Route::resource('tshirt_images', TshirtImageController::class);
 
 // Rota para mostrar o pdf relativo a uma encomenda (fatura)
-route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
+Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
 
 Route::resource('orders', OrderController::class);
 

@@ -12,6 +12,7 @@ use App\Models\OrderItem;
 use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class TshirtImageController extends Controller
 {
@@ -114,6 +115,28 @@ class TshirtImageController extends Controller
         // Porque se não as relações dão null.
         $tshirt_images = $request->user()->customer->tshirtImages;
         return view('tshirt_images.minhas')->with('tshirt_images', $tshirt_images);
+    }
+
+    public function getPrivateTshirtImage(Request $request)
+    {
+        $image_url = $request->image_url;
+        // Verifica se existe o nome do ficheiro na base de dados
+        if ($image_url == null) {
+            abort(404);
+        }
+
+        $path = storage_path('app/tshirt_images_private/' . $image_url);
+        // Verifica se o ficheiro existe na pasta storage/app/pdf_receipts
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        cache()->forget($path);
+        $response = response()->file($path);
+        $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+        return $response;
     }
 
     public function update(TshirtImageRequest $request, TshirtImage $tshirt_image): RedirectResponse

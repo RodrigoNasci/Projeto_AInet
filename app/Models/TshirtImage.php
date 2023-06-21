@@ -36,14 +36,14 @@ class TshirtImage extends Model
     {
         return Attribute::make(
             get: function () {
-                if ($this->customer_id != null && $this->image_url /* && $this->customer->id == auth()->user()->id */) {
-                    $privatePath = storage_path('app/tshirt_images_private/' . $this->image_url);
-                    if (!File::exists($privatePath)) {
-                        abort(404);
-                    }
-                    $file = File::get($privatePath);
-                    return "data:image/png;base64," . base64_encode($file);
-                }
+                // if ($this->customer_id != null && $this->image_url /* && $this->customer->id == auth()->user()->id */) {
+                //     $privatePath = storage_path('app/tshirt_images_private/' . $this->image_url);
+                //     if (!File::exists($privatePath)) {
+                //         abort(404);
+                //     }
+                //     $file = File::get($privatePath);
+                //     return "data:image/png;base64," . base64_encode($file);
+                // }
                 return $this->image_url ? asset('storage/tshirt_images/' . $this->image_url) :
                     asset('/img/plain_white.png');
             }
