@@ -28,7 +28,7 @@
                                 data-bs-target="#confirmationModal"
                                 data-msgLine1="Quer realmente apagar a imagem <strong>&quot;{{ $tshirt_image->name }}&quot;</strong>?"
                                 data-action="{{ route('tshirt_images.destroy', ['tshirt_image' => $tshirt_image]) }}">
-                                Apagar Cliente
+                                Eliminar
                             </button>
                             <a href="{{ route('tshirt_images.edit', ['tshirt_image' => $tshirt_image]) }}"
                                 class="btn btn-primary">Editar
