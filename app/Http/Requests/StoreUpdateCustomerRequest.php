@@ -36,8 +36,8 @@ class StoreUpdateCustomerRequest extends FormRequest
                 'email',
                 Rule::unique('users', 'email')->ignore($this->id),
             ],
-            'user_type'=>'required|in:C,A,E',
-            'blocked'=>'required|integer|min:0|max:1',
+            'user_type'=>'in:C,A,E',
+            'blocked'=>'integer|min:0|max:1',
             'file_photo'=>'sometimes|image|max:4096',
         ];
     }

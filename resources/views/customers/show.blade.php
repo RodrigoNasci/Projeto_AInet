@@ -22,9 +22,14 @@
                         data-action="{{ route('customers.destroy', ['customer' => $customer]) }}">
                         Apagar Cliente
                     </button>
+                    @if ((Auth::user()->user_type ?? '') == 'A')
+                    <a href="{{ route('customers.index') }}" class="btn btn-primary ms-3">Voltar</a>
+
+                    @else
                     <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="btn btn-secondary ms-3">
                         Alterar Cliente
                     </a>
+                    @endif
                 </div>
             </div>
             <div class="ps-2 mt-5 mt-md-1 d-flex mx-auto flex-column align-items-center justify-content-between"

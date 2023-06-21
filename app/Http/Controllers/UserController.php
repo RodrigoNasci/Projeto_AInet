@@ -124,7 +124,7 @@ class UserController extends Controller
         $url = route('users.show', ['user' => $user]);
         $htmlMessage = "User <a href='$url'>#{$user->id}</a>
                         <strong>\"{$user->name}\"</strong> foi alterado com sucesso!";
-        return redirect()->route('users.show', $user)
+        return redirect()->back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
     }

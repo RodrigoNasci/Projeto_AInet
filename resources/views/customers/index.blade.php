@@ -30,6 +30,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Bloqueado</th>
                             <th scope="col">Detalhes</th>
+                            <th scope="col">Alterar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +50,37 @@
                             </td>
                             <td>
                                 <a class="btn btn-sm btn-primary" href="{{ route('customers.show', ['customer' => $user->customer]) }}">Detalhes</a>
+                            </td>
+                            <td>
+                                @if($user->blocked == 1)
+                                    <form id="form_user_{{ $user->id }}" novalidate class="needs-validation" method="POST"
+                                        action="{{ route('users.update', ['user' => $user]) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $user->id }}">
+                                        <input type="hidden" name="name" value="{{ old('name', $user->name) }}">
+                                        <input type="hidden" name="email" value="{{ old('name', $user->email) }}">
+                                        <input type="hidden" name="user_type" value="{{ old('name', $user->user_type) }}">
+                                        <input type="hidden" name="blocked" value="0">
+                                        <div class="my-1 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-success" name="ok" form="form_user_{{ $user->id }}">Desbloquear</button>
+                                        </div>
+                                    </form>
+                                @else
+                                    <form id="form_user_{{ $user->id }}" novalidate class="needs-validation" method="POST"
+                                        action="{{ route('users.update', ['user' => $user]) }}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="id" value="{{ $user->id }}">
+                                        <input type="hidden" name="name" value="{{ old('name', $user->name) }}">
+                                        <input type="hidden" name="email" value="{{ old('name', $user->email) }}">
+                                        <input type="hidden" name="user_type" value="{{ old('name', $user->user_type) }}">
+                                        <input type="hidden" name="blocked" value="1">
+                                        <div class="my-1 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-danger" name="ok" form="form_user_{{ $user->id }}">Bloquear</button>
+                                        </div>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

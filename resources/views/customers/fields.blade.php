@@ -10,7 +10,7 @@
 
 <div class="mb-3 form-floating">
     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputNome"
-        {{ $disabledStr }} {{ $editPermission }} value="{{ old('name', $customer->user->name) }}">
+        {{ $disabledStr }} {{ $editPermission }} value="{{ old('name', $customer->user->name)}}">
     <label for="inputNome" class="form-label">Nome</label>
     @error('name')
         <div class="invalid-feedback">
@@ -21,7 +21,7 @@
 
 <div class="mb-3 form-floating">
     <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="inputEmail"
-        {{ $disabledStr }} {{ $editPermission }} value="{{ old('email', $customer->user->email) }}">
+        {{ $disabledStr }} {{ $editPermission }} value="{{ old('email', $customer->user->email)}}">
     <label for="inputEmail" class="form-label">Email</label>
     @error('email')
         <div class="invalid-feedback">
