@@ -44,8 +44,11 @@ class TshirtImage extends Model
                 //     $file = File::get($privatePath);
                 //     return "data:image/png;base64," . base64_encode($file);
                 // }
-                return $this->image_url ? asset('storage/tshirt_images/' . $this->image_url) :
-                    asset('/img/plain_white.png');
+
+                // Caso a tshirt faça parte do catálogo	então retorna diretamente a imagem a partir do public folder...
+                // Se a tshirt não fizer parte do catálogo então faz o route para o controller que retorna a imagem
+                return $this->image_url && $this->customer_id == null ? asset('storage/tshirt_images/' . $this->image_url) :
+                    route('tshirt_images.minha', ['image_url' => $this->image_url]);
             }
         );
     }

@@ -24,11 +24,29 @@ class TshirtImageController extends Controller
 
         $categories = Category::all();
 
+        $filterByYear = $request->year ?? '';
+
         $filterByCategory = $request->category ?? '';
 
         $filterByName = $request->name ?? '';
 
         $filterByDescription = $request->description ?? '';
+
+        $year = $request->input('year', '');
+
+        // Top 10 T-shirts mais vendidas de sempre (inclui imagens de clientes/catálogo e imagens que já não estão disponíveis para venda)
+        $jsonMostSoldTshirtImagesPerMonth = DB::table('tshirt_images')
+            ->join('order_items', 'tshirt_images.id', '=', 'order_items.tshirt_image_id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->select('tshirt_images.name', DB::raw('SUM(order_items.qty) as total_quantity_sold'))
+            ->where('orders.status', '=', 'closed')
+            ->when($filterByYear, function ($query, $filterByYear) {
+                return $query->whereYear('orders.date', $filterByYear);
+            })
+            ->groupBy('tshirt_images.id', 'tshirt_images.name')
+            ->orderByDesc('total_quantity_sold')
+            ->limit(10)
+            ->get();
 
         // Apenas imagens que fazem parte do catálogo da loja (não são de clientes)
         $tshirtImageQuery = TshirtImage::query()->whereNull('customer_id');
@@ -46,10 +64,22 @@ class TshirtImageController extends Controller
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
 
+        //Filtrar por ano (query para o gráfico)
+        // if ($filterByYear != '') {
+        //     $mostSoldTshirtsImagePeryMonthQuery->whereYear('date', $filterByYear);
+        // }
 
         $tshirt_images = $tshirtImageQuery->paginate(15);
 
-        return view('tshirt_images.index', compact('tshirt_images', 'totalImages', 'clientImages', 'catalogueImages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
+        //Array com o número de encomendas fechadas por mês
+        // $mostSoldTshirtsImagePerMonth = $mostSoldTshirtsImagePeryMonthQuery->pluck('count', 'month')->toArray();
+        // $mostSoldTshirtsImagePerMonth = array_replace(array_fill(1, 12, 0), $mostSoldTshirtsImagePerMonth);
+        // $mostSoldTshirtsImagePerMonth = array_values($mostSoldTshirtsImagePerMonth);
+
+        //converter para json (usado no gráfico (js))
+        //$jsonMostSoldTshirtImagesPerMonth = json_encode($mostSoldTshirtsImagePerMonth);
+
+        return view('tshirt_images.index', compact('tshirt_images', 'totalImages', 'clientImages', 'catalogueImages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription', 'filterByYear', 'jsonMostSoldTshirtImagesPerMonth'));
     }
 
     public function catalogo(Request $request): View
@@ -175,9 +205,11 @@ class TshirtImageController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy()
+    public function destroy(TshirtImage $tshirt_image): RedirectResponse
     {
-        # code...
-
+        $tshirt_image->delete();
+        return redirect()->route('tshirt_images.index')
+            ->with('alert-msg', "Tshirt <strong>#{$tshirt_image->id} {$tshirt_image->name}</strong> foi eliminada com sucesso!")
+            ->with('alert-type', 'success');
     }
 }
