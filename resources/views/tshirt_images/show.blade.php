@@ -3,9 +3,9 @@
 @section('main')
     <div class="container-fluid p-0">
 
-            <a href="javascript:void(0);" onclick="javascript:history.back();">
-                <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
-            </a>
+        <a href="javascript:void(0);" onclick="javascript:history.back();">
+            <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
+        </a>
 
 
         <div class="row mt-3">
@@ -24,21 +24,26 @@
                     @include('tshirt_images.shared.fields', ['readonlyData' => true])
                     <div class="card-body text-left">
                         <div class="mb-3">
-                            <form method="POST"
-                                action="{{ route('tshirt_images.destroy', ['tshirt_image' => $tshirt_image]) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" name="delete" class="btn btn-danger">
-                                    Eliminar
-                                </button>
-                                <a href="{{ route('tshirt_images.edit', ['tshirt_image' => $tshirt_image]) }}"
-                                    class="btn btn-primary">Editar
-                                </a>
-                            </form>
+                            <button type="button" name="delete" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#confirmationModal"
+                                data-msgLine1="Quer realmente apagar a imagem <strong>&quot;{{ $tshirt_image->name }}&quot;</strong>?"
+                                data-action="{{ route('tshirt_images.destroy', ['tshirt_image' => $tshirt_image]) }}">
+                                Apagar Cliente
+                            </button>
+                            <a href="{{ route('tshirt_images.edit', ['tshirt_image' => $tshirt_image]) }}"
+                                class="btn btn-primary">Editar
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @include('shared.confirmationDialog', [
+        'title' => 'Apagar Imagem T-Shirt',
+        'msgLine1' => 'As alterações efetuadas ao dados da imagem vão ser perdidas!',
+        'msgLine2' => 'Clique no botão "Apagar" para confirmar a operação.',
+        'confirmationButton' => 'Apagar Imagem T-Shirt',
+        'formMethod' => 'DELETE',
+    ])
 @endsection

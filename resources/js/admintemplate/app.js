@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(e);
     }
 
+    // Top 10 Sold T-Shirts per month
     try {
-
         var topTShirts = JSON.parse(document.getElementById('jsonMostSoldTshirtImagesPerMonth').value);
 
         var tShirtNames = topTShirts.map(function (item) {

@@ -8,8 +8,7 @@ use Illuminate\View\View;
 use App\Models\TshirtImage;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\OrderItem;
-use App\Models\Order;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -64,20 +63,7 @@ class TshirtImageController extends Controller
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
 
-        //Filtrar por ano (query para o gráfico)
-        // if ($filterByYear != '') {
-        //     $mostSoldTshirtsImagePeryMonthQuery->whereYear('date', $filterByYear);
-        // }
-
         $tshirt_images = $tshirtImageQuery->paginate(15);
-
-        //Array com o número de encomendas fechadas por mês
-        // $mostSoldTshirtsImagePerMonth = $mostSoldTshirtsImagePeryMonthQuery->pluck('count', 'month')->toArray();
-        // $mostSoldTshirtsImagePerMonth = array_replace(array_fill(1, 12, 0), $mostSoldTshirtsImagePerMonth);
-        // $mostSoldTshirtsImagePerMonth = array_values($mostSoldTshirtsImagePerMonth);
-
-        //converter para json (usado no gráfico (js))
-        //$jsonMostSoldTshirtImagesPerMonth = json_encode($mostSoldTshirtsImagePerMonth);
 
         return view('tshirt_images.index', compact('tshirt_images', 'totalImages', 'clientImages', 'catalogueImages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription', 'filterByYear', 'jsonMostSoldTshirtImagesPerMonth'));
     }
@@ -207,9 +193,27 @@ class TshirtImageController extends Controller
 
     public function destroy(TshirtImage $tshirt_image): RedirectResponse
     {
-        $tshirt_image->delete();
-        return redirect()->route('tshirt_images.index')
-            ->with('alert-msg', "Tshirt <strong>#{$tshirt_image->id} {$tshirt_image->name}</strong> foi eliminada com sucesso!")
-            ->with('alert-type', 'success');
+        try {
+            $tshirt_image->delete();
+            if ($tshirt_image->image_url && $tshirt_image->customer_id == null) {
+                $path = storage_path('app/public/tshirt_images/' . $tshirt_image->image_url);
+                File::delete($path);
+            } elseif ($tshirt_image->image_url && $tshirt_image->customer_id != null) {
+                $path = storage_path('app/tshirt_images_private/' . $tshirt_image->image_url);
+                File::delete($path);
+            }
+            $htmlMessage = "Tshirt <strong>#{$tshirt_image->id} {$tshirt_image->name}</strong> foi eliminada com sucesso!";
+            return redirect()->route('tshirt_images.index')
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
+        } catch (\Exception $error) {
+            $url = route('tshirt_images.show', ['tshirt_image' => $tshirt_image]);
+            $htmlMessage = "Não foi possível apagar a T-Shirt <a href='$url'>#{$tshirt_image->id}</a>
+                        <strong>\"{$tshirt_image->name}\"</strong> porque ocorreu um erro!";
+            $alertType = 'danger';
+        }
+        return back()
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', $alertType);
     }
 }
