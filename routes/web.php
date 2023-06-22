@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ColorController;
 
 
 /*
@@ -68,6 +69,8 @@ Route::resource('orders', OrderController::class);
 
 Route::resource('prices', PriceController::class);
 
+Route::resource('colors', ColorController::class);
+
 
 // Vai para a página de edição do item do carrinho de compras
 //Route::get('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
@@ -88,8 +91,6 @@ Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateI
 
 // Atualiza um item do carrinho de compras
 Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
-
-Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar');
 
 Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 
