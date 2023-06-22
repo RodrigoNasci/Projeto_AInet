@@ -8,8 +8,7 @@ use Illuminate\View\View;
 use App\Models\TshirtImage;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\OrderItem;
-use App\Models\Order;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -24,14 +23,32 @@ class TshirtImageController extends Controller
 
         $categories = Category::all();
 
+        $filterByYear = $request->year ?? '';
+
         $filterByCategory = $request->category ?? '';
 
         $filterByName = $request->name ?? '';
 
         $filterByDescription = $request->description ?? '';
 
-        // Apenas imagens que fazem parte do catálogo da loja (não são de clientes)
-        $tshirtImageQuery = TshirtImage::query()->whereNull('customer_id');
+        $year = $request->input('year', '');
+
+        // Top 10 T-shirts mais vendidas de sempre (inclui imagens de clientes/catálogo e imagens que já não estão disponíveis para venda)
+        $jsonMostSoldTshirtImagesPerMonth = DB::table('tshirt_images')
+            ->join('order_items', 'tshirt_images.id', '=', 'order_items.tshirt_image_id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->select('tshirt_images.name', DB::raw('SUM(order_items.qty) as total_quantity_sold'))
+            ->where('orders.status', '=', 'closed')
+            ->when($filterByYear, function ($query, $filterByYear) {
+                return $query->whereYear('orders.date', $filterByYear);
+            })
+            ->groupBy('tshirt_images.id', 'tshirt_images.name')
+            ->orderByDesc('total_quantity_sold')
+            ->limit(10)
+            ->get();
+
+        // Todas as imagens da loja (clientes e catálogo)
+        $tshirtImageQuery = TshirtImage::query();
 
         if ($filterByCategory !== '') {
             $categoryIds = Category::where('name', 'like', "%$filterByCategory%")->pluck('id');
@@ -46,10 +63,9 @@ class TshirtImageController extends Controller
             $tshirtImageQuery->where('description', 'like', "%$filterByDescription%");
         }
 
-
         $tshirt_images = $tshirtImageQuery->paginate(15);
 
-        return view('tshirt_images.index', compact('tshirt_images', 'totalImages', 'clientImages', 'catalogueImages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription'));
+        return view('tshirt_images.index', compact('tshirt_images', 'totalImages', 'clientImages', 'catalogueImages', 'categories', 'filterByCategory', 'filterByName', 'filterByDescription', 'filterByYear', 'jsonMostSoldTshirtImagesPerMonth'));
     }
 
     public function catalogo(Request $request): View
@@ -175,9 +191,29 @@ class TshirtImageController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function destroy()
+    public function destroy(TshirtImage $tshirt_image): RedirectResponse
     {
-        # code...
-
+        try {
+            $tshirt_image->delete();
+            if ($tshirt_image->image_url && $tshirt_image->customer_id == null) {
+                $path = storage_path('app/public/tshirt_images/' . $tshirt_image->image_url);
+                File::delete($path);
+            } elseif ($tshirt_image->image_url && $tshirt_image->customer_id != null) {
+                $path = storage_path('app/tshirt_images_private/' . $tshirt_image->image_url);
+                File::delete($path);
+            }
+            $htmlMessage = "Tshirt <strong>#{$tshirt_image->id} {$tshirt_image->name}</strong> foi eliminada com sucesso!";
+            return redirect()->route('tshirt_images.index')
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
+        } catch (\Exception $error) {
+            $url = route('tshirt_images.show', ['tshirt_image' => $tshirt_image]);
+            $htmlMessage = "Não foi possível apagar a T-Shirt <a href='$url'>#{$tshirt_image->id}</a>
+                        <strong>\"{$tshirt_image->name}\"</strong> porque ocorreu um erro!";
+            $alertType = 'danger';
+        }
+        return back()
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', $alertType);
     }
 }

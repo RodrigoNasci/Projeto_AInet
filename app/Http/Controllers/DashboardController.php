@@ -16,19 +16,35 @@ class DashboardController extends Controller
         $filterByStatus = $request->status ?? '';
         $filterByCustomer = $request->customer ?? '';
 
-        $todayOrders = Order::query()->whereRaw('Date(date) = CURDATE()')->count();
-        $totalOrders = Order::query()->count();
-        $todayRevenue = Order::query()->whereRaw('Date(date) = CURDATE()')->get('total_price')->count();
-        $totalRevenue = Order::query()->sum('total_price');
+        // Vendas de hoje correspondem às encomendas 'paid' e 'closed' de hoje
+        $todayOrders = Order::whereRaw('Date(date) = CURDATE()')
+            ->whereIn('status', ['closed', 'paid'])
+            ->count();
+        $todayOrders = number_format($todayOrders, 0, ',', '.');
 
+        // Vendas todais correspondem às encomendas 'paid' e 'closed'
+        $totalOrders = Order::whereIn('status', ['closed', 'paid'])->count();
+        $totalOrders = number_format($totalOrders, 0, ',', '.');
+
+        // Receita de hoje corresponde às encomendas 'paid' e 'closed' de hoje
+        $todayRevenue = Order::whereRaw('Date(date) = CURDATE()')
+            ->whereIn('status', ['closed', 'paid'])
+            ->sum('total_price');
+        $todayRevenue = number_format($todayRevenue, 2, ',', '.');
+
+        // Receita total corresponde às encomendas 'paid' e 'closed'
+        $totalRevenue = Order::whereIn('status', ['closed', 'paid'])->sum('total_price');
+        $totalRevenue = number_format($totalRevenue, 2, ',', '.');
 
         //Query para o gráfico de encomendas por mês
         $ordersPerMonthQuery = Order::selectRaw('COUNT(*) as count, MONTH(date) as month')
+            ->whereIn('status', ['closed', 'paid'])
             ->groupBy('month')
             ->orderBy('month');
 
         //Query para o gráfico de receitas por mês
         $revenuePerMonthQuery = Order::selectRaw('SUM(total_price) as count, MONTH(date) as month')
+            ->whereIn('status', ['closed', 'paid'])
             ->groupBy('month')
             ->orderBy('month');
 
@@ -36,12 +52,12 @@ class DashboardController extends Controller
         $orderQuery = Order::query();
 
         //Filtrar por status (tabela)
-        if ($filterByStatus != ''){
-            $orderQuery->where('status', 'LIKE' ,$filterByStatus);
+        if ($filterByStatus != '') {
+            $orderQuery->where('status', 'LIKE', $filterByStatus);
         }
 
         //Filtrar por cliente (tabela)
-        if ($filterByCustomer != ''){
+        if ($filterByCustomer != '') {
             $customerIds = User::where('name', 'like', "%$filterByCustomer%")->pluck('id');
             $orderQuery->whereIntegerInRaw('customer_id', $customerIds);
         }

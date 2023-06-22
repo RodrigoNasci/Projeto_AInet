@@ -17,7 +17,7 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -33,7 +33,7 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -51,26 +51,11 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <h1 class="mt-1 mb-3">{{ $totalImages }}</h1>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">???</h5>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3"></h1>
                                 </div>
                             </div>
                         </div>
@@ -85,24 +70,25 @@
                             <form id="formGraph" method="GET" class="form prevent-scroll"
                                 action="{{ route('tshirt_images.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
-                                {{-- <input type="hidden" id="jsonClosedOrdersPerMonth" value="{{ $jsonClosedOrdersPerMonth }}"> --}}
+                                <input type="hidden" id="jsonMostSoldTshirtImagesPerMonth"
+                                    value="{{ $jsonMostSoldTshirtImagesPerMonth }}">
                                 <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
-                                    {{-- <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
-                                    </option> --}}
-                                    {{-- @for ($year = date('Y'); $year >= 2020; $year--)
+                                    <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
+                                    </option>
+                                    @for ($year = date('Y'); $year >= 2020; $year--)
                                         <option value="{{ $year }}"
                                             {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
                                             {{ $year }}
                                         </option>
-                                    @endfor --}}
+                                    @endfor
                                 </select>
                             </form>
                         </div>
                     </div>
                     <div class="card-body py-3">
                         <div class="chart chart-sm">
-                            <canvas id="chartjs-dashboard-line"></canvas>
+                            <canvas id="chartjs-top-tshirts"></canvas>
                         </div>
                     </div>
                 </div>
@@ -151,7 +137,7 @@
                         <tbody>
                             @if ($tshirt_images->count() == 0)
                                 <tr>
-                                    <td colspan="6" class="text-center">Não existem encomendas</td>
+                                    <td colspan="6" class="text-center">Não existem imagens de T-Shirt</td>
                                 </tr>
                             @endif
                             @foreach ($tshirt_images as $tshirt_image)
@@ -159,12 +145,12 @@
                                     class="cursor-pointer">
                                     <td class="d-none d-xl-table-cell">{{ $tshirt_image->name }}</td>
                                     <td class="d-none d-xl-table-cell">
-                                        {{ $tshirt_image->category->name ?? 'Sem Categoria' }}</td>
+                                        {{ $tshirt_image->category->name }}</td>
                                     <td class="d-none d-xl-table-cell">
                                         {{ $tshirt_image->description }}
                                     </td>
-                                    <td> <img src="{{ $tshirt_image->fullImageUrl }}" alt="Image" width="50"
-                                            height="50">
+                                    <td> <img src="{{ $tshirt_image->fullImageUrl }}" alt="Image"
+                                            class="avatar img-fluid me-2">
                                     </td>
                                 </tr>
                             @endforeach

@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PriceController;
 
 
 /*
@@ -47,8 +48,10 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
     ->name('tshirt_images.minhas')
     ->middleware('auth');
 
+
 // Rota para obter cada imagem privada do cliente
 Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha');
+
 
 // Rota para mostrar o catálogo de imagens
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
@@ -62,6 +65,8 @@ Route::resource('tshirt_images', TshirtImageController::class);
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
 
 Route::resource('orders', OrderController::class);
+
+Route::resource('prices', PriceController::class);
 
 
 // Vai para a página de edição do item do carrinho de compras

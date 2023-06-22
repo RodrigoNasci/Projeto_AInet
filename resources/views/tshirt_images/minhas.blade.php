@@ -56,7 +56,7 @@
                                         src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
                                     {{-- #####TODO --}}
                                     <img class="card-img-top max-height-img overlay-image"
-                                        src="{{ route('tshirt_images.minha', ['image_url' => $tshirt_image->image_url]) }}">
+                                        src="{{ $tshirt_image->fullImageUrl }}">
                                 </div>
                             </div>
                             <!-- Product details-->
