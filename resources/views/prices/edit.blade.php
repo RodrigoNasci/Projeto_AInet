@@ -90,8 +90,7 @@
                         <div class="card-body text-left">
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary" name="ok">Guardar Alterações</button>
-                                <a href="{{ route('prices.show', ['price' => $price]) }}"
-                                    class="btn btn-secondary">Cancelar</a>
+                                <a href="{{ route('prices.index') }}" class="btn btn-secondary">Cancelar</a>
                             </div>
                         </div>
                     </form>
