@@ -36,69 +36,78 @@
                     <li class="sidebar-header">
                         Pages
                     </li>
-
-                    <li class="sidebar-item {{ Route::currentRouteName() == 'dashboard.index' ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('dashboard.index') }}">
-                            <i class="align-middle" data-feather="sliders"></i> <span
-                                class="align-middle">Dashboard</span>
-                        </a>
-                    </li>
-
+                    @if ((Auth::user()->user_type ?? '') == 'A')
+                        <li class="sidebar-item {{ Route::currentRouteName() == 'dashboard.index' ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('dashboard.index') }}">
+                                <i class="align-middle" data-feather="sliders"></i> <span
+                                    class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
                     <li class="sidebar-item {{ Route::currentRouteName() == 'orders.index' ? 'active' : '' }}">
                         <a href="{{ route('orders.index') }}" class="sidebar-link" href="pages-profile.html">
                             <i class="align-middle" data-feather="package"></i> <span
                                 class="align-middle">Encomendas</span>
                         </a>
                     </li>
+                    @if ((Auth::user()->user_type ?? '') == 'A')
+                        <li class="sidebar-item {{ Route::currentRouteName() == 'tshirt_images.index' ? 'active' : '' }}">
+                            <a href="{{ route('tshirt_images.index') }}" class="sidebar-link" href="pages-sign-in.html">
+                                <i class="align-middle" data-feather="image"></i> <span class="align-middle">Imagens
+                                    T-Shirt</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item {{ Route::currentRouteName() == 'tshirt_images.index' ? 'active' : '' }}">
-                        <a href="{{ route('tshirt_images.index') }}" class="sidebar-link" href="pages-sign-in.html">
-                            <i class="align-middle" data-feather="image"></i> <span class="align-middle">Imagens
-                                T-Shirt</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="#">
+                                <i class="align-middle" data-feather="grid"></i> <span
+                                    class="align-middle">Categorias</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="grid"></i> <span
-                                class="align-middle">Categorias</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item"{{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}>
+                            <a class="sidebar-link" href="{{ route('users.index') }}">
+                                <i class="align-middle" data-feather="user-plus"></i> <span
+                                    class="align-middle">Pessoal</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item"{{ Route::currentRouteName() == 'users.index' ? 'active' : '' }}>
-                        <a class="sidebar-link" href="{{ route('users.index') }}">
-                            <i class="align-middle" data-feather="user-plus"></i> <span
-                                class="align-middle">Pessoal</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item" {{ Route::currentRouteName() == 'customers.index' ? 'active' : '' }}>
+                            <a class="sidebar-link" href="{{ route('customers.index') }}">
+                                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item" {{ Route::currentRouteName() == 'customers.index' ? 'active' : '' }}>
-                        <a class="sidebar-link" href="{{ route('customers.index') }}">
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item" {{ Route::currentRouteName() == 'prices.index' ? 'active' : '' }}>
+                            <a class="sidebar-link" href="{{ route('prices.index') }}">
+                                <i class="align-middle" data-feather="dollar-sign"></i> <span
+                                    class="align-middle">Preços</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item" {{ Route::currentRouteName() == 'prices.index' ? 'active' : '' }}>
-                        <a class="sidebar-link" href="{{ route('prices.index') }}">
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span
-                                class="align-middle">Preços</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item" {{ Route::currentRouteName() == 'colors.index' ? 'active' : '' }}>
+                            <a class="sidebar-link" href="{{ route('colors.index') }}">
+                                <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cores
+                                    T-Shirt</span>
+                            </a>
+                        </li>
 
-                    <li class="sidebar-item" {{ Route::currentRouteName() == 'colors.index' ? 'active' : '' }}>
-                        <a class="sidebar-link" href="{{ route('colors.index') }}">
-                            <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cores
-                                T-Shirt</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item" style="padding-top: 70%">
-                        <hr>
-                        <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
-                            <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à
-                                Loja</span>
-                        </a>
-                    </li>
+                        <li class="sidebar-item" style="padding-top: 70%">
+                            <hr>
+                            <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
+                                <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à
+                                    Loja</span>
+                            </a>
+                        </li>
+                    @else
+                        <li class="sidebar-item" style="padding-top: 180%">
+                            <hr>
+                            <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
+                                <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à
+                                    Loja</span>
+                            </a>
+                        </li>
+                    @endif
             </div>
         </nav>
 

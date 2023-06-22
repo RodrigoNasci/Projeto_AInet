@@ -13,7 +13,12 @@ class TshirtImagePolicy
      */
     public function viewAny(?User $user): bool
     {
-        return true;
+        return $user->user_type == 'A';
+    }
+
+    public function viewMinhas(?User $user): bool
+    {
+        return $user->user_type == 'C';
     }
 
     /**
@@ -21,7 +26,7 @@ class TshirtImagePolicy
      */
     public function view(?User $user, TshirtImage $tshirtImage): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -29,7 +34,7 @@ class TshirtImagePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->user_type == 'A' || $user->user_type == 'C';
     }
 
     /**
@@ -45,7 +50,7 @@ class TshirtImagePolicy
      */
     public function delete(User $user, TshirtImage $tshirtImage): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -53,7 +58,7 @@ class TshirtImagePolicy
      */
     public function restore(User $user, TshirtImage $tshirtImage): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -61,6 +66,6 @@ class TshirtImagePolicy
      */
     public function forceDelete(User $user, TshirtImage $tshirtImage): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 }

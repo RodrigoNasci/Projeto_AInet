@@ -13,7 +13,7 @@ class ColorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -21,7 +21,7 @@ class ColorPolicy
      */
     public function view(User $user, Color $color): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**

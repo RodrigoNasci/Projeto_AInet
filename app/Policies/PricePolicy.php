@@ -13,7 +13,7 @@ class PricePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -21,7 +21,7 @@ class PricePolicy
      */
     public function view(User $user, Price $price): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
