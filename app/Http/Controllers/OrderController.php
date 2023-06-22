@@ -12,6 +12,11 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Support\Facades\Route;
+use PDF;
+
 class OrderController extends Controller
 {
     public function index(Request $request): View
@@ -110,10 +115,132 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
-        $order->update($request->all());
+        if($request->status == 'closed' && $order->status != 'closed'){
+            // if($request->user()->role != 'admin'){
 
-        // $url = route('orders.show', ['order' => $order]);
-        $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
+            // }
+
+            //Criar pdf da fatura
+
+            $pdf = new Dompdf();
+            $pdfOptions = new Options();
+            $pdfOptions->set('isRemoteEnabled', true);
+            $pdf->setOptions($pdfOptions);
+
+            $stylePath = storage_path('app/stylefatura.css');
+            $styleContent = file_get_contents($stylePath);
+
+            $pdfContent = '<html lang="en"> <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+                <style>'. $styleContent .' </style>
+            </head>
+            <body> <table class="body-wrap">
+                    <tbody><tr><td></td>
+                        <td class="container" width="600">
+                            <div class="content">
+                                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img class="img-logo" src="'. asset("img/logo.png") .'" alt="logo">
+                                                <span class="title-fatura">FATURA</span>
+                                                <br>
+                                                <br><br><br><br>
+                                                <span class="info-fatura"> ImagineShirt</span>
+                                                <br>
+                                                <span class="info-fatura"> 2411-901 Leiria, Portugal</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        <td class="content-wrap aligncenter">
+                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="content-block">
+                                                        <br><br><br>
+                                                            <h2 style="margin-left: 30% !important;">Obrigado pela sua compra!</h2>
+                                                        <br><br><br>
+                                                        </td>
+                                                    </tr>
+                                                <tr>
+                                                    <td class="content-block">
+                                                        <table class="invoice">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>Cliente: '. $order->customer->user->name .'<br>NIF: '. $order->nif .'<br>Data da fatura: '. date('Y-m-d') .'<br>Estado da encomenda: Fechado</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <td><b>Produto</b></td>
+                                                                                <td class="center-column"><b>Quantidade</b></td>
+                                                                                <td class="alignright"><b>Subtotal</b></td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>';
+                                                                        foreach ($order->orderItems as $orderItem) {
+                                                                            $pdfContent .= '
+                                                                                                <tr>
+                                                                                                    <td>'. $orderItem->tshirtImage->name . ' - ' . $orderItem->color->name . ' - ' . $orderItem->size . '</td>
+                                                                                                    <td class="center-column">'. $orderItem->qty .'</td>
+                                                                                                    <td class="alignright">'. $orderItem->sub_total .' €</td>
+                                                                                                </tr>
+                                                                                            ';
+                                                                                        }
+
+                                                                            $pdfContent .= '
+                                                                            <tr class="total">
+                                                                                <td class="alignright" colspan="2">Total</td>
+                                                                                <td class="alignright">'. $order->total_price .'€</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="content-block">
+                                                        <span style="margin-left: 27% !important;">ImagineShirt Corporation Inc. 2411-901 Leiria, Portugal</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                                <div class="footer">
+                                </div></div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody></table>
+            </body>
+            </html>';
+
+            $pdf->loadHtml($pdfContent);
+
+            $pdf->render();
+            $output = $pdf->output();
+
+            // Save PDF to a file
+            $pdfFilename = 'order_' . $order->id . '.pdf';
+            $pdfFilePath = storage_path('app/pdf_receipts/' . $pdfFilename);
+            file_put_contents($pdfFilePath, $output);
+
+            $order->receipt_url = $pdfFilename;
+            $order->save();
+
+            $htmlMessage = "Encomenda " . $order->id . " foi alterada com suceesso! Fatura disponível para download.";
+        }else{
+            $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
+        }
+
+        $order->update($request->all());
 
         return redirect()->route('orders.show', ['order' => $order])
             ->with('alert-msg', $htmlMessage)
