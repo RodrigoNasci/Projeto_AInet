@@ -166,29 +166,54 @@ class TshirtImageController extends Controller
             ->with('alert-type', 'success');
     }
 
+    public function create()
+    {
+        $tshirt_image = new TshirtImage();
+        $categories = Category::all();
+        return view('tshirt_images.create', compact('categories', 'tshirt_image'));
+    }
+
     public function store(TshirtImageRequest $request): RedirectResponse
     {
-        if ($request->user()->customer == null) {
-            // O administrador não precisa de inserir o customer_id pois são imagens para o catálogo da loja
-            $newTshirtImage = TshirtImage::create($request->validated());
-        } else {
-            $formData = $request->validated();
-            // Cliente insere tshirt, tem que ter costumer_id mas com categoria null
-            $tshirt_image = DB::transaction(function () use ($formData, $request) {
-                $newTshirtImage = new TshirtImage();
-                $newTshirtImage->customer_id = $request->user()->customer->id;
-                $newTshirtImage->description = $formData['description'];
-                $newTshirtImage->name = $formData['name'];
-                $path = $request->file_image->store('tshirt_images_private');
-                $newTshirtImage->image_url = basename($path);
-                $newTshirtImage->save();
-                return $newTshirtImage;
-            });
+        try {
+            if ($request->user()->customer == null) {
+                $formData = $request->validated();
+                // O administrador não precisa de inserir o customer_id pois são imagens para o catálogo da loja
+                $tshirt_image = DB::transaction(function () use ($formData, $request) {
+                    $newTshirtImage = new TshirtImage();
+                    $newTshirtImage->description = $formData['description'];
+                    $newTshirtImage->name = $formData['name'];
+                    $newTshirtImage->category_id = $formData['category_id'];
+                    $path = $request->file_image->store('public/tshirt_images');
+                    $newTshirtImage->image_url = basename($path);
+                    $newTshirtImage->save();
+                    return $newTshirtImage;
+                });
+                $redirect = 'tshirt_images.index';
+            } else {
+                $formData = $request->validated();
+                // Cliente insere tshirt, tem que ter costumer_id mas com categoria null
+                $tshirt_image = DB::transaction(function () use ($formData, $request) {
+                    $newTshirtImage = new TshirtImage();
+                    $newTshirtImage->customer_id = $request->user()->customer->id;
+                    $newTshirtImage->description = $formData['description'];
+                    $newTshirtImage->name = $formData['name'];
+                    $path = $request->file_image->store('tshirt_images_private');
+                    $newTshirtImage->image_url = basename($path);
+                    $newTshirtImage->save();
+                    return $newTshirtImage;
+                });
+                $redirect = 'tshirt_images.minhas';
+            }
+            $htmlMessage = "Tshirt <strong>\"{$tshirt_image->name}\"</strong> foi criada com sucesso!";
+            $alertType = 'success';
+        } catch (\Exception $error) {
+            $htmlMessage = "Não foi possível criar a tshirt!";
+            $alertType = 'danger';
         }
-        $htmlMessage = "Tshirt <strong>\"{$tshirt_image->name}\"</strong> foi criada com sucesso!";
-        return redirect()->route('tshirt_images.minhas')
+        return redirect()->route($redirect)
             ->with('alert-msg', $htmlMessage)
-            ->with('alert-type', 'success');
+            ->with('alert-type', $alertType);
     }
 
     public function destroy(TshirtImage $tshirt_image): RedirectResponse

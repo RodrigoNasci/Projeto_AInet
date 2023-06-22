@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Color;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ColorController extends Controller
 {
@@ -14,38 +16,56 @@ class ColorController extends Controller
     {
         $colorsQuery = Color::query();
 
+        $filterByYear = $request->year ?? '';
+
+        $filterByName = $request->name ?? '';
+
+        $filterByCode = $request->code ?? '';
+
+        $jsonMostSoldColorsPerMonth = DB::table('orders as o')
+            ->join('order_items as oi', 'oi.order_id', '=', 'o.id')
+            ->join('colors', 'colors.code', '=', 'oi.color_code')
+            ->select('oi.color_code', 'colors.name', DB::raw('SUM(oi.qty) as total_sold'))
+            ->when($filterByYear, function ($query, $filterByYear) {
+                return $query->whereYear('o.date', $filterByYear);
+            })
+            ->whereIn('o.status', ['closed', 'paid'])
+            ->groupBy('oi.color_code', 'colors.name')
+            ->orderByDesc('total_sold')
+            ->take(10)
+            ->get();
+
+        if ($filterByName !== '') {
+            $colorsQuery->where('name', 'like', "%$filterByName%");
+        }
+
+        if ($filterByCode !== '') {
+            $colorsQuery->where('code', 'like', "%$filterByCode%");
+        }
+
         $colors = $colorsQuery->paginate(15);
 
-        return view('colors.index', [
-            'colors' => $colors,
-        ]);
+        return view('colors.index', compact('colors', 'jsonMostSoldColorsPerMonth', 'filterByYear', 'filterByName', 'filterByCode'));
     }
 
-    public function show(Color $color): View
+    public function destroy(Color $color): RedirectResponse
     {
-        return view('colors.show', compact('color'));
-    }
-
-
-    public function edit(Color $color)
-    {
-        return view('colors.edit', compact('color'));
-    }
-
-    public function update(Request $request, Color $color): RedirectResponse
-    {
-        if ($color->update($request->all())) {
-            $url = route('colors.show', ['color' => $color]);
-            $htmlMessage = "Cor <a href='$url'>#{$color->code}</a>
-                            <strong>\"{$color->name}\"</strong> foi atualizada com sucesso!";
+        try {
+            $color->delete();
+            if ($color->code) {
+                $path = storage_path('app/public/tshirt_base/' . $color->code . '.jpg');
+                File::delete($path);
+            }
+            $htmlMessage = "Cor <strong>#{$color->code} {$color->name}</strong> foi eliminada com sucesso!";
             return redirect()->route('colors.index')
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
+        } catch (\Exception $error) {
+            $url = route('colors.show', ['color' => $color]);
+            $htmlMessage = "Não foi possível apagar a cor <a href='$url'>#{$color->code}</a>
+                        <strong>\"{$color->name}\"</strong> porque ocorreu um erro!";
+            $alertType = 'danger';
         }
-        $url = route('colors.show', ['color' => $color]);
-        $htmlMessage = "Não foi possível atualizar a Cor <a href='$url'>#{$color->code}</a>
-                    <strong>\"{$color->name}\"</strong> porque ocorreu um erro!";
-        $alertType = 'danger';
         return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);

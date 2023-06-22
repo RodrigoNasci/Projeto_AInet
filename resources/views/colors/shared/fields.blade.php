@@ -27,3 +27,14 @@
         </div>
     @enderror
 </div>
+<div class="card-header">
+    <h5 class="card-title">Cor</h5>
+</div>
+<div class="card-body">
+
+    @error('name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>

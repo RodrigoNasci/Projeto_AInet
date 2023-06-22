@@ -17,7 +17,7 @@ class OrderItem extends Model
 
     public function color(): BelongsTo
     {
-        return $this->belongsTo(Color::class, 'color_code', 'code');
+        return $this->belongsTo(Color::class, 'color_code', 'code')->withTrashed();
     }
 
     public function order(): BelongsTo

@@ -66,6 +66,28 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (e) {
         console.log(e);
     }
+
+    // Top 10 most sold colors per month
+    try {
+        var topColors = JSON.parse(document.getElementById('jsonMostSoldColorsPerMonth').value);
+
+        var colorNames = topColors.map(function (item) {
+            return item.name;
+        });
+
+        var quantitiesSold = topColors.map(function (item) {
+            return item.total_sold;
+        });
+
+        var ctx_topColors = document.getElementById("chartjs-top-colors").getContext("2d");
+        var gradient_topColors = ctx_topColors.createLinearGradient(0, 0, 0, 225);
+        gradient_topColors.addColorStop(0, "rgba(215, 227, 244, 1)");
+        gradient_topColors.addColorStop(1, "rgba(215, 227, 244, 1)");
+        var stepSize = 50;
+        createGraph("chartjs-top-colors", gradient_topColors, quantitiesSold, "bar", "Most Sold Colors", colorNames, stepSize);
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 
@@ -128,3 +150,23 @@ function removerMesesNaoPassados(content) {
         content = content.slice(0, currentMonth);
     }
 }
+
+
+// function previewImagem() {
+//     var imagem = document.querySelector('input[name=file_image]').files[0];
+//     var preview = document.querySelector('#preview');
+
+//     var reader = new FileReader();
+
+//     reader.onloadend = function () {
+//         preview.src = reader.result;
+//     }
+
+//     if (imagem) {
+//         reader.readAsDataURL(imagem);
+//     } else {
+//         preview.src = "";
+//     }
+// }
+
+

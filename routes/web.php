@@ -91,9 +91,9 @@ Route::resource('colors', ColorController::class)
     ->only(['update', 'edit'])
     ->middleware('can:update,color');
 
-Route::resource('colors', ColorController::class)
-    ->only(['destroy'])
-    ->middleware('can:delete,color');
+Route::resource('colors', ColorController::class);
+
+Route::delete('colors/{color}/delete', [ColorController::class, 'destroy'])->name('colors.destroy');
 
 
 ///Cart
@@ -174,4 +174,3 @@ Route::get('/password/change', [ChangePasswordController::class, 'show'])
 
 Route::post('/password/change', [ChangePasswordController::class, 'store'])
     ->name('password.change.store');
-

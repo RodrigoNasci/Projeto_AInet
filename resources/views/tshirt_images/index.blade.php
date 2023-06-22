@@ -94,6 +94,8 @@
                 </div>
             </div>
         </div>
+        <h1 class="h3 mb-3"> <a href="{{ route('tshirt_images.create') }}" class="btn btn-primary">Adicionar Imagem
+                T-Shirt</a></h1>
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 w-100">
                 <div class="card flex-fill d-flex">
@@ -144,8 +146,9 @@
                                 <tr onClick="window.location='{{ route('tshirt_images.show', ['tshirt_image' => $tshirt_image]) }}'"
                                     class="cursor-pointer">
                                     <td class="d-none d-xl-table-cell">{{ $tshirt_image->name }}</td>
+                                    {{-- Existem imagens de tshirt na base de dados que não tem categoria --}}
                                     <td class="d-none d-xl-table-cell">
-                                        {{ $tshirt_image->category->name }}</td>
+                                        {{ $tshirt_image->category->name ?? 'Sem categoria' }}</td>
                                     <td class="d-none d-xl-table-cell">
                                         {{ $tshirt_image->description }}
                                     </td>

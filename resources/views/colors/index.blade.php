@@ -4,73 +4,15 @@
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3"><strong>Análise</strong> Cores T-Shirts</h1>
         <div class="row">
-            <div class="col-xl-6 col-xxl-5 d-flex">
-                <div class="w-100">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">??????</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="tag"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">{{ '?????' }}</h1>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">??????</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="tag"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">{{ '?????' }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">?????</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="tag"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">{{ '?????' }}</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-xl-6 col-xxl-7">
                 <div class="card flex-fill w-100">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title mb-0">Cores mais vendidas</h5>
-                            {{-- <form id="formGraph" method="GET" class="form prevent-scroll"
-                                action="{{ route('tshirt_images.index') }}">
-                                <input type="hidden" id="jsonMostSoldTshirtImagesPerMonth"
-                                    value="{{ $jsonMostSoldTshirtImagesPerMonth }}">
+                            <form id="formGraph" method="GET" class="form prevent-scroll"
+                                action="{{ route('colors.index') }}">
+                                <input type="hidden" id="jsonMostSoldColorsPerMonth"
+                                    value="{{ $jsonMostSoldColorsPerMonth }}">
                                 <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
                                     <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
@@ -82,12 +24,12 @@
                                         </option>
                                     @endfor
                                 </select>
-                            </form> --}}
+                            </form>
                         </div>
                     </div>
                     <div class="card-body py-3">
                         <div class="chart chart-sm">
-                            <canvas id="chartjs-top-tshirts"></canvas>
+                            <canvas id="chartjs-top-colors"></canvas>
                         </div>
                     </div>
                 </div>
@@ -99,29 +41,16 @@
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="card-title mb-0">Cores T-Shirt</h5>
                         <div>
-                            {{-- <form id="formFilters" method="GET" class="form prevent-scroll"
-                                action="{{ route('tshirt_images.index') }}">
-                                <select class="form-select-sm" name="category"
-                                    onChange="document.getElementById('formFilters').submit()">
-                                    <option value=""
-                                        {{ old('category', $filterByCategory) === '' ? 'selected' : '' }}>
-                                        Todas
-                                        as Categorias</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->name }}"
-                                            {{ old('category', $filterByCategory) == $category->name ? 'selected' : '' }}>
-                                            {{ $category->name }}
-                                    @endforeach
-                                </select>
+                            <form id="formFilters" method="GET" class="form prevent-scroll"
+                                action="{{ route('colors.index') }}">
                                 <input type="text" name="name" class="form-select-sm rounded mr-0"
                                     placeholder="Pesquisar por nome" value="{{ old('name', $filterByName) }}" />
-                                <input type="text" name="description" class="form-select-sm rounded mr-0"
-                                    placeholder="Pesquisar por descrição"
-                                    value="{{ old('description', $filterByDescription) }}" />
+                                <input type="text" name="code" class="form-select-sm rounded mr-0"
+                                    placeholder="Pesquisar por código" value="{{ old('code', $filterByCode) }}" />
                                 <button type="submit" class="btn m-0 p-1">
                                     <i class="bi bi-search"></i>
                                 </button>
-                            </form> --}}
+                            </form>
                         </div>
                     </div>
                     <table class="table table-hover my-0">
@@ -145,12 +74,6 @@
                                     <td class="d-none d-xl-table-cell">{{ $color->name }}</td>
                                     <td><img src="{{ $color->fullImageUrl }}" alt="Image" class="avatar img-fluid"></td>
                                     <td class="text-end">
-                                        <a class="btn btn-secondary mx-1" title="Ver detalhes"
-                                            href="{{ route('colors.show', ['color' => $color]) }}"><i
-                                                data-feather="eye"></i></a>
-                                        <a class="btn btn-dark mx-1" title="Editar"
-                                            href="{{ route('colors.edit', ['color' => $color]) }}"><i
-                                                data-feather="edit"></i></a>
                                         <button type="button" name="delete" class="btn btn-danger mx-1" title="Eliminar"
                                             data-bs-toggle="modal" data-bs-target="#confirmationModal"
                                             data-msgLine1="Quer realmente apagar a cor <strong>&quot;{{ $color->nome }}&quot;</strong>?"
@@ -170,4 +93,11 @@
             </div>
         </div>
     </div>
+    @include('shared.confirmationDialog', [
+        'title' => 'Apagar Cor de T-Shirt',
+        'msgLine1' => 'As alterações efetuadas ao dados da cor vão ser perdidas!',
+        'msgLine2' => 'Clique no botão "Apagar" para confirmar a operação.',
+        'confirmationButton' => 'Apagar Cor de T-Shirt',
+        'formMethod' => 'DELETE',
+    ])
 @endsection

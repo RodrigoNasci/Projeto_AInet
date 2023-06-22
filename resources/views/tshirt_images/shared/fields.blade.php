@@ -33,6 +33,9 @@
 <div class="card-body">
     <select class="form-select mb-3 @error('category_id') is-invalid @enderror" name="category_id" id="category"
         {{ $disabledStr }}>
+        @if ($tshirt_image->category_id == null)
+            <option value="" selected>Sem Categoria</option>
+        @endif
         @foreach ($categories as $category)
             <option value="{{ $category->id }}"
                 {{ old('category_id', $tshirt_image->category_id) == $category->id ? 'selected' : '' }}>
@@ -41,6 +44,15 @@
         @endforeach
     </select>
     @error('category_id')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+<div class="card-body">
+    <input type="file" class="form-control @error('file_image') is-invalid @enderror" name="file_image"
+        id="inputFileImage">
+    @error('file_image')
         <div class="invalid-feedback">
             {{ $message }}
         </div>

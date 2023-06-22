@@ -103,36 +103,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="col-xl-6 col-xxl-7">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title mb-0">Encomendas fechadas por mês</h5>
-                        <form id="formGraph" method="GET" class="form prevent-scroll"
-                            action="{{ route('orders.index') }}">
-                            <input type="hidden" id="jsonClosedOrdersPerMonth" value="{{ $jsonClosedOrdersPerMonth }}">
-                            <select class="form-select-sm " name="year" id="year"
-                                onChange="document.getElementById('formGraph').submit()">
-                                <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
-                                </option>
-                                @for ($year = date('Y'); $year >= 2020; $year--)
-                                    <option value="{{ $year }}"
-                                        {{ old('year', $filterByYear) == $year ? 'selected' : '' }}>
-                                        {{ $year }}
-                                    </option>
-                                @endfor
-                            </select>
-                        </form>
-                    </div>
-                </div>
-                <div class="card-body py-3">
-                    <div class="chart chart-sm">
-                        <canvas id="chartjs-dashboard-line"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         </div>
     </div>
 @endsection

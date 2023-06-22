@@ -21,8 +21,18 @@ class ColorRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        if ($this->isMethod('post')) {
+            return [
+                'code' => 'required|string|max:255|unique:colors,code',
+                'name' => 'required|string|max:255',
+            ];
+        }
+
+        if ($this->isMethod('put')) {
+            return [
+                'code' => 'sometimes|string|max:255|unique:colors,code',
+                'name' => 'sometimes|string|max:255',
+            ];
+        }
     }
 }
