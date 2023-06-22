@@ -8,6 +8,7 @@
         @endforeach
     </select>
 </div>
+<br>
 <div class="d-flex">
     <select class="form-select" name="size" id="inputSize">
         <option value="XS" {{ old('size', $orderItem->size ?? 'size') === 'XS' ? 'selected' : '' }}>XS

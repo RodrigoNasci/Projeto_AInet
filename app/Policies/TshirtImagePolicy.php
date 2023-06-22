@@ -37,7 +37,7 @@ class TshirtImagePolicy
      */
     public function update(User $user, TshirtImage $tshirtImage): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**

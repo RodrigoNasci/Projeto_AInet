@@ -16,10 +16,15 @@ class OrderPolicy
         return $user->user_type == 'A';
     }
 
+    public function viewEncomendas(User $user): bool
+    {
+        return $user->user_type == 'C';
+    }
+
     /**
      * Determine whether the user can view the model.
      */
-    public function view(?User $user, Order $order): bool
+    public function view(User $user, Order $order): bool
     {
         return $user->user_type == 'A' || $user->id === $order->customer_id;
     }

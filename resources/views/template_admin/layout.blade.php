@@ -92,7 +92,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item" style="padding-top: 100%">
+                    <li class="sidebar-item" style="padding-top: 70%">
                         <hr>
                         <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
                             <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à
