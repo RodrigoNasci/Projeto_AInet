@@ -19,7 +19,7 @@
                         @csrf
                         @method('PUT')
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Preço Imagem Catálogo</h5>
+                            <h5 class="card-title mb-0">Preço Imagem Catálogo (€)</h5>
                         </div>
                         <div class="card-body">
                             <input type="number" class="form-control @error('unit_price_catalog') is-invalid @enderror"
@@ -32,7 +32,7 @@
                             @enderror
                         </div>
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Preço Imagem Própria</h5>
+                            <h5 class="card-title mb-0">Preço Imagem Própria (€)</h5>
                         </div>
                         <div class="card-body">
                             <input type="number" class="form-control @error('unit_price_own') is-invalid @enderror"
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Desconto Imagem Catálogo</h5>
+                            <h5 class="card-title mb-0">Desconto Imagem Catálogo (%)</h5>
                         </div>
                         <div class="card-body">
                             <input type="number"
@@ -60,7 +60,7 @@
                             @enderror
                         </div>
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Desconto Imagem Própria</h5>
+                            <h5 class="card-title mb-0">Desconto Imagem Própria (%)</h5>
                         </div>
                         <div class="card-body">
                             <input type="number"

@@ -166,6 +166,12 @@ class CartController extends Controller
                 // Atualiza quantidade
                 $cart[$key]->qty += $qty;
                 $price = Price::find(1);
+                // Atualiza também o preço unitário no caso de houver mudança dos preços por parte do Administrador
+                if ($orderItem->tshirtImage->customer) {
+                    $cart[$key]->unit_price = $price->unit_price_own;
+                } else {
+                    $cart[$key]->unit_price = $price->unit_price_catalog;
+                }
                 $cart[$key]->sub_total = $price->getPrice($orderItem->tshirtImage->customer, $cart[$key]->qty);
                 $htmlMessage = "Quantidade do item <strong>" . $orderItem->tshirtImage->name . "</strong> foi alterada.";
             }

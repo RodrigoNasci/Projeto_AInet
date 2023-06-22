@@ -97,7 +97,7 @@
                                     </h1>
                                 </div>
                             </div>
-                            <a href="{{ route('prices.edit', ['price' => $price]) }}" class="btn btn-primary">Gerir Preços
+                            <a href="{{ route('prices.edit', ['price' => $price]) }}" class="btn btn-primary">Alterar Preços
                             </a>
                         </div>
                     </div>
