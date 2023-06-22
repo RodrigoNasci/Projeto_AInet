@@ -13,7 +13,7 @@ class OrderPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->user_type == 'A';
+        return $user->user_type == 'A' ||$user->user_type == 'E';
     }
 
     public function viewEncomendas(User $user): bool
@@ -26,7 +26,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        return $user->user_type == 'A' || $user->id === $order->customer_id;
+        return $user->user_type == 'A' ||$user->user_type == 'E' || $user->id === $order->customer_id;
     }
 
     /**
@@ -42,7 +42,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order): bool
     {
-        return $user->user_type == 'A';
+        return $user->user_type == 'A' ||$user->user_type == 'E';
     }
 
     /**

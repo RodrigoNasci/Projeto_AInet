@@ -24,8 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     @if ((Auth::user()->user_type ?? '') == 'A')
-                        <li class="nav-item"><a class="nav-link active" aria-current="page"
-                                href="{{ route('dashboard.index') }}">Admin Panel</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('dashboard.index') }}">Admin Panel</a>
+                        </li>
+                    @elseif ((Auth::user()->user_type ?? '') == 'E')
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('orders.index') }}">Employee Panel</a>
+                        </li>
                     @endif
                     <li class="nav-item"><a class="nav-link" href="#!">About</a></li> <!-- about page-->
                     <li class="nav-item dropdown">
