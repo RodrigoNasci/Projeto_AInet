@@ -48,9 +48,15 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
     ->name('tshirt_images.minhas')
     ->middleware('auth');
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // Rota para obter cada imagem privada do cliente
 Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha');
 
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 // Rota para mostrar o catálogo de imagens
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
 
@@ -60,7 +66,12 @@ Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class
 Route::resource('tshirt_images', TshirtImageController::class);
 
 // Rota para mostrar o pdf relativo a uma encomenda (fatura)
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
+=======
+route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
+>>>>>>> Stashed changes
 
 Route::resource('orders', OrderController::class);
 
