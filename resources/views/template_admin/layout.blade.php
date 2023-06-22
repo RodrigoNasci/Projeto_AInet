@@ -59,7 +59,7 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-sign-up.html">
+                        <a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="grid"></i> <span
                                 class="align-middle">Categorias</span>
                         </a>
@@ -79,14 +79,14 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                        <a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="dollar-sign"></i> <span
                                 class="align-middle">Preços</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                        <a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cores
                                 T-Shirt</span>
                         </a>

@@ -105,9 +105,10 @@
                                         <a class="dropdown-item" href="{{ route('tshirt_images.minhas') }}">Minhas
                                             Imagens</a>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('orders.minhas') }}">Encomendas</a>
+                                    </li>
                                 @endif
-                                <li><a class="dropdown-item" href="{{ route('orders.minhas') }}">Encomendas</a>
-                                </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
