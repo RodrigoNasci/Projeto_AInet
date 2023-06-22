@@ -11,7 +11,7 @@ class DashboardPolicy
      */
     public function viewAny(User $user):bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'E';
+        return $user->user_type == 'A';
     }
 
 }
