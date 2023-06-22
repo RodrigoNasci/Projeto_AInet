@@ -46,7 +46,7 @@ Route::resource('tshirt_images', TshirtImageController::class);
 
 
 ///Orders
-Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')               //dont work
+Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')
     ->middleware('can:viewEncomendas, App\Model\Order');
 
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura')    //dont work
@@ -121,7 +121,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.
 
 
 ///Users
-Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy')
+Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy') //dont work
     ->middleware('can:delete, user');
 
 Route::resource('users', UserController::class)
@@ -145,7 +145,7 @@ Route::resource('users', UserController::class)
 
 
 ///Customers
-Route::delete('customers/{customer}/foto', [CustomerController::class, 'destroy_foto'])->name('customers.foto.destroy')
+Route::delete('customers/{customer}/foto', [CustomerController::class, 'destroy_foto'])->name('customers.foto.destroy') //dont work
     ->middleware('can:delete, customer');
 
 Route::resource('customers', CustomerController::class)
