@@ -34,8 +34,19 @@ class CartController extends Controller
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', $alertType);
         }
+        if($request->customer == null){
+
+            $htmlMessage = "Tem de dar Login ou Registar-se para fazer encomendas!";
+            return redirect()->back()
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'warning');
+        }
         $customer = $request->user()->customer;
+
         return view('cart.confirmar', compact('cart', 'customer', 'total'));
+
+
+
     }
 
     public function addToCart(TshirtImage $tshirt_image, Request $request): RedirectResponse

@@ -159,7 +159,7 @@
                                         <div class="d-flex justify-content-between mb-5">
                                             <h5 class="text-uppercase">Preço Total</h5>
                                             <h5>
-                                                <h5>{{ $total . '€' }}</h5>
+                                                <h5>{{ $total+5 . '€' }}</h5>
                                             </h5>
                                         </div>
                                         <a href="{{ route('cart.confirmar') }}">

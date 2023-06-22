@@ -28,8 +28,8 @@
                             <th scope="col">Tipo</th>
                             <th scope="col">Email</th>
                             <th scope="col">Bloqueado</th>
-                            <th scope="col">Detalhes</th>
                             <th scope="col">Alterar</th>
+                            <th scope="col">Apagar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,14 +48,6 @@
                                         @else
                                             <span class="badge bg-danger">Sim</span>
                                         @endif
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="text-center">
-                                        <a class="btn btn-sm btn-primary"
-                                            href="{{ route('customers.show', ['customer' => $user->customer]) }}">
-                                            <i class="text-white" data-feather="eye"></i>
-                                        </a>
                                     </div>
                                 </td>
                                 <td>
@@ -99,6 +91,14 @@
                                         </form>
                                     @endif
                                 </td>
+                                <td>
+                                    <button type="button" name="delete" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#confirmationModal"
+                                        data-msgLine1="Quer realmente apagar a conta <strong>&quot;{{ $user->name }}&quot;</strong>?"
+                                        data-action="{{ route('customers.destroy', ['customer' => $user->customer]) }}">
+                                        <i class="text-white" data-feather="delete"></i>
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -112,4 +112,11 @@
             {{ $users->withQueryString()->links() }}
         </div>
     </div>
+
+    @include('shared.confirmationDialog', [
+        'title' => 'Apagar Cliente',
+        'confirmationButton' => 'Apagar',
+        'formMethod' => 'DELETE',
+    ])
+
 @endsection

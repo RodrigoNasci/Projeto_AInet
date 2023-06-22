@@ -21,7 +21,7 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer): bool
     {
-        return $user->user_type == 'A' || $user->id === $customer->id;
+        return $user->user_type == 'C' || $user->id === $customer->id;
     }
 
     /**

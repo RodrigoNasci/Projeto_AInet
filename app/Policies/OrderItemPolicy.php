@@ -29,7 +29,7 @@ class OrderItemPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -37,7 +37,7 @@ class OrderItemPolicy
      */
     public function update(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -45,7 +45,7 @@ class OrderItemPolicy
      */
     public function delete(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderItemPolicy
      */
     public function restore(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -61,6 +61,6 @@ class OrderItemPolicy
      */
     public function forceDelete(User $user, OrderItem $orderItem): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 }

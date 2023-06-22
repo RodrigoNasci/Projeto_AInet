@@ -1,5 +1,7 @@
 import './adminkit';
 
+import './modal';
+
 document.addEventListener("DOMContentLoaded", function () {
     // Closed orders per month
     try {
