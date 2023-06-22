@@ -85,14 +85,14 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#">
+                    <li class="sidebar-item" {{ Route::currentRouteName() == 'colors.index' ? 'active' : '' }}>
+                        <a class="sidebar-link" href="{{ route('colors.index') }}">
                             <i class="align-middle" data-feather="image"></i> <span class="align-middle">Cores
                                 T-Shirt</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item" style="padding-top: 70%">
+                    <li class="sidebar-item" style="padding-top: 100%">
                         <hr>
                         <a class="sidebar-link" href="{{ route('tshirt_images.catalogo') }}">
                             <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Voltar à

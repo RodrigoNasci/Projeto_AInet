@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ColorController;
 
 
 /*
@@ -56,6 +57,8 @@ Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('or
 
 //Prices
 Route::resource('prices', PriceController::class);
+
+Route::resource('colors', ColorController::class);
 
 
 ///Cart
