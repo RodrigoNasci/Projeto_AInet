@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PriceController;
 
 
 /*
@@ -62,6 +63,8 @@ Route::resource('tshirt_images', TshirtImageController::class);
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura');
 
 Route::resource('orders', OrderController::class);
+
+Route::resource('prices', PriceController::class);
 
 
 // Vai para a página de edição do item do carrinho de compras

@@ -17,7 +17,7 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -33,7 +33,7 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
 
                                         <div class="col-auto">
                                             <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
+                                                <i class="align-middle" data-feather="tag"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                         <tbody>
                             @if ($tshirt_images->count() == 0)
                                 <tr>
-                                    <td colspan="6" class="text-center">Não existem encomendas</td>
+                                    <td colspan="6" class="text-center">Não existem imagens de T-Shirt</td>
                                 </tr>
                             @endif
                             @foreach ($tshirt_images as $tshirt_image)
@@ -145,7 +145,7 @@
                                     class="cursor-pointer">
                                     <td class="d-none d-xl-table-cell">{{ $tshirt_image->name }}</td>
                                     <td class="d-none d-xl-table-cell">
-                                        {{ $tshirt_image->category->name ?? 'Sem Categoria' }}</td>
+                                        {{ $tshirt_image->category->name }}</td>
                                     <td class="d-none d-xl-table-cell">
                                         {{ $tshirt_image->description }}
                                     </td>

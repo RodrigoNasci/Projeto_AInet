@@ -78,8 +78,8 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                    <li class="sidebar-item" {{ Route::currentRouteName() == 'prices.index' ? 'active' : '' }}>
+                        <a class="sidebar-link" href="{{ route('prices.index') }}">
                             <i class="align-middle" data-feather="dollar-sign"></i> <span
                                 class="align-middle">Preços</span>
                         </a>
@@ -123,7 +123,8 @@
                                     alt="" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="{{ route('users.show', ['user' => Auth::user()]) }}"><i
+                                <a class="dropdown-item"
+                                    href="{{ route('users.show', ['user' => Auth::user()]) }}"><i
                                         class="align-middle me-1" data-feather="user"></i> Profile</a>
                                 <!-- Profile route -->
                                 <div class="dropdown-divider"></div>

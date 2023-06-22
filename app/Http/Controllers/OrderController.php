@@ -115,7 +115,7 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
-        if($request->status == 'closed' && $order->status != 'closed'){
+        if ($request->status == 'closed' && $order->status != 'closed') {
             // if($request->user()->role != 'admin'){
 
             // }
@@ -134,7 +134,7 @@ class OrderController extends Controller
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Document</title>
-                <style>'. $styleContent .' </style>
+                <style>' . $styleContent . ' </style>
             </head>
             <body> <table class="body-wrap">
                     <tbody><tr><td></td>
@@ -144,7 +144,7 @@ class OrderController extends Controller
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img class="img-logo" src="'. asset("img/logo.png") .'" alt="logo">
+                                                <img class="img-logo" src="' . asset("img/logo.png") . '" alt="logo">
                                                 <span class="title-fatura">FATURA</span>
                                                 <br>
                                                 <br><br><br><br>
@@ -169,7 +169,7 @@ class OrderController extends Controller
                                                         <table class="invoice">
                                                             <tbody>
                                                             <tr>
-                                                                <td>Cliente: '. $order->customer->user->name .'<br>NIF: '. $order->nif .'<br>Data da fatura: '. date('Y-m-d') .'<br>Estado da encomenda: Fechado</td>
+                                                                <td>Cliente: ' . $order->customer->user->name . '<br>NIF: ' . $order->nif . '<br>Data da fatura: ' . date('Y-m-d') . '<br>Estado da encomenda: Fechado</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
@@ -182,20 +182,20 @@ class OrderController extends Controller
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>';
-                                                                        foreach ($order->orderItems as $orderItem) {
-                                                                            $pdfContent .= '
+            foreach ($order->orderItems as $orderItem) {
+                $pdfContent .= '
                                                                                                 <tr>
-                                                                                                    <td>'. $orderItem->tshirtImage->name . ' - ' . $orderItem->color->name . ' - ' . $orderItem->size . '</td>
-                                                                                                    <td class="center-column">'. $orderItem->qty .'</td>
-                                                                                                    <td class="alignright">'. $orderItem->sub_total .' €</td>
+                                                                                                    <td>' . $orderItem->tshirtImage->name . ' - ' . $orderItem->color->name . ' - ' . $orderItem->size . '</td>
+                                                                                                    <td class="center-column">' . $orderItem->qty . '</td>
+                                                                                                    <td class="alignright">' . $orderItem->sub_total . ' €</td>
                                                                                                 </tr>
                                                                                             ';
-                                                                                        }
+            }
 
-                                                                            $pdfContent .= '
+            $pdfContent .= '
                                                                             <tr class="total">
                                                                                 <td class="alignright" colspan="2">Total</td>
-                                                                                <td class="alignright">'. $order->total_price .'€</td>
+                                                                                <td class="alignright">' . $order->total_price . '€</td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -236,7 +236,7 @@ class OrderController extends Controller
             $order->save();
 
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com suceesso! Fatura disponível para download.";
-        }else{
+        } else {
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
         }
 

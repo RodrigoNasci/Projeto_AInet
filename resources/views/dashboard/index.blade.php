@@ -1,7 +1,6 @@
 @extends('template_admin.layout')
 
 @section('main')
-
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
             <div class="col-sm-6 col-xl-3">
@@ -9,7 +8,7 @@
                     <i class="text-primary" data-feather="trending-up" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Vendas de Hoje</p>
-                        <h6 class="mb-0">{{$todayOrders}}</h6>
+                        <h6 class="mb-0">{{ $todayOrders }}</h6>
                     </div>
                 </div>
             </div>
@@ -18,7 +17,7 @@
                     <i class="text-primary" data-feather="bar-chart-2" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Vendas Totais</p>
-                        <h6 class="mb-0">{{$totalOrders}}</h6>
+                        <h6 class="mb-0">{{ $totalOrders }}</h6>
                     </div>
                 </div>
             </div>
@@ -27,7 +26,7 @@
                     <i class="text-primary" data-feather="bar-chart" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Receita de Hoje</p>
-                        <h6 class="mb-0">{{$todayRevenue}}€</h6>
+                        <h6 class="mb-0">{{ $todayRevenue }}€</h6>
                     </div>
                 </div>
             </div>
@@ -36,7 +35,7 @@
                     <i class="text-primary" data-feather="pie-chart" style="height:53px; width:52px"></i>
                     <div class="ms-3">
                         <p class="mb-2">Receita Total</p>
-                        <h6 class="mb-0">{{$totalRevenue}}€</h6>
+                        <h6 class="mb-0">{{ $totalRevenue }}€</h6>
                     </div>
                 </div>
             </div>
@@ -49,7 +48,8 @@
                 <div class="bg-white text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Numero de Vendas</h6>
-                        <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('dashboard.index') }}">
+                        <form id="formGraph" method="GET" class="form prevent-scroll"
+                            action="{{ route('dashboard.index') }}">
                             {{-- Input hidden para mandar a variável para o javascript --}}
                             <input type="hidden" id="jsonOrdersPerMonth" value="{{ $jsonOrdersPerMonth }}">
                             <select class="form-select-sm " name="year" id="year"
@@ -76,7 +76,8 @@
                 <div class="bg-white text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Receita</h6>
-                        <form id="formGraph" method="GET" class="form prevent-scroll" action="{{ route('dashboard.index') }}">
+                        <form id="formGraph" method="GET" class="form prevent-scroll"
+                            action="{{ route('dashboard.index') }}">
                             {{-- Input hidden para mandar a variável para o javascript --}}
                             <input type="hidden" id="jsonRevenuePerMonth" value="{{ $jsonRevenuePerMonth }}">
                             <select class="form-select-sm " name="year" id="year"
@@ -111,11 +112,16 @@
 
                         <select class="form-select-sm" name="status"
                             onChange="document.getElementById('formFilters').submit()">
-                            <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os Estados</option>
-                            <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>Fechado</option>
-                            <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Pago</option>
-                            <option value="pending"{{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Pendente</option>
-                            <option value="canceled"{{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Cancelado</option>
+                            <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>Todos os
+                                Estados</option>
+                            <option value="closed" {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                Fechado</option>
+                            <option value="paid" {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>Pago
+                            </option>
+                            <option value="pending"{{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>
+                                Pendente</option>
+                            <option value="canceled"{{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>
+                                Cancelado</option>
                         </select>
 
                         <input type="text" name="customer" class="form-select-sm rounded mr-0"
@@ -143,7 +149,7 @@
                     <tbody>
                         @foreach ($orders as $order)
                             <tr>
-                                <td>{{ $order->date}}</td>
+                                <td>{{ $order->date }}</td>
                                 <td>{{ $order->customer_id }}</td>
                                 <td>{{ $order->customer->user->name ?? 'null' }}</td>
                                 <td>{{ $order->total_price }}€</td>
@@ -158,7 +164,8 @@
                                         <span class="badge bg-warning">{{ $order->status }}</span>
                                     @endif
                                 </td>
-                                <td><a class="btn btn-sm btn-primary" href="">Detalhes</a></td>
+                                <td><a class="btn btn-sm btn-primary"
+                                        href="{{ route('orders.show', ['order' => $order]) }}">Detalhes</a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -166,6 +173,4 @@
             </div>
         </div>
     </div>
-
 @endsection
-
