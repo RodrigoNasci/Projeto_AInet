@@ -61,8 +61,7 @@ class ColorController extends Controller
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
         } catch (\Exception $error) {
-            $url = route('colors.show', ['color' => $color]);
-            $htmlMessage = "Não foi possível apagar a cor <a href='$url'>#{$color->code}</a>
+            $htmlMessage = "Não foi possível apagar a cor #{$color->code}</a>
                         <strong>\"{$color->name}\"</strong> porque ocorreu um erro!";
             $alertType = 'danger';
         }

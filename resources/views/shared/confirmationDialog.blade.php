@@ -16,8 +16,7 @@
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
                 <a class="btn btn-primary" id="confirmationModalButton"
                     onclick="event.preventDefault(); document.getElementById('confirmationModalForm').submit();">{{ $confirmationButton ?? 'OK' }}</a>
-                <form id="confirmationModalForm" action="{{ $formAction ?? '#' }}" method="POST"
-                    style="display: none;">
+                <form id="confirmationModalForm" action="{{ $formAction ?? '' }}" method="POST" style="display: none;">
                     @csrf
                     <input type="hidden" name="_method" value="{{ $formMethod ?? 'POST' }}"
                         id="confirmationModalFormMethod">

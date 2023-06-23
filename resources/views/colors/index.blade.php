@@ -76,7 +76,7 @@
                                     <td class="text-end">
                                         <button type="button" name="delete" class="btn btn-danger mx-1" title="Eliminar"
                                             data-bs-toggle="modal" data-bs-target="#confirmationModal"
-                                            data-msgLine1="Quer realmente apagar a cor <strong>&quot;{{ $color->nome }}&quot;</strong>?"
+                                            data-msgLine1="Quer realmente apagar a cor <strong>&quot;{{ $color->name }}&quot;</strong>?"
                                             data-action="{{ route('colors.destroy', ['color' => $color]) }}">
                                             <i data-feather="trash"></i></button>
                                     </td>

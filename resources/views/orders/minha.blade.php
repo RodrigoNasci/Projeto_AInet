@@ -2,107 +2,100 @@
 
 @section('main')
     <section class="py-2">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="h3 mb-3"><strong>Detalhes</strong> Encomenda Nº <b>
-                            {{ str_pad($order->id, 2, '0', STR_PAD_LEFT) }}
-                        </b></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-lg-8 col-xxl-9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Informações da encomenda</h5>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-hover text-dark">
-                                <tbody>
-                                    <tr>
-                                        <td>Nome do cliente:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->customer->user->name ?? 'null' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Data da encomenda:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Notas sobre a encomenda:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->notes ?? '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>NIF:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->nif }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Endereço de envio:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->address }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tipo de pagamento:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->payment_type }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Referência de pagamento:</td>
-                                        <td class="d-none d-xl-table-cell">{{ $order->payment_ref }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Preço Total:</td>
-                                        <td class="d-none d-xl-table-cell">
-                                            {{ number_format($order->total_price, 2, ',', '.') }} €</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fa fa-file-pdf-o"></i>Fatura</td>
-                                        <td class="d-none d-xl-table-cell">
-                                            @if (isset($order->receipt_url))
-                                                <a target="_blank"
-                                                    href="{{ route('orders.fatura', ['receipt_url' => $order->receipt_url]) }}">{{ $order->receipt_url }}</a>
-                                            @else
-                                                Sem fatura
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-8 col-xxl-9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Items da encomenda</h5>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-hover text-dark">
-                                <thead>
-                                    <tr>
-                                        {{-- <th>ID</th>
-                                        <th>Nome da imagem</th>
-                                        <th>Código da cor</th>
-                                        <th>Tamanho</th>
-                                        <th>Quantidade</th>
-                                        <th>Preço Unitário</th>
-                                        <th>Subtotal</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- @foreach ($order->orderitems as $orderItem)
-                                        <tr>
-                                            <td>{{ $orderItem->id }}</td>
-                                            <td>{{ $orderItem->tshirtImage->name }}</td>
-                                            <td>{{ $orderItem->color_code }}</td>
-                                            <td>{{ $orderItem->size }}</td>
-                                            <td>{{ $orderItem->qty }}</td>
-                                            <td>{{ number_format($orderItem->unit_price, 2, ',', '.') }} €</td>
-                                            <td>{{ number_format($orderItem->sub_total, 2, ',', '.') }} €</td>
-                                        </tr>
-                                    @endforeach --}}
-                                </tbody>
-                            </table>
+        <section class="h-100 gradient-custom">
+            <div class="container py-5 h-100">
+                <h1 class="fw-bold mb-3 text-center text-black">Detalhe Encomenda</h1>
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-10 col-xl-8">
+                        <div class="card" style="border-radius: 10px;">
+                            <div class="card-header px-4 py-5">
+                                <h5 class="text-muted mb-0">Obrigado pela sua compra, <span
+                                        class="text-black">{{ $order->customer->user->name ?? 'null' }}</span>!
+                                </h5>
+                            </div>
+                            <div class="card-body p-4">
+                                @foreach ($order->orderItems as $item)
+                                    <div class="card shadow-0 border mb-4">
+
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="image-container">
+                                                        <img class="card-img-top max-height-img" id="tshirt-color"
+                                                            src="/storage/tshirt_base/{{ $item->color->code }}.jpg"
+                                                            alt="Background Image" />
+                                                        <img class="card-img-top max-height-img overlay-image"
+                                                            src="{{ $item->tshirtImage->fullImageUrl }}"
+                                                            alt="Overlay Image" />
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0">
+                                                        {{ $item->tshirtImage->name }}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">{{ $item->color->name }}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Qtd: {{ $item->qty }}</p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Preço Unitário:
+                                                        {{ $item->unit_price . '€' }}
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                                    <p class="text-muted mb-0 small">Preço Total:
+                                                        {{ $item->sub_total . '€' }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="d-flex justify-content-between pt-2">
+                                    <p class="fw-bold mb-0">Order Details</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between pt-2">
+                                    <p class="text-muted mb-0">Número Encomenda: {{ $item->order->id }}</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted mb-0">Data do Pedido: {{ $item->order->date }}
+                                    </p>
+                                </div>
+
+                                <div class="d-flex justify-content-between mb-5">
+                                    <p class="text-muted mb-0">
+                                        <i class="fas fa-file-pdf"></i>
+                                        Fatura:
+                                        @if (isset($item->order->receipt_url))
+                                            <a target="_blank"
+                                                href="{{ route('orders.fatura', ['receipt_url' => $item->order->receipt_url]) }}"
+                                                style="text-decoration: none;">
+                                                {{ $item->order->receipt_url }}</a>
+                                        @else
+                                            Sem fatura
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer border-0 px-4 py-5 bg-dark text-light">
+                                <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                                    Total
+                                    paid: <span
+                                        class="h2 mb-0 ms-2">{{ number_format($order->total_price, 2, ',', '.') . '€' }}</span>
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
     </section>
 @endsection

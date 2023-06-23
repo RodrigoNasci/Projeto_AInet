@@ -25,6 +25,7 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
+//Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create');
 
 Route::view('home', 'home');
 

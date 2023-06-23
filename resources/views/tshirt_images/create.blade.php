@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="card">
-                        @include('tshirt_images.shared.fields')
+                        @include('tshirt_images.shared.fields', ['insertFileImage' => true])
                         <div class="card-body text-left">
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary" name="ok">Confirmar</button>
