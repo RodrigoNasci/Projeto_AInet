@@ -13,6 +13,12 @@
         Estado Fechado
     </option>
 
+    @if ($readonlyData)
+        <option value="pending" disabled {{ $order->status == 'pending' ? 'selected' : '' }}>
+            Estado pendente
+        </option>
+    @endif
+
     @if($user == 'A')
         <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : '' }}>
             Estado Cancelado
