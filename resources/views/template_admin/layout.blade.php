@@ -132,11 +132,14 @@
                                     alt="" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item"
-                                    href="{{ route('users.show', ['user' => Auth::user()]) }}"><i
-                                        class="align-middle me-1" data-feather="user"></i> Profile</a>
-                                <!-- Profile route -->
-                                <div class="dropdown-divider"></div>
+                                @if ((Auth::user()->user_type ?? '') == 'A')
+                                    <a class="dropdown-item"
+                                        href="{{ route('users.show', ['user' => Auth::user()]) }}">
+                                        <i class="align-middle me-1" data-feather="user"></i> Profile
+                                    </a>
+                                    <!-- Profile route -->
+                                    <div class="dropdown-divider"></div>
+                                @endif
                                 <a class="dropdown-item"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sair

@@ -3,7 +3,7 @@
 @section('titulo', 'Cliente')
 
 @section('subtitulo')
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="padding-left: 1.5%">
         <li class="breadcrumb-item">Clientes</li>
         <li class="breadcrumb-item"><strong>{{ $customer->user->name }}</strong></li>
         <li class="breadcrumb-item active">Consultar</li>
@@ -23,12 +23,11 @@
                         Apagar Cliente
                     </button>
                     @if ((Auth::user()->user_type ?? '') == 'A')
-                    <a href="{{ route('customers.index') }}" class="btn btn-primary ms-3">Voltar</a>
-
+                        <a href="{{ route('customers.index') }}" class="btn btn-primary ms-3">Voltar</a>
                     @else
-                    <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="btn btn-secondary ms-3">
-                        Alterar Cliente
-                    </a>
+                        <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="btn btn-secondary ms-3">
+                            Alterar Cliente
+                        </a>
                     @endif
                 </div>
             </div>

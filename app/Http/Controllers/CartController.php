@@ -18,8 +18,9 @@ class CartController extends Controller
     public function show(Request $request): View
     {
         $cart = session('cart', []);
+        $originalPrice = $this->getOriginalPrice($cart);
         $total = $this->getCartTotal($cart);
-        return view('cart.show', compact('cart', 'total'));
+        return view('cart.show', compact('cart', 'total', 'originalPrice'));
     }
 
     public function confirmar(Request $request)
@@ -34,9 +35,8 @@ class CartController extends Controller
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', $alertType);
         }
-        if($request->customer == null){
-
-            $htmlMessage = "Tem de dar Login ou Registar-se para fazer encomendas!";
+        if ($request->user()->user_type == 'E' || $request->user()->user_type == 'A') {
+            $htmlMessage = "Apenas clientes podem confirmar encomendas.";
             return redirect()->back()
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'warning');
@@ -44,9 +44,6 @@ class CartController extends Controller
         $customer = $request->user()->customer;
 
         return view('cart.confirmar', compact('cart', 'customer', 'total'));
-
-
-
     }
 
     public function addToCart(TshirtImage $tshirt_image, Request $request): RedirectResponse
@@ -197,9 +194,7 @@ class CartController extends Controller
     {
         $total = 0;
         foreach ($cart as $key => $item) {
-            if ($key !== 'total') {
-                $total += $item->sub_total;
-            }
+            $total += $item->sub_total;
         }
         return $total;
     }
@@ -259,5 +254,14 @@ class CartController extends Controller
         return back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', $alertType);
+    }
+
+    private function getOriginalPrice($cart): float
+    {
+        $total = 0;
+        foreach ($cart as $key => $item) {
+            $total += $item->unit_price * $item->qty;
+        }
+        return $total;
     }
 }
