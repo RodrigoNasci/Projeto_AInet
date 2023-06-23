@@ -51,7 +51,8 @@
                         </a>
                     </li>
                     @if ((Auth::user()->user_type ?? '') == 'A')
-                        <li class="sidebar-item {{ Route::currentRouteName() == 'tshirt_images.index' ? 'active' : '' }}">
+                        <li
+                            class="sidebar-item {{ Route::currentRouteName() == 'tshirt_images.index' ? 'active' : '' }}">
                             <a href="{{ route('tshirt_images.index') }}" class="sidebar-link" href="pages-sign-in.html">
                                 <i class="align-middle" data-feather="image"></i> <span class="align-middle">Imagens
                                     T-Shirt</span>
@@ -74,7 +75,8 @@
 
                         <li class="sidebar-item" {{ Route::currentRouteName() == 'customers.index' ? 'active' : '' }}>
                             <a class="sidebar-link" href="{{ route('customers.index') }}">
-                                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
+                                <i class="align-middle" data-feather="users"></i> <span
+                                    class="align-middle">Clientes</span>
                             </a>
                         </li>
 

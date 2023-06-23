@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var colorSelect = document.getElementById('input-color');
     var tshirtImage = document.getElementById('tshirt-color');
 
-    // Função para atualizar a cor da tshirt
     function updateTshirtColor() {
         tshirtImage.src = "/storage/tshirt_base/" + colorSelect.value + ".jpg";
     }
