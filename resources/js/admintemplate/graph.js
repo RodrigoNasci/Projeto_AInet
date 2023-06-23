@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gradient_topCategories.addColorStop(0, "rgba(215, 227, 244, 1)");
         gradient_topCategories.addColorStop(1, "rgba(215, 227, 244, 1)");
         var stepSize = 1000;
-        createGraph("chartjs-top-categories", gradient_topCategories, quantitiesSold, "bar", "Most Sold Categories", categoryNames, stepSize);
+        createGraph("chartjs-top-categories", gradient_topCategories, quantitiesSold, "bar", "Quantity", categoryNames, stepSize);
     } catch (e) {
         console.log(e);
     }
