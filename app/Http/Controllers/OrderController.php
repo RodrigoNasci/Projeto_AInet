@@ -135,7 +135,7 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
-        if ($request->status == "canceled"){
+        if ($request->status == "canceled") {
             if ($request->user()->user_type != 'A') {
                 return redirect()->route('orders.index')->with('alert-msg', 'Não tem permissões para cancelar encomendas!')
                     ->with('alert-type', 'danger');;
@@ -259,16 +259,21 @@ class OrderController extends Controller
             $order->save();
 
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso! Fatura disponível para download.";
-            $this->sendMail($order, $pdfFilePath);
-
         } else {
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
         }
 
         $order->update($request->all());
 
+        if ($order->status == 'canceled') {
+            $emailPath = 'app/emailCanceled.html';
+        } else if ($order->status == 'closed') {
+            $emailPath = 'app/emailClosed.html';
+        }
+        $order->sendMail($order, $emailPath);
+
         //Se não for um admin redireciona para a lista de encomendas
-        if ($request->user()->user_type != 'A' && $request->status == 'closed'){
+        if ($request->user()->user_type != 'A' && $request->status == 'closed') {
             return redirect()->route('orders.index')
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
@@ -278,26 +283,4 @@ class OrderController extends Controller
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
     }
-
-    public function sendMail(Order $order)
-    {
-
-        $recipientEmail = $order->customer->user->email;
-        $recipientName = $order->customer->user->name;
-
-        $attachmentName = 'order_' . $order->id . '.pdf';
-        $attachmentPath = storage_path('app/pdf_receipts/' . $attachmentName);
-
-        $htmlContent = '<html><body><h1>Receipt</h1><p>Obrigado pela compra.</p></body></html>';
-
-        Mail::send([], [], function (Message $message) use ($recipientEmail, $recipientName, $attachmentPath, $attachmentName,  $htmlContent) {
-            $message->to($recipientEmail, $recipientName)
-                ->subject('Receipt')
-                ->attach($attachmentPath, ['as' => $attachmentName])
-                ->html($htmlContent, 'text/html');
-        });
-
-        return true;
-    }
 }
-

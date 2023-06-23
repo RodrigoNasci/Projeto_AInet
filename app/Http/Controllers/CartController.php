@@ -235,6 +235,8 @@ class CartController extends Controller
                             $orderItem->order_id = $order->id;
                             $orderItem->save();
                         }
+                        $emailPath = 'app/emailPending.html';
+                        $order->sendMail($order, $emailPath);
                     });
                     $htmlMessage = "Carrinho confirmado com sucesso.";
                     $request->session()->forget('cart');
@@ -242,9 +244,6 @@ class CartController extends Controller
                     return redirect()->route('cart.show')
                         ->with('alert-msg', $htmlMessage)
                         ->with('alert-type', 'success');
-                    // return redirect()->route('orders.minhas')
-                    //     ->with('alert-msg', $htmlMessage)
-                    //     ->with('alert-type', 'success');
                 }
             }
         } catch (\Exception $error) {
