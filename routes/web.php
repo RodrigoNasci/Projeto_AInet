@@ -207,15 +207,19 @@ Route::middleware('verified')->group(function () {
         ->only(['destroy']);
 
 
-
     //Categories
-    Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy')
+        ->middleware('can:delete,category');
+
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create')
+        ->middleware('can:create,App\Models\Category');
+
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store')
+        ->middleware('can:create,App\Models\Category');
 
     Route::resource('categories', CategoryController::class)
-        ->only(['create', 'store']);
-
-    Route::resource('categories', CategoryController::class)
-        ->only(['index']);
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\Category');
 
 
     ///Password

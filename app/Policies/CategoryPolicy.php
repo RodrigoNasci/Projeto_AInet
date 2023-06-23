@@ -13,7 +13,7 @@ class CategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
@@ -21,7 +21,7 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category): bool
     {
-        return true;
+        return $user->user_type == 'A';
     }
 
     /**
