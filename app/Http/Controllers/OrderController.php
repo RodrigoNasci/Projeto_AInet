@@ -9,9 +9,12 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\OrderRequest;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Message;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use PhpParser\Node\Expr\Cast\String_;
 
 class OrderController extends Controller
 {
@@ -249,6 +252,8 @@ class OrderController extends Controller
             $order->save();
 
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso! Fatura disponível para download.";
+            $this->sendMail($order, $pdfFilePath);
+
         } else {
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
         }
@@ -259,4 +264,24 @@ class OrderController extends Controller
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');
     }
+
+    public function sendMail(Order $order)
+    {
+
+        $recipientEmail = $order->customer->user->email;
+        $recipientName = $order->customer->user->name;
+
+        $attachmentName = 'order_' . $order->id . '.pdf';
+        $attachmentPath = storage_path('app/pdf_receipts/' . $attachmentName);
+
+
+        Mail::send([], [], function (Message $message) use ($recipientEmail, $recipientName, $attachmentPath, $attachmentName) {
+            $message->to($recipientEmail, $recipientName)
+                ->subject('Receipt')
+                ->attach($attachmentPath, ['as' => $attachmentName]);
+        });
+
+        return true;
+    }
 }
+

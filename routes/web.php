@@ -14,6 +14,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CategoryController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,8 @@ use App\Http\Controllers\CategoryController;
 Route::view('home', 'home');
 
 Auth::routes(['verify' => true]);
+
+Route::get('orders/sendEmail', [OrderController::class, 'sendEmail'])->middleware('can:update,order');
 
 ///Tshirts
 Route::get('/', [TshirtImageController::class, 'catalogo'])->name('root');
