@@ -36,7 +36,7 @@
                     @enderror
                 </div>
                 <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="form_tshirt_images">
-                    Submit Image
+                    Enviar Imagem
                 </button>
             </form>
         </div>
@@ -54,7 +54,6 @@
                                 <div class="image-container">
                                     <img class="card-img-top max-height-img" id="tshirt-color"
                                         src="/storage/tshirt_base/fafafa.jpg" alt="Background Image" />
-                                    {{-- #####TODO --}}
                                     <img class="card-img-top max-height-img overlay-image"
                                         src="{{ $tshirt_image->fullImageUrl }}">
                                 </div>
@@ -72,7 +71,13 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                         href="{{ route('tshirt_images.produto', ['tshirt_image' => $tshirt_image]) }}">View
-                                        image</a></div>
+                                        image</a>
+                                    <button type="button" name="delete" class="btn btn-outline-danger mt-auto"
+                                        title="Eliminar" data-bs-toggle="modal" data-bs-target="#confirmationModal"
+                                        data-msgLine1="Quer realmente apagar a imagem <strong>&quot;{{ $tshirt_image->name }}&quot;</strong>?"
+                                        data-action="{{ route('tshirt_images.destroy', ['tshirt_image' => $tshirt_image]) }}">
+                                        <i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,4 +85,10 @@
             </div>
         </div>
     </section>
+    @include('shared.confirmationDialog', [
+        'title' => 'Apagar Imagem de T-Shirt',
+        'msgLine2' => 'Clique no botão "Apagar" para confirmar a operação.',
+        'confirmationButton' => 'Apagar',
+        'formMethod' => 'DELETE',
+    ])
 @endsection
