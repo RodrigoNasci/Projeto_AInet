@@ -204,12 +204,15 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:update,customer');
 
     Route::resource('customers', CustomerController::class)
-        ->only(['destroy'])
-        ->middleware('can:delete,customer');
+        ->only(['destroy']);
+
 
 
     //Categories
     Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::resource('categories', CategoryController::class)
+        ->only(['create', 'store']);
 
     Route::resource('categories', CategoryController::class)
         ->only(['index']);

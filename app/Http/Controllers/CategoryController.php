@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Http\Requests\CategoryRequest;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -54,6 +55,36 @@ class CategoryController extends Controller
         $categories = $categoryQuery->paginate(10);
 
         return view('categories.index', compact('categories', 'filterByName', 'filterByYear', 'bestSellingCategoriesPerMonth', 'tshirt_imagesPerCategory'));
+    }
+
+    public function create(): View
+    {
+        $category = new Category();
+        return view('categories.create', compact('category'));
+    }
+
+    public function store(CategoryRequest $request): RedirectResponse
+    {
+        try {
+            $formData = $request->validated();
+            $category = DB::transaction(function () use ($formData, $request) {
+                $newCategory = new Category();
+                $newCategory->name = $formData['name'];
+                $newCategory->save();
+                return $newCategory;
+                });
+            $redirect = 'categories.index';
+
+
+            $htmlMessage = "Categoria <strong>\"{$category->name}\"</strong> foi criada com sucesso!";
+            $alertType = 'success';
+        } catch (\Exception $error) {
+            $htmlMessage = "Não foi possível criar a categoria!";
+            $alertType = 'danger';
+        }
+        return redirect()->route($redirect)
+            ->with('alert-msg', $htmlMessage)
+            ->with('alert-type', $alertType);
     }
 
     public function destroy(Category $category): RedirectResponse
