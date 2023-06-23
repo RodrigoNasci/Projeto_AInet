@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\CategoryController;
 
 
 /*
@@ -189,6 +190,11 @@ Route::resource('customers', CustomerController::class)
 Route::resource('customers', CustomerController::class)
     ->only(['destroy'])
     ->middleware('can:delete,customer');
+
+
+//Categories
+Route::resource('categories', CategoryController::class)
+    ->only(['index']);
 
 
 ///Password

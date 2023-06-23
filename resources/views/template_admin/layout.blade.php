@@ -58,8 +58,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">
+                        <li class="sidebar-item" {{ Route::currentRouteName() == 'categories.index' ? 'active' : '' }}>
+                            <a class="sidebar-link" href="{{ route('categories.index') }}">
                                 <i class="align-middle" data-feather="grid"></i> <span
                                     class="align-middle">Categorias</span>
                             </a>
