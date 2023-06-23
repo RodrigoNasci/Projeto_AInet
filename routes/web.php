@@ -205,9 +205,11 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:delete,customer');
 
 
-    //Categories
-    Route::resource('categories', CategoryController::class)
-        ->only(['index']);
+//Categories
+Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+Route::resource('categories', CategoryController::class)
+    ->only(['index']);
 
 
     ///Password
