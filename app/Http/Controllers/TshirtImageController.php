@@ -115,8 +115,11 @@ class TshirtImageController extends Controller
         return view('tshirt_images.show', compact('tshirt_image', 'categories'));
     }
 
-    public function showProduto(TshirtImage $tshirt_image): View
+    public function showProduto(Request $request, TshirtImage $tshirt_image): View
     {
+        if ($tshirt_image->customer_id !== null && $request->user()->id != $tshirt_image->customer_id) {
+            abort(403);
+        }
         $relatedProducts = TshirtImage::query()
             ->where('category_id', '=', $tshirt_image->category_id)
             ->where('id', '!=', $tshirt_image->id)
