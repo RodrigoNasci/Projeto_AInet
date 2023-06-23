@@ -56,7 +56,7 @@
                                 action="{{ route('categories.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="bestSellingCategoriesPerMonth" value="{{ $bestSellingCategoriesPerMonth }}">
-                                {{-- <select class="form-select-sm " name="year" id="year"
+                                <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
                                     <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
                                     </option>
@@ -66,7 +66,7 @@
                                             {{ $year }}
                                         </option>
                                     @endfor
-                                </select> --}}
+                                </select>
                             </form>
                         </div>
                     </div>
