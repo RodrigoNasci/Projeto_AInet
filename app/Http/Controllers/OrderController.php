@@ -78,14 +78,16 @@ class OrderController extends Controller
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth', 'userType'));
     }
 
-    public function show(Order $order): View
+    public function show(Order $order, Request $request): View
     {
-        return view('orders.show', compact('order'));
+        $userType = $request->user()->user_type;
+        return view('orders.show', compact('order', 'userType'));
     }
 
-    public function edit(Order $order): View
+    public function edit(Order $order, Request $request): View
     {
-        return view('orders.edit', compact('order'));
+        $userType = $request->user()->user_type;
+        return view('orders.edit', compact('order', 'userType'));
     }
 
     public function minhasEncomendas(Request $request): View
@@ -123,12 +125,14 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
-        if ($request->status == 'closed' && $order->status != 'closed') {
-            if ($request->user()->role != 'admin') {
-                return redirect()->route('orders.index')->with('alert-msg', 'Não tem permissões para fechar encomendas!')
+        if ($request->status == "canceled"){
+            if ($request->user()->user_type != 'A') {
+                return redirect()->route('orders.index')->with('alert-msg', 'Não tem permissões para cancelar encomendas!')
                     ->with('alert-type', 'danger');;
             }
+        }
 
+        if ($request->status == 'closed' && $order->status != 'closed') {
             //Criar pdf da fatura
 
             $pdf = new Dompdf();

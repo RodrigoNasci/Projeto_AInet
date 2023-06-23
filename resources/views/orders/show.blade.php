@@ -22,11 +22,10 @@
                             <tr>
                                 <td>Estado da encomenda:</td>
                                 <td class="d-none d-xl-table-cell">
-                                    @include('orders.shared.fields', ['readonlyData' => true])
+                                    @include('orders.shared.fields', ['readonlyData' => true, 'userType' => $userType])
                                 </td>
                                 <td>
-                                    <a href="{{ route('orders.edit', ['order' => $order]) }}"
-                                        class="btn btn-primary btn-sm">
+                                    <a href="{{ route('orders.edit', ['order' => $order]) }}" class="btn btn-primary btn-sm">
                                         Editar
                                     </a>
                                 </td>
