@@ -248,7 +248,7 @@ class OrderController extends Controller
             $order->receipt_url = $pdfFilename;
             $order->save();
 
-            $htmlMessage = "Encomenda " . $order->id . " foi alterada com suceesso! Fatura disponível para download.";
+            $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso! Fatura disponível para download.";
         } else {
             $htmlMessage = "Encomenda " . $order->id . " foi alterada com sucesso!";
         }
