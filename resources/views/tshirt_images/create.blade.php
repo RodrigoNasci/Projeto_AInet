@@ -3,7 +3,7 @@
 @section('main')
     <div class="container-fluid p-0">
         <div class="row mb-2">
-            <a href="javascript:void(0);" onclick="javascript:history.back();">
+            <a href="{{ route('tshirt_images.index') }}">
                 <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
             </a>
         </div>
