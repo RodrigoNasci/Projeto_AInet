@@ -25,22 +25,22 @@
                                 </div>
                             </div>
 
-                            {{-- <table class="table mb-0">
+                            <table class="table mb-0">
+                                @php $counter = 0 @endphp
                                 <tbody>
-                                    <tr>
-                                        <td>Chrome</td>
-                                        <td class="text-end">4306</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Firefox</td>
-                                        <td class="text-end">3801</td>
-                                    </tr>
-                                    <tr>
-                                        <td>IE</td>
-                                        <td class="text-end">1689</td>
-                                    </tr>
+                                    @foreach ($tshirt_imagesPerCategory as $category)
+                                        @if ($counter < 3)
+                                            <tr>
+                                                <td>{{ $category->name }}</td>
+                                                <td class="text-end">{{ $category->tshirt_count }}</td>
+                                            </tr>
+                                            @php $counter++ @endphp
+                                        @else
+                                            @break
+                                        @endif
+                                    @endforeach
                                 </tbody>
-                            </table> --}}
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                                 action="{{ route('categories.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="bestSellingCategoriesPerMonth" value="{{ $bestSellingCategoriesPerMonth }}">
-                                {{-- <select class="form-select-sm " name="year" id="year"
+                                <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
                                     <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
                                     </option>
@@ -66,7 +66,7 @@
                                             {{ $year }}
                                         </option>
                                     @endfor
-                                </select> --}}
+                                </select>
                             </form>
                         </div>
                     </div>
