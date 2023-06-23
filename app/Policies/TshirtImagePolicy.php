@@ -50,7 +50,7 @@ class TshirtImagePolicy
      */
     public function delete(User $user, TshirtImage $tshirtImage): bool
     {
-        return $user->user_type == 'A';
+        return $user->user_type == 'A' || $user->user_type == 'C';
     }
 
     /**
