@@ -25,6 +25,8 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
+
+
 Route::view('home', 'home');
 
 Auth::routes(['verify' => true]);
@@ -35,7 +37,7 @@ Route::get('/', [TshirtImageController::class, 'catalogo'])->name('root');
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
 
 Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])->name('tshirt_images.minhas')
-        ->middleware('can:viewMinhas,App\Models\TshirtImage');
+    ->middleware('can:viewMinhas,App\Models\TshirtImage');
 
 Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto');
 
@@ -203,9 +205,11 @@ Route::middleware('verified')->group(function () {
         ->middleware('can:delete,customer');
 
 
-    //Categories
-    Route::resource('categories', CategoryController::class)
-        ->only(['index']);
+//Categories
+Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+Route::resource('categories', CategoryController::class)
+    ->only(['index']);
 
 
     ///Password
@@ -214,5 +218,4 @@ Route::middleware('verified')->group(function () {
 
     Route::post('/password/change', [ChangePasswordController::class, 'store'])
         ->name('password.change.store');
-
 });

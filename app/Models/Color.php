@@ -27,8 +27,12 @@ class Color extends Model
     {
         return Attribute::make(
             get: function () {
-                return $this->code ? asset('storage/tshirt_base/' . $this->code . '.jpg') :
-                    asset('/img/plain_white.png');
+                // return $this->code ? asset('storage/tshirt_base/' . $this->code . '.jpg') :
+                //     asset('/img/plain_white.png');
+                if ($this->code != null && !$this->trashed()) {
+                    return asset('storage/tshirt_base/' . $this->code . '.jpg');
+                }
+                return asset('/img/plain_white.png');
             },
         );
     }

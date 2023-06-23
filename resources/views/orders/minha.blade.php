@@ -22,8 +22,7 @@
                                                 <div class="col-md-2">
                                                     <div class="image-container">
                                                         <img class="card-img-top max-height-img" id="tshirt-color"
-                                                            src="/storage/tshirt_base/{{ $item->color->code }}.jpg"
-                                                            alt="" />
+                                                            src="{{ $item->color->fullimageUrl }}" alt="" />
                                                         <img class="card-img-top max-height-img overlay-image"
                                                             src="{{ $item->tshirtImage->fullImageUrl }}" alt="" />
                                                     </div>

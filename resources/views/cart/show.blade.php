@@ -20,8 +20,9 @@
                                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                                     <div class="image-container">
                                                         <img class="card-img-top max-height-img" id="tshirt-color"
-                                                            src="/storage/tshirt_base/{{ $orderItem->color->code }}.jpg"
+                                                            src="{{ $orderItem->color->fullimageUrl ?? asset('/img/plain_white.png') }}"
                                                             alt="Background Image" />
+                                                        {{-- src="/storage/tshirt_base/{{ $orderItem->color->code }}.jpg" --}}
                                                         <img class="card-img-top max-height-img overlay-image"
                                                             src="{{ $orderItem->tshirtImage->fullImageUrl }}"
                                                             alt="Overlay Image" />

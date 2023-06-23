@@ -110,11 +110,11 @@
                         <tbody>
                             @if ($categories->count() == 0)
                                 <tr>
-                                    <td colspan="6" class="text-center">Não existem encomendas</td>
+                                    <td colspan="6" class="text-center">Não existem categorias</td>
                                 </tr>
                             @endif
                             @foreach ($categories as $category)
-                                <tr>
+                                <tr class="cursor-pointer">
                                     <td>{{ $category->id }}</td>
                                     <td class="d-none d-xl-table-cell">{{ $category->name }}</td>
                                     <td class="text-end">
@@ -122,7 +122,7 @@
                                         <button type="button" name="delete" class="btn btn-danger mx-1" title="Eliminar"
                                             data-bs-toggle="modal" data-bs-target="#confirmationModal"
                                             data-msgLine1="Quer realmente apagar a categoria <strong>&quot;{{ $category->name }}&quot;</strong>?"
-                                            data-action="">
+                                            data-action="{{ route('categories.destroy', ['category' => $category]) }}">
                                             <i data-feather="trash"></i></button>
 
                                     </td>
@@ -141,4 +141,11 @@
         </div>
 
     </div>
+    @include('shared.confirmationDialog', [
+        'title' => 'Apagar categoria',
+        'msgLine1' => 'As alterações efetuadas ao dados vão ser perdidas!',
+        'msgLine2' => 'Clique no botão "Apagar" para confirmar a operação.',
+        'confirmationButton' => 'Apagar',
+        'formMethod' => 'DELETE',
+    ])
 @endsection

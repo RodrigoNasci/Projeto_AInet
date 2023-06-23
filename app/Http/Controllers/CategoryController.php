@@ -26,8 +26,7 @@ class CategoryController extends Controller
             ->select('categories.name as category_name', DB::raw('SUM(order_items.qty) as total_sold'))
             ->whereIn('orders.status', ['closed', 'paid'])
             ->groupBy('categories.name')
-            ->orderByRaw('total_sold DESC')
-            ->take(10);
+            ->orderByRaw('total_sold DESC');
 
         //Query para obter a proporção de categorias nas imagens
         $tshirt_imagesPerCategory = Category::leftJoin('tshirt_images', 'categories.id', '=', 'tshirt_images.category_id')
@@ -55,5 +54,35 @@ class CategoryController extends Controller
         $categories = $categoryQuery->paginate(10);
 
         return view('categories.index', compact('categories', 'filterByName', 'filterByYear', 'bestSellingCategoriesPerMonth', 'tshirt_imagesPerCategory'));
+    }
+
+    public function destroy(Category $category): RedirectResponse
+    {
+        try {
+            $tshirtImagesCount = $category->tshirtImages()->withTrashed()->count();
+            if ($tshirtImagesCount > 0) {
+                $htmlMessage = "Não foi possível apagar a categoria <strong>{$category->name}</strong> porque existem {$tshirtImagesCount} imagens associadas!";
+                $alertType = 'danger';
+
+                return redirect()->route('categories.index')
+                    ->with('alert-msg', $htmlMessage)
+                    ->with('alert-type', $alertType);
+            }
+
+            $category->delete();
+            $htmlMessage = "Categoria <strong>{$category->name}</strong> foi eliminada com sucesso!";
+
+            return redirect()->route('categories.index')
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
+
+        } catch (\Illuminate\Database\QueryException $error) {
+            $htmlMessage = "Não foi possível apagar a categoria <strong>{$category->name}</strong> porque ocorreu um erro!";
+            $alertType = 'danger';
+
+            return redirect()->back()
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', $alertType);
+        }
     }
 }

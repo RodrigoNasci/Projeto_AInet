@@ -47,8 +47,14 @@ class TshirtImage extends Model
 
                 // Caso a tshirt faça parte do catálogo	então retorna diretamente a imagem a partir do public folder...
                 // Se a tshirt não fizer parte do catálogo então faz o route para o controller que retorna a imagem
-                return $this->image_url && $this->customer_id == null ? asset('storage/tshirt_images/' . $this->image_url) :
-                    route('tshirt_images.minha', ['image_url' => $this->image_url]);
+                if ($this->image_url && $this->customer_id == null) {
+                    return asset('storage/tshirt_images/' . $this->image_url);
+                }
+                if ($this->image_url && !$this->trashed()) {
+                    return route('tshirt_images.minha', ['image_url' => $this->image_url]);
+                }
+                // return $this->image_url && $this->customer_id == null ? asset('storage/tshirt_images/' . $this->image_url) :
+                //     route('tshirt_images.minha', ['image_url' => $this->image_url]);
             }
         );
     }
