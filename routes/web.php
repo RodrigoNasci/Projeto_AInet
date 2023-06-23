@@ -45,7 +45,7 @@ Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->na
     ->middleware('can:create,App\Models\TshirtImage');
 
 Route::post('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')
-    ->middleware('can:create,App\Models\TshirtImage');
+    ->middleware('can:store,App\Models\TshirtImage');
 
 Route::middleware('verified')->group(function () {
 

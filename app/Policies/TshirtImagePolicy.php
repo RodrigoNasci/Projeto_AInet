@@ -37,6 +37,11 @@ class TshirtImagePolicy
         return $user->user_type == 'A';
     }
 
+    public function store(User $user): bool
+    {
+        return $user->user_type == 'A'|| $user->user_type == 'C';
+    }
+
     /**
      * Determine whether the user can update the model.
      */
