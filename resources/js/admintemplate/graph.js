@@ -84,6 +84,28 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (e) {
         console.log(e);
     }
+
+    // Top 10 most sold categories per month
+    try {
+        var topCategories = JSON.parse(document.getElementById('bestSellingCategoriesPerMonth').value);
+
+        var categoryNames = topCategories.map(function (item) {
+            return item.category_name;
+        });
+
+        var quantitiesSold = topCategories.map(function (item) {
+            return item.total_sold;
+        });
+
+        var ctx_topCategories = document.getElementById("chartjs-top-categories").getContext("2d");
+        var gradient_topCategories = ctx_topCategories.createLinearGradient(0, 0, 0, 225);
+        gradient_topCategories.addColorStop(0, "rgba(215, 227, 244, 1)");
+        gradient_topCategories.addColorStop(1, "rgba(215, 227, 244, 1)");
+        var stepSize = 1000;
+        createGraph("chartjs-top-categories", gradient_topCategories, quantitiesSold, "bar", "Quantity", categoryNames, stepSize);
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 

@@ -87,6 +87,11 @@ class OrderController extends Controller
         return view('orders.minhas')->with('orders', $orders);
     }
 
+    public function minhaEncomenda(Order $order): View
+    {
+        return view('orders.minha')->with('order', $order);
+    }
+
     public function getFatura(Request $request)
     {
         $receipt_url = $request->receipt_url;
