@@ -58,6 +58,11 @@ class OrderController extends Controller
         }
 
         //Paginação (tabela)
+        if($request->user()->user_type != 'A'){
+            $orderQuery->where('status', '!=', 'closed');
+            $orderQuery->where('status', '!=', 'canceled');
+        }
+
         $orders = $orderQuery->paginate(10);
 
         //Array com o número de encomendas fechadas por mês
@@ -68,7 +73,9 @@ class OrderController extends Controller
         //converter para json (usado no gráfico (js))
         $jsonClosedOrdersPerMonth = json_encode($closedOrdersPerMonth);
 
-        return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth'));
+        $userType = $request->user()->user_type;
+
+        return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth', 'userType'));
     }
 
     public function show(Order $order): View
@@ -117,9 +124,9 @@ class OrderController extends Controller
     public function update(OrderRequest $request, Order $order): RedirectResponse
     {
         if ($request->status == 'closed' && $order->status != 'closed') {
-            // if($request->user()->role != 'admin'){
-
-            // }
+            if($request->user()->role != 'admin'){
+                return redirect()->route('orders.index')->with('error', 'Não tem permissões para fechar encomendas!');
+            }
 
             //Criar pdf da fatura
 
@@ -183,17 +190,17 @@ class OrderController extends Controller
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>';
-            foreach ($order->orderItems as $orderItem) {
-                $pdfContent .= '
-                                                                                                <tr>
-                                                                                                    <td>' . $orderItem->tshirtImage->name . ' - ' . $orderItem->color->name . ' - ' . $orderItem->size . '</td>
-                                                                                                    <td class="center-column">' . $orderItem->qty . '</td>
-                                                                                                    <td class="alignright">' . $orderItem->sub_total . ' €</td>
-                                                                                                </tr>
-                                                                                            ';
-            }
+                                                                            foreach ($order->orderItems as $orderItem) {
+                                                                                $pdfContent .= '
+                                                                                <tr>
+                                                                                <td>' . $orderItem->tshirtImage->name . ' - ' . $orderItem->color->name . ' - ' . $orderItem->size . '</td>
+                                                                                <td class="center-column">' . $orderItem->qty . '</td>
+                                                                                <td class="alignright">' . $orderItem->sub_total . ' €</td>
+                                                                                </tr>
+                                                                                ';
+                                                                            }
 
-            $pdfContent .= '
+                                                                            $pdfContent .= '
                                                                             <tr class="total">
                                                                                 <td class="alignright" colspan="2">Total</td>
                                                                                 <td class="alignright">' . $order->total_price . '€</td>
