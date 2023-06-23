@@ -51,7 +51,7 @@ Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['show'])
     ->middleware('can:view,tshirt_image');
 
-Route::resource('tshirt_images', TshirtImageController::class)
+Route::resource('tshirt_images', TshirtImageController::class)      //404 not found
     ->only(['create', 'store'])
     ->middleware('can:create,App\Models\TshirtImage');
 
@@ -159,7 +159,7 @@ Route::resource('users', UserController::class)
     ->only(['show'])
     ->middleware('can:view,user');
 
-Route::resource('users', UserController::class)
+Route::resource('users', UserController::class)     //404 not found
     ->only(['create', 'store'])
     ->middleware('can:create,App\Models\User');
 
