@@ -39,6 +39,9 @@ Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtI
 
 Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto');
 
+Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')->middleware('can:create,App\Models\TshirtImage');
+Route::post('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')->middleware('can:create,App\Models\TshirtImage');
+
 Route::middleware('verified')->group(function () {
 
     Route::resource('tshirt_images', TshirtImageController::class)
@@ -49,11 +52,8 @@ Route::middleware('verified')->group(function () {
         ->only(['show'])
         ->middleware('can:view,tshirt_image');
 
-    Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')->middleware('can:create,App\Models\TshirtImage');
-    Route::post('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')->middleware('can:create,App\Models\TshirtImage');
-
     Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('can:create,App\Models\User');
-    Route::get('users', [UserController::class, 'store'])->name('users.store')->middleware('can:create,App\Models\User');
+    Route::post('users', [UserController::class, 'store'])->name('users.store')->middleware('can:create,App\Models\User');
 
     Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha')
         ->middleware('can:viewMinhas,App\Models\TshirtImage');
