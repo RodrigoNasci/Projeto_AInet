@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Closed orders per month
     try {
         var ordersClosedPerMonth = JSON.parse(document.getElementById('jsonClosedOrdersPerMonth').value);
-        removerMesesNaoPassados(ordersClosedPerMonth);
+        ordersClosedPerMonth = removerMesesNaoPassados(ordersClosedPerMonth);
         var ctx_ordersClosedPerMonth = document.getElementById("chartjs-dashboard-line").getContext("2d");
         var gradient_ordersClosedPerMonth = ctx_ordersClosedPerMonth.createLinearGradient(0, 0, 0, 225);
         gradient_ordersClosedPerMonth.addColorStop(0, "rgba(215, 227, 244, 1)");
@@ -218,4 +218,5 @@ function removerMesesNaoPassados(content) {
         var currentMonth = new Date().getMonth() + 1;
         content = content.slice(0, currentMonth);
     }
+    return content;
 }
