@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Color extends Model
 {
     use HasFactory, SoftDeletes;
+
+    // Estava a dar problemas devido ao facto de não ter o updated_at
+    public $timestamps = false;
+
     protected $primaryKey = 'code';
     public $incrementing = false;
     protected $keyType = 'string';

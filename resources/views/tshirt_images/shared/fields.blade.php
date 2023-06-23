@@ -1,5 +1,6 @@
 @php
     $disabledStr = $readonlyData ?? false ? 'disabled' : '';
+    $disabledFileInput = $insertFileImage ?? false;
 @endphp
 <div class="card-header">
     <h5 class="card-title">Nome</h5>
@@ -49,12 +50,14 @@
         </div>
     @enderror
 </div>
-<div class="card-body">
-    <input type="file" class="form-control @error('file_image') is-invalid @enderror" name="file_image"
-        id="inputFileImage">
-    @error('file_image')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
-</div>
+@if ($disabledFileInput)
+    <div class="card-body">
+        <input type="file" class="form-control @error('file_image') is-invalid @enderror" name="file_image"
+            id="inputFileImage">
+        @error('file_image')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+@endif
