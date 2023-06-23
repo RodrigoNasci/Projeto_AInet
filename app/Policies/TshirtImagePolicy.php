@@ -29,11 +29,6 @@ class TshirtImagePolicy
         return $user->user_type == 'A';
     }
 
-    public function viewCatalogo(User $user, TshirtImage $tshirtImage): bool
-    {
-        return $user->user_type == 'A' || $user->user_type === $tshirtImage->customer_id;
-    }
-
     /**
      * Determine whether the user can create models.
      */

@@ -39,8 +39,7 @@ Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshir
 Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])->name('tshirt_images.minhas')
     ->middleware('can:viewMinhas,App\Models\TshirtImage');
 
-Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto')
-    ->middleware('can:viewCatalogo, tshirt_image');
+Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto');
 
 Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')
     ->middleware('can:create,App\Models\TshirtImage');
