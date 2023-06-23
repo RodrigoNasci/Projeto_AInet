@@ -1,4 +1,4 @@
-<div>
+<div class="d-flex">
     <select class="form-select" name="code" id="input-color">
         @foreach ($colors as $color)
             <option value="{{ $color->code }}"
@@ -8,8 +8,7 @@
         @endforeach
     </select>
 </div>
-<br>
-<div class="d-flex">
+<div class="d-flex mt-2">
     <select class="form-select" name="size" id="inputSize">
         <option value="XS" {{ old('size', $orderItem->size ?? 'size') === 'XS' ? 'selected' : '' }}>XS
         </option>
@@ -23,8 +22,7 @@
         </option>
     </select>
 </div>
-<br>
-<div class="d-flex">
+<div class="d-flex mt-2">
     <input class="form-control text-center me-3" name="qty" id="inputQty" type="number" min="1"
         style="max-width: 3rem" value="{{ old('qty', $orderItem->qty ?? 1) }}" />
 </div>

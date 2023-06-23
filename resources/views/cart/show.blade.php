@@ -92,26 +92,6 @@
                                                                 class="bi bi-pencil-fill"></i></button>
                                                     </form>
                                                 </div>
-                                                {{-- <div class="col-md-2" style="white-space: nowrap !important;">
-                                                    <div>
-                                                        Preço Unitario
-                                                        <h6 class="mb-0">{{ $orderItem->unit_price . '€' }}</h6>
-                                                    </div>
-                                                    <br>
-                                                    <div>
-                                                        Subtotal
-                                                        <h6 class="mb-0">{{ $orderItem->sub_total . '€' }}</h6>
-                                                    </div>
-                                                </div> --}}
-                                                {{-- <div class="col-md-1 col-lg-1 col-xl-1 text-end" style="float:right !important;">
-                                                    <form method="POST" action="{{ route('cart.remove') }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <input type="hidden" name="orderItem" value="{{ json_encode($orderItem) }}">
-                                                        <button type="submit" class="btn text-muted"><i class="fas fa-times"></i></button>
-                                                    </form>
-                                                 <a href="#!" class="text-muted"><i class="bi bi-pencil-fill"></i></a>
-                                                </div> --}}
                                             </div>
                                             <hr class="my-4">
                                         @endforeach
@@ -130,36 +110,37 @@
 
                                         <div class="d-flex justify-content-between mb-4">
                                             <h5 class="text-uppercase">{{ count($cart) . ' items' }}</h5>
-                                            <h5>{{ $total . '€' }}</h5>
                                         </div>
-
-                                        <h5 class="text-uppercase mb-3">Shipping</h5>
-
-                                        <div class="mb-4 pb-2">
-                                            <select class="select">
-                                                <option value="1">Standard-Delivery- €5.00</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                                <option value="4">Four</option>
-                                            </select>
-                                        </div>
-
-                                        <h5 class="text-uppercase mb-3">Give code</h5>
-
-                                        <div class="mb-5">
-                                            <div class="form-outline">
-                                                <input type="text" id="form3Examplea2"
-                                                    class="form-control form-control-lg" />
-                                                <label class="form-label" for="form3Examplea2">Enter your code</label>
-                                            </div>
-                                        </div>
-
                                         <hr class="my-4">
-
-                                        <div class="d-flex justify-content-between mb-5">
-                                            <h5 class="text-uppercase">Preço Total</h5>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h5 class="text-uppercase">Preço</h5>
                                             <h5>
-                                                <h5>{{ $total+5 . '€' }}</h5>
+                                                @if ($originalPrice == 0)
+                                                    <h5>-</h5>
+                                                @else
+                                                    <h5>{{ $originalPrice . '€' }}</h5>
+                                                @endif
+                                            </h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h5 class="text-uppercase">Desconto</h5>
+                                            <h5>
+                                                @if ($originalPrice - $total == 0)
+                                                    <h5>-</h5>
+                                                @else
+                                                    <h5>{{ $originalPrice - $total . '€' }}</h5>
+                                                @endif
+                                            </h5>
+                                        </div>
+                                        <hr class="my-4">
+                                        <div class="d-flex justify-content-between mb-5">
+                                            <h5 class="text-uppercase">Preço Final</h5>
+                                            <h5>
+                                                @if ($total == 0)
+                                                    <h5>-</h5>
+                                                @else
+                                                    <h5>{{ $total . '€' }}</h5>
+                                                @endif
                                             </h5>
                                         </div>
                                         <a href="{{ route('cart.confirmar') }}">
