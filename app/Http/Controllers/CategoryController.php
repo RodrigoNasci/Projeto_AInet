@@ -33,6 +33,14 @@ class CategoryController extends Controller
             ->take(10)
             ->get();
 
+        //Query para obter a proporção de categorias nas imagens
+        $tshirt_imagesPerCategory = Category::leftJoin('tshirt_images', 'categories.id', '=', 'tshirt_images.category_id')
+            ->select('categories.name', DB::raw('COUNT(tshirt_images.id) as tshirt_count'))
+            ->groupBy('categories.name')
+            ->orderByRaw('tshirt_count DESC')
+            ->take(10)
+            ->get();
+
         //Query para a tabela de encomendas
         $categoryQuery = Category::query();
 
@@ -44,6 +52,6 @@ class CategoryController extends Controller
         //Paginação (tabela)
         $categories = $categoryQuery->paginate(5);
 
-        return view('categories.index', compact('categories', 'filterByName', 'filterByYear', 'bestSellingCategoriesPerMonth'));
+        return view('categories.index', compact('categories', 'filterByName', 'filterByYear', 'bestSellingCategoriesPerMonth', 'tshirt_imagesPerCategory'));
     }
 }

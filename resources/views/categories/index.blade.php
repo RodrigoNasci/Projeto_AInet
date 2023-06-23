@@ -6,8 +6,49 @@
         <h1 class="h3 mb-3"><strong>Análise</strong> Categorias</h1>
 
         <div class="row">
-            <div class="col-xl-6 col-xxl-7 w-100">
-                <div class="card flex-fill w-100">
+
+            <div class="col-xl-6 col-xxl-6 d-flex w-100">
+
+                <div class="card flex-fill col-xl-6 w-50">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Proporção de categorias</h5>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <form>
+                                <input type="hidden" id="tshirt_imagesPerCategory" value="{{ $tshirt_imagesPerCategory }}">
+                            </form>
+                            <div class="py-3">
+                                <div class="chart chart-xs">
+                                    <canvas id="chartjs-dashboard-pie-category"></canvas>
+                                </div>
+                            </div>
+
+                            {{-- <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Chrome</td>
+                                        <td class="text-end">4306</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Firefox</td>
+                                        <td class="text-end">3801</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IE</td>
+                                        <td class="text-end">1689</td>
+                                    </tr>
+                                </tbody>
+                            </table> --}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GAP -->
+                <div style="width: 20px;"></div>
+
+                <div class="card flex-fill col-xl-6 w-50">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title mb-0">Categorias mais vendidas</h5>
@@ -15,7 +56,7 @@
                                 action="{{ route('categories.index') }}">
                                 {{-- Input hidden para mandar a variável para o javascript --}}
                                 <input type="hidden" id="bestSellingCategoriesPerMonth" value="{{ $bestSellingCategoriesPerMonth }}">
-                                <select class="form-select-sm " name="year" id="year"
+                                {{-- <select class="form-select-sm " name="year" id="year"
                                     onChange="document.getElementById('formGraph').submit()">
                                     <option value="" {{ old('year', $filterByYear) === '' ? 'selected' : '' }}>All
                                     </option>
@@ -25,12 +66,12 @@
                                             {{ $year }}
                                         </option>
                                     @endfor
-                                </select>
+                                </select> --}}
                             </form>
                         </div>
                     </div>
                     <div class="card-body py-3">
-                        <div class="chart chart-sm">
+                        <div class="chart align-self-center chart chart-lg">
                             <canvas id="chartjs-top-categories"></canvas>
                         </div>
                     </div>

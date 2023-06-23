@@ -99,14 +99,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
         var ctx_topCategories = document.getElementById("chartjs-top-categories").getContext("2d");
         var gradient_topCategories = ctx_topCategories.createLinearGradient(0, 0, 0, 225);
-        gradient_topCategories.addColorStop(0, "rgba(215, 227, 244, 1)");
-        gradient_topCategories.addColorStop(1, "rgba(215, 227, 244, 1)");
+        gradient_topCategories.addColorStop(0, "#0057a3");
+        gradient_topCategories.addColorStop(1, "rgba(0, 87, 163, 0.7)");
         var stepSize = 1000;
-        createGraph("chartjs-top-categories", gradient_topCategories, quantitiesSold, "bar", "Quantity", categoryNames, stepSize);
+        createGraph("chartjs-top-categories", gradient_topCategories, quantitiesSold, "bar", "Quantidade", categoryNames, stepSize);
+    } catch (e) {
+        console.log(e);
+    }
+
+    // Proporção de categorias
+    try {
+        var tshirt_imagesPerCategory = JSON.parse(document.getElementById('tshirt_imagesPerCategory').value);
+
+        var categoryNames = tshirt_imagesPerCategory.map(function (item) {
+            return item.name;
+        });
+
+        var tshirt_count = tshirt_imagesPerCategory.map(function (item) {
+            return item.tshirt_count;
+        });
+
+        createPieGraph("chartjs-dashboard-pie-category", tshirt_count, categoryNames);
     } catch (e) {
         console.log(e);
     }
 });
+
+function createPieGraph(elementId, graphData, labels) {
+        // Pie chart
+        var colors = [
+            "#0057a3",
+            "rgba(0, 87, 163, 0.9)",
+            "rgba(0, 87, 163, 0.8)",
+            "rgba(0, 87, 163, 0.7)",
+            "rgba(0, 87, 163, 0.6)",
+            "rgba(0, 87, 163, 0.5)",
+            "rgba(0, 87, 163, 0.4)",
+            "rgba(0, 87, 163, 0.3)",
+            "rgba(0, 87, 163, 0.2)",
+            "rgba(0, 87, 163, 0.15)"
+          ];
+
+        new Chart(document.getElementById(elementId), {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: graphData,
+                    backgroundColor: colors.slice(0, labels.length),
+                    borderColor: "transparent"
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                legend: {
+                    display: false
+                }
+            }
+        });
+}
 
 
 function createGraph(elementId, gradient, graphData, graphType, graphLabel, labels, stepSize = 100) {
