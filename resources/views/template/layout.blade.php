@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@
     @vite('resources/sass/shoptemplate/app.scss')
 </head>
 
-<body class="m-0 b-0">
+<body class="m-0 b-0 h-100">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 b-0">
         <div class="container-fluid px-3 px-lg-2 mx-3">
@@ -120,7 +120,7 @@
             </div>
         </div>
     </nav>
-    <main>
+    <main class="h-100">
             @if (session('alert-msg'))
                 @include('shared.messages')
             @endif
