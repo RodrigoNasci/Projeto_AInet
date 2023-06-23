@@ -3,7 +3,7 @@
 @section('titulo', 'Cliente')
 
 @section('subtitulo')
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="padding-left: 1.5%">
         <li class="breadcrumb-item">Clientes</li>
         <li class="breadcrumb-item"><strong>{{ $customer->user->name }}</strong></li>
         <li class="breadcrumb-item active">Consultar</li>
