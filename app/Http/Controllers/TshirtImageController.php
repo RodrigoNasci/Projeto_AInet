@@ -224,7 +224,7 @@ class TshirtImageController extends Controller
             ->with('alert-type', $alertType);
     }
 
-    public function destroy(TshirtImage $tshirt_image): RedirectResponse
+    public function destroy(Request $request, TshirtImage $tshirt_image): RedirectResponse
     {
         try {
             $tshirt_image->delete();
@@ -236,7 +236,12 @@ class TshirtImageController extends Controller
                 File::delete($path);
             }
             $htmlMessage = "Tshirt <strong>#{$tshirt_image->id} {$tshirt_image->name}</strong> foi eliminada com sucesso!";
-            return redirect()->route('tshirt_images.index')
+            if ($request->user()->customer != null) {
+                $redirect = 'tshirt_images.minhas';
+            } else {
+                $redirect = 'tshirt_images.index';
+            }
+            return redirect()->route($redirect)
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
         } catch (\Exception $error) {

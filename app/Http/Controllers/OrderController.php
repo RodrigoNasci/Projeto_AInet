@@ -83,7 +83,7 @@ class OrderController extends Controller
 
     public function minhasEncomendas(Request $request): View
     {
-        $orders = $request->user()->customer->orders;
+        $orders = $request->user()->customer->orders()->orderBy('date', 'desc')->get();
         return view('orders.minhas')->with('orders', $orders);
     }
 
