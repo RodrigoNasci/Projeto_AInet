@@ -81,9 +81,15 @@ class OrderController extends Controller
         return view('orders.index', compact('orders', 'closedOrders', 'paidOrders', 'pendingOrders', 'canceledOrders', 'filterByStatus', 'filterByDate', 'filterByCustomer', 'filterByYear', 'jsonClosedOrdersPerMonth', 'userType'));
     }
 
-    public function show(Order $order, Request $request): View
+    public function show(Order $order, Request $request)
     {
         $userType = $request->user()->user_type;
+        if (($order->status == 'closed' || $order->status == 'canceled') && $userType != 'A') {
+            return redirect()->route('orders.index')
+                ->with('alert-msg', "Não tem permissões para aceder a esta encomenda!")
+                ->with('alert-type', 'danger');
+        }
+
         return view('orders.show', compact('order', 'userType'));
     }
 
@@ -259,6 +265,13 @@ class OrderController extends Controller
         }
 
         $order->update($request->all());
+
+        //Se não for um admin redireciona para a lista de encomendas
+        if ($request->user()->user_type != 'A' && $request->status == 'closed'){
+            return redirect()->route('orders.index')
+                ->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
+        }
 
         return redirect()->route('orders.show', ['order' => $order])
             ->with('alert-msg', $htmlMessage)
