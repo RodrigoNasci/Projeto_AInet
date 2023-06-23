@@ -50,7 +50,7 @@ class CategoryController extends Controller
         }
 
         //Paginação (tabela)
-        $categories = $categoryQuery->paginate(5);
+        $categories = $categoryQuery->paginate(10);
 
         return view('categories.index', compact('categories', 'filterByName', 'filterByYear', 'bestSellingCategoriesPerMonth', 'tshirt_imagesPerCategory'));
     }
