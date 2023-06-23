@@ -20,13 +20,13 @@
                         data-bs-target="#confirmationModal"
                         data-msgLine1="Quer realmente apagar a conta <strong>&quot;{{ $customer->user->name }}&quot;</strong>?"
                         data-action="{{ route('customers.destroy', ['customer' => $customer]) }}">
-                        Apagar Cliente
+                        Apagar Conta
                     </button>
                     @if ((Auth::user()->user_type ?? '') == 'A')
                         <a href="{{ route('customers.index') }}" class="btn btn-primary ms-3">Voltar</a>
                     @else
                         <a href="{{ route('customers.edit', ['customer' => $customer]) }}" class="btn btn-secondary ms-3">
-                            Alterar Cliente
+                            Alterar Dados
                         </a>
                     @endif
                 </div>

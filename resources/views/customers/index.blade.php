@@ -66,7 +66,7 @@
                                             <div class="my-1 d-flex justify-content-center">
                                                 <button type="submit" class="btn btn-success" name="ok"
                                                     form="form_user_{{ $user->id }}">
-                                                    <i class="text-white" data-feather="lock"></i>
+                                                    <i class="text-white" data-feather="unlock"></i>
                                                 </button>
                                             </div>
                                         </form>
@@ -85,7 +85,7 @@
                                             <div class="my-1 d-flex justify-content-center">
                                                 <button type="submit" class="btn btn-danger" name="ok"
                                                     form="form_user_{{ $user->id }}">
-                                                    <i class="text-white" data-feather="unlock"></i>
+                                                    <i class="text-white" data-feather="lock"></i>
                                                 </button>
                                             </div>
                                         </form>
@@ -118,5 +118,4 @@
         'confirmationButton' => 'Apagar',
         'formMethod' => 'DELETE',
     ])
-
 @endsection
