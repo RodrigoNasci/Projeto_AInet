@@ -126,9 +126,6 @@
                                     <option value="" {{ old('status', $filterByStatus) === '' ? 'selected' : '' }}>
                                         Todos
                                         os Estados</option>
-                                    <option value="closed"
-                                        {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
-                                        Estado Fechado</option>
                                     <option value="paid"
                                         {{ old('status', $filterByStatus) === 'paid' ? 'selected' : '' }}>
                                         Estado Pago</option>
@@ -136,12 +133,17 @@
                                         {{ old('status', $filterByStatus) === 'pending' ? 'selected' : '' }}>Estado
                                         Pendente
                                     </option>
-                                    <option value="canceled"
-                                        {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado
-                                        Cancelado
-                                    </option>
+                                    @if($userType == 'A')
+                                        <option value="canceled"
+                                            {{ old('status', $filterByStatus) === 'canceled' ? 'selected' : '' }}>Estado
+                                            Cancelado
+                                        </option>
+                                        <option value="closed"
+                                            {{ old('status', $filterByStatus) === 'closed' ? 'selected' : '' }}>
+                                            Estado Fechado
+                                        </option>
+                                    @endif
                                 </select>
-
                                 <input type="date" id="date" name="date" class="form-select-sm"
                                     value="{{ old('date', $filterByDate) }}"
                                     onChange="document.getElementById('formFilters').submit()">
