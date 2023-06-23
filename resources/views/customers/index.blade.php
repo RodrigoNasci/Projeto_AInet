@@ -52,8 +52,8 @@
                                 </td>
                                 <td>
                                     @if ($user->blocked == 1)
-                                        <form id="form_user_{{ $user->id }}" novalidate class="needs-validation"
-                                            method="POST" action="{{ route('users.update', ['user' => $user]) }}"
+                                        <form id="form_user_{{ $user->id }}" class="needs-validation" method="POST"
+                                            action="{{ route('users.update', ['user' => $user]) }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
@@ -71,8 +71,8 @@
                                             </div>
                                         </form>
                                     @else
-                                        <form id="form_user_{{ $user->id }}" novalidate class="needs-validation"
-                                            method="POST" action="{{ route('users.update', ['user' => $user]) }}"
+                                        <form id="form_user_{{ $user->id }}" class="needs-validation" method="POST"
+                                            action="{{ route('users.update', ['user' => $user]) }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')

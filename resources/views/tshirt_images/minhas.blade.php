@@ -3,8 +3,8 @@
 @section('main')
     <section class="py-2">
         <div class="container px-4 px-lg-5 mt-5">
-            <form id="form_tshirt_images" novalidate class="needs-validation" method="POST"
-                action="{{ route('tshirt_images.store') }}" enctype="multipart/form-data">
+            <form id="form_tshirt_images" class="needs-validation" method="POST" action="{{ route('tshirt_images.store') }}"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3 form-floating">
                     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
