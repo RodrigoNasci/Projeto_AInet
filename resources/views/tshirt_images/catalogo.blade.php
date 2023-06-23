@@ -86,8 +86,6 @@
                                         <h5 class="fw-bolder">{{ $tshirt_image->name }}</h5>
                                         <!-- Product description -->
                                         <p class="description">{{ $tshirt_image->description }}</p>
-                                        <!-- Product price-->
-                                        <b>$40.00 - $80.00</b>
                                     </div>
                                 </div>
                                 <!-- Product actions-->

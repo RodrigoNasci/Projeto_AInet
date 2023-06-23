@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use App\Models\TshirtImage;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Price;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -116,8 +117,15 @@ class TshirtImageController extends Controller
 
     public function showProduto(TshirtImage $tshirt_image): View
     {
+        $relatedProducts = TshirtImage::query()
+            ->where('category_id', '=', $tshirt_image->category_id)
+            ->where('id', '!=', $tshirt_image->id)
+            ->where('customer_id', '=', null)
+            ->limit(4)
+            ->get();
+        $price = Price::find(1);
         $colors = Color::all();
-        return view('tshirt_images.produto', compact('tshirt_image', 'colors'));
+        return view('tshirt_images.produto', compact('tshirt_image', 'colors', 'price', 'relatedProducts'));
     }
 
     public function minhasTshirtImages(Request $request): View
