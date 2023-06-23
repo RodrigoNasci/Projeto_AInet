@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
+use Illuminate\Support\HtmlString;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -287,11 +288,13 @@ class OrderController extends Controller
         $attachmentName = 'order_' . $order->id . '.pdf';
         $attachmentPath = storage_path('app/pdf_receipts/' . $attachmentName);
 
+        $htmlContent = '<html><body><h1>Receipt</h1><p>Obrigado pela compra.</p></body></html>';
 
-        Mail::send([], [], function (Message $message) use ($recipientEmail, $recipientName, $attachmentPath, $attachmentName) {
+        Mail::send([], [], function (Message $message) use ($recipientEmail, $recipientName, $attachmentPath, $attachmentName,  $htmlContent) {
             $message->to($recipientEmail, $recipientName)
                 ->subject('Receipt')
-                ->attach($attachmentPath, ['as' => $attachmentName]);
+                ->attach($attachmentPath, ['as' => $attachmentName])
+                ->html($htmlContent, 'text/html');
         });
 
         return true;
