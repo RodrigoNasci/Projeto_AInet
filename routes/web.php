@@ -25,26 +25,17 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')->middleware('can:create,App\Models\TshirtImage');
-Route::get('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')->middleware('can:create,App\Models\TshirtImage');
-
-Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('can:create,App\Models\User');
-Route::get('users', [UserController::class, 'store'])->name('users.store')->middleware('can:create,App\Models\User');
-
 Route::view('home', 'home');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 ///Tshirts
 Route::get('/', [TshirtImageController::class, 'catalogo'])->name('root');
 
-Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])->name('tshirt_images.minhas')
-    ->middleware('can:viewMinhas,App\Models\TshirtImage');
-
-Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha')
-    ->middleware('can:viewMinhas,App\Models\TshirtImage');
-
 Route::get('/catalogo', [TshirtImageController::class, 'catalogo'])->name('tshirt_images.catalogo');
+
+Route::get('tshirt_images/minhas', [TshirtImageController::class, 'minhasTshirtImages'])->name('tshirt_images.minhas')
+        ->middleware('can:viewMinhas,App\Models\TshirtImage');
 
 Route::get('catalogo/tshirt_image/{tshirt_image}', [TshirtImageController::class, 'showProduto'])->name('tshirt_images.produto');
 
@@ -56,159 +47,173 @@ Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['show'])
     ->middleware('can:view,tshirt_image');
 
-Route::resource('tshirt_images', TshirtImageController::class)      //404 not found
-    ->only(['create', 'store'])
-    ->middleware('can:create,App\Models\TshirtImage');
 
-Route::resource('tshirt_images', TshirtImageController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:create,tshirt_image');
+Route::middleware('verified')->group(function () {
 
-Route::resource('tshirt_images', TshirtImageController::class)
-    ->only(['destroy'])
-    ->middleware('can:delete,tshirt_image');
+    Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')->middleware('can:create,App\Models\TshirtImage');
+    Route::get('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')->middleware('can:create,App\Models\TshirtImage');
 
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('can:create,App\Models\User');
+    Route::get('users', [UserController::class, 'store'])->name('users.store')->middleware('can:create,App\Models\User');
 
-///Orders
-Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')
-    ->middleware('can:viewEncomendas,App\Models\Order');
+    Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha')
+        ->middleware('can:viewMinhas,App\Models\TshirtImage');
 
-Route::get('encomendas/{order}', [OrderController::class, 'minhaEncomenda'])->name('orders.minha')
-    ->middleware('can:viewEncomendas,App\Models\Order');
+    // Route::resource('tshirt_images', TshirtImageController::class)      //404 not found
+    //     ->only(['create', 'store'])
+    //     ->middleware('can:create,App\Models\TshirtImage');
 
-Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura')
-    ->middleware('can:viewAny,App\Models\Order');
+    Route::resource('tshirt_images', TshirtImageController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:create,tshirt_image');
 
-
-Route::resource('orders', OrderController::class)
-    ->only(['index'])
-    ->middleware('can:viewAny,App\Models\Order');
-
-Route::resource('orders', OrderController::class)
-    ->only(['show'])
-    ->middleware('can:view,order');
-
-Route::resource('orders', OrderController::class)
-    ->only(['create', 'store'])
-    ->middleware('can:create,App\Models\Order');
-
-Route::resource('orders', OrderController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:update,order');
-
-Route::resource('orders', OrderController::class)
-    ->only(['destroy'])
-    ->middleware('can:delete,order');
+    Route::resource('tshirt_images', TshirtImageController::class)
+        ->only(['destroy'])
+        ->middleware('can:delete,tshirt_image');
 
 
-//Prices
-Route::resource('prices', PriceController::class)
-    ->only(['index'])
-    ->middleware('can:viewAny,App\Models\Price');
+    ///Orders
+    Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')
+        ->middleware('can:viewEncomendas,App\Models\Order');
 
-Route::resource('prices', PriceController::class)
-    ->only(['show'])
-    ->middleware('can:view,price');
+    Route::get('encomendas/{order}', [OrderController::class, 'minhaEncomenda'])->name('orders.minha')
+        ->middleware('can:viewEncomendas,App\Models\Order');
 
-Route::resource('prices', PriceController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:update,price');
+    Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura')
+        ->middleware('can:viewAny,App\Models\Order');
 
 
-///Colors
-Route::delete('colors/{color}/delete', [ColorController::class, 'destroy'])->name('colors.destroy')
-    ->middleware('can:delete,color');
+    Route::resource('orders', OrderController::class)
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\Order');
 
-Route::resource('colors', ColorController::class)
-    ->only(['index'])
-    ->middleware('can:viewAny,App\Models\Color');
+    Route::resource('orders', OrderController::class)
+        ->only(['show'])
+        ->middleware('can:view,order');
 
-Route::resource('colors', ColorController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:update,color');
+    Route::resource('orders', OrderController::class)
+        ->only(['create', 'store'])
+        ->middleware('can:create,App\Models\Order');
 
+    Route::resource('orders', OrderController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:update,order');
 
-///Cart
-Route::get('cart', [CartController::class, 'show'])->name('cart.show');
-
-Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar')
-    ->middleware('auth');
-
-Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
-
-Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
-
-Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
-
-Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
-
-Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateItemQuantity');
-
-Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+    Route::resource('orders', OrderController::class)
+        ->only(['destroy'])
+        ->middleware('can:delete,order');
 
 
-///Dashboard
-Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index')
-    ->middleware('can:viewAny,App\Models\User');
+    //Prices
+    Route::resource('prices', PriceController::class)
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\Price');
+
+    Route::resource('prices', PriceController::class)
+        ->only(['show'])
+        ->middleware('can:view,price');
+
+    Route::resource('prices', PriceController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:update,price');
 
 
-///Users
-Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy')
-    ->middleware('can:delete,user');
+    ///Colors
+    Route::delete('colors/{color}/delete', [ColorController::class, 'destroy'])->name('colors.destroy')
+        ->middleware('can:delete,color');
 
-Route::resource('users', UserController::class)
-    ->only(['index'])
-    ->middleware('can:viewAny,App\Models\User');
+    Route::resource('colors', ColorController::class)
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\Color');
 
-Route::resource('users', UserController::class)
-    ->only(['show'])
-    ->middleware('can:view,user');
-
-Route::resource('users', UserController::class)     //404 not found
-    ->only(['create', 'store'])
-    ->middleware('can:create,App\Models\User');
-
-Route::resource('users', UserController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:update,user');
-
-Route::resource('users', UserController::class)
-    ->only(['destroy'])
-    ->middleware('can:delete,user');
+    Route::resource('colors', ColorController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:update,color');
 
 
-///Customers
-Route::delete('customers/{customer}/foto', [CustomerController::class, 'destroy_foto'])->name('customers.foto.destroy')
-    ->middleware('can:delete,customer');
+    ///Cart
+    Route::get('cart', [CartController::class, 'show'])->name('cart.show');
 
-Route::resource('customers', CustomerController::class)
-    ->only(['index'])
-    ->middleware('can:viewAny,App\Models\Customer');
+    Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar')
+        ->middleware('auth');
 
-Route::resource('customers', CustomerController::class)
-    ->only(['show'])
-    ->middleware('can:view,customer');
+    Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
-Route::resource('customers', CustomerController::class)
-    ->only(['create', 'store']);
+    Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::resource('customers', CustomerController::class)
-    ->only(['update', 'edit'])
-    ->middleware('can:update,customer');
+    Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
 
-Route::resource('customers', CustomerController::class)
-    ->only(['destroy'])
-    ->middleware('can:delete,customer');
+    Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
+
+    Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateItemQuantity');
+
+    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 
 
-//Categories
-Route::resource('categories', CategoryController::class)
-    ->only(['index']);
+    ///Dashboard
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index')
+        ->middleware('can:viewAny,App\Models\User');
 
 
-///Password
-Route::get('/password/change', [ChangePasswordController::class, 'show'])
-    ->name('password.change.show');
+    ///Users
+    Route::delete('users/{user}/foto', [UserController::class, 'destroy_foto'])->name('users.foto.destroy')
+        ->middleware('can:delete,user');
 
-Route::post('/password/change', [ChangePasswordController::class, 'store'])
-    ->name('password.change.store');
+    Route::resource('users', UserController::class)
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\User');
+
+    Route::resource('users', UserController::class)
+        ->only(['show'])
+        ->middleware('can:view,user');
+
+    Route::resource('users', UserController::class)     //404 not found
+        ->only(['create', 'store'])
+        ->middleware('can:create,App\Models\User');
+
+    Route::resource('users', UserController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:update,user');
+
+    Route::resource('users', UserController::class)
+        ->only(['destroy'])
+        ->middleware('can:delete,user');
+
+
+    ///Customers
+    Route::delete('customers/{customer}/foto', [CustomerController::class, 'destroy_foto'])->name('customers.foto.destroy')
+        ->middleware('can:delete,customer');
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['index'])
+        ->middleware('can:viewAny,App\Models\Customer');
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['show'])
+        ->middleware('can:view,customer');
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['create', 'store']);
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['update', 'edit'])
+        ->middleware('can:update,customer');
+
+    Route::resource('customers', CustomerController::class)
+        ->only(['destroy'])
+        ->middleware('can:delete,customer');
+
+
+    //Categories
+    Route::resource('categories', CategoryController::class)
+        ->only(['index']);
+
+
+    ///Password
+    Route::get('/password/change', [ChangePasswordController::class, 'show'])
+        ->name('password.change.show');
+
+    Route::post('/password/change', [ChangePasswordController::class, 'store'])
+        ->name('password.change.store');
+
+});
