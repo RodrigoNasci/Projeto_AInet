@@ -117,7 +117,7 @@ class TshirtImageController extends Controller
 
     public function showProduto(Request $request, TshirtImage $tshirt_image): View
     {
-        if ($request->user() == null || ($tshirt_image->customer_id !== null && $request->user()->id != $tshirt_image->customer_id && $request->user()->user_type != 'A')) {
+        if ($request->user() == null && ($tshirt_image->customer_id !== null && $request->user()->id != $tshirt_image->customer_id && $request->user()->user_type != 'A')) {
             abort(403);
         }
         $relatedProducts = TshirtImage::query()
