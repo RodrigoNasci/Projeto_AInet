@@ -61,9 +61,8 @@ class ColorController extends Controller
                 ->with('alert-msg', $htmlMessage)
                 ->with('alert-type', 'success');
         } catch (\Exception $error) {
-            // $htmlMessage = "Não foi possível apagar a cor #{$color->code}</a>
-            //             <strong>\"{$color->name}\"</strong> porque ocorreu um erro!";
-            $htmlMessage = $error->getMessage();
+            $htmlMessage = "Não foi possível apagar a cor #{$color->code}</a>
+                        <strong>\"{$color->name}\"</strong> porque ocorreu um erro!";
             $alertType = 'danger';
         }
         return back()
