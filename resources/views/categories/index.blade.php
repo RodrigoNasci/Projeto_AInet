@@ -37,12 +37,15 @@
                 </div>
             </div>
         </div>
+
+        <h1> <a href="{{ route('tshirt_images.create') }}" class="btn btn-primary btn-sm">Adicionar nova categoria</a></h1>
+
         <div class="row">
-            <div class="col-12 col-lg-8 col-xxl-8">
+            <div class="col-12 col-lg-8 col-xxl-12">
                 <div class="card flex-fill d-flex">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h5 class="card-title mb-0">Categorias</h5>
-                        <div>
+
                             <form id="formFilters" method="GET" class="form prevent-scroll"
                                 action="{{ route('categories.index') }}">
 
@@ -54,7 +57,6 @@
                                 </button>
 
                             </form>
-                        </div>
                     </div>
                     <table class="table table-hover my-0">
                         <thead>
@@ -89,51 +91,6 @@
                     </table>
                 </div>
             </div>
-
-
-
-            <div class="col-12 col-lg-4 col-xxl-4">
-                <div class="card flex-fill d-flex">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Gerir categorias</h5>
-                        <hr>
-                        <div>
-                        <h5 class="card-title mb-2">Alterar categoria</h5>
-                        <form id="formGerir" method="POST" class="form prevent-scroll"
-                            action="{{ route('categories.index') }}">
-                            @csrf
-                            @method('PUT')
-                                <span>ID</span><br>
-                                <input type="text" name="id" class="form-select-sm rounded mr-0" placeholder="id da categoria"/>
-                                <br>
-                                <span>Nome</span><br>
-                                <input type="text" name="name" class="form-select-sm rounded mr-0" placeholder="Nome da categoria"/>
-                                <br>
-                                <button type="submit" class="btn mt-2 p-1 btn-success">
-                                    Alterar
-                                </button>
-                        </form>
-
-
-                            <hr>
-
-                            <h5 class="card-title mb-2">Criar nova categoria</h5>
-
-                            <form id="formGerir" method="POST" class="form prevent-scroll" action="{{ route('categories.index') }}">
-                            @csrf
-                            @method('PUT')
-                                <span>Nome</span><br>
-                                <input type="text" name="name" class="form-select-sm rounded mr-0" placeholder="Nome da categoria" />
-                                <br>
-                                <button type="submit" class="btn mt-2 mb-1 p-1 btn-primary">
-                                    Criar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <div class="row">
