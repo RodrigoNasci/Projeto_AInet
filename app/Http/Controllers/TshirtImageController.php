@@ -174,7 +174,7 @@ class TshirtImageController extends Controller
             ->with('alert-type', 'success');
     }
 
-    public function create()
+    public function create(TshirtImage $tshirtImage)
     {
         $tshirt_image = new TshirtImage();
         $categories = Category::all();

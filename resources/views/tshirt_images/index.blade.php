@@ -94,8 +94,9 @@
                 </div>
             </div>
         </div>
-        <h1 class="h3 mb-3"> <a href="{{ route('tshirt_images.create') }}" class="btn btn-primary">Adicionar Imagem
-                T-Shirt</a></h1>
+        <h1 class="h3 mb-3">
+            <a href="{{ route('tshirt_images.create') }}" class="btn btn-primary">Adicionar Imagem T-Shirt</a>
+        </h1>
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 w-100">
                 <div class="card flex-fill d-flex">

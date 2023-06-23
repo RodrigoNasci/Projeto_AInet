@@ -48,7 +48,7 @@ Route::resource('tshirt_images', TshirtImageController::class)
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['show'])
-    ->middleware('can:view,tshirtImage');
+    ->middleware('can:view,tshirt_image');
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['create', 'store'])
@@ -56,11 +56,11 @@ Route::resource('tshirt_images', TshirtImageController::class)
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['update', 'edit'])
-    ->middleware('can:create,tshirtImage');
+    ->middleware('can:create,tshirt_image');
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['destroy'])
-    ->middleware('can:delete,tshirtImage');
+    ->middleware('can:delete,tshirt_image');
 
 
 ///Orders
