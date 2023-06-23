@@ -119,7 +119,7 @@
                                                 @if ($originalPrice == 0)
                                                     <h5>-</h5>
                                                 @else
-                                                    <h5>{{ $originalPrice . '€' }}</h5>
+                                                    <h5> {{ number_format($originalPrice, 2, ',', '.') . '€' }}</h5>
                                                 @endif
                                             </h5>
                                         </div>
@@ -129,7 +129,8 @@
                                                 @if ($originalPrice - $total == 0)
                                                     <h5>-</h5>
                                                 @else
-                                                    <h5>{{ $originalPrice - $total . '€' }}</h5>
+                                                    <h5>{{ number_format($originalPrice - $total, 2, ',', '.') . '€' }}
+                                                    </h5>
                                                 @endif
                                             </h5>
                                         </div>
@@ -140,7 +141,7 @@
                                                 @if ($total == 0)
                                                     <h5>-</h5>
                                                 @else
-                                                    <h5>{{ $total . '€' }}</h5>
+                                                    <h5>{{ number_format($total, 2, ',', '.') . '€' }}</h5>
                                                 @endif
                                             </h5>
                                         </div>
