@@ -98,11 +98,16 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer): RedirectResponse
+    public function destroy(Request $request, Customer $customer): RedirectResponse
     {
         $user = $customer->user;
         $customer->delete();
         $user->delete();
+        if ($request->user()->user_type == 'A') {
+            $htmlMessage = "User #{$customer->id} <strong>\"{$customer->user->name}\"</strong> foi apagado com sucesso!";
+            return back()->with('alert-msg', $htmlMessage)
+                ->with('alert-type', 'success');
+        }
         $htmlMessage = "User #{$customer->id} <strong>\"{$customer->user->name}\"</strong> foi apagado com sucesso!";
         return redirect()->route('tshirt_images.catalogo')
             ->with('alert-msg', $htmlMessage)

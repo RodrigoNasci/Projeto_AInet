@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="card">
-                    <form id="form_prices" novalidate class="needs-validation" method="POST"
+                    <form id="form_prices" class="needs-validation" method="POST"
                         action="{{ route('prices.update', ['price' => $price]) }}">
                         @csrf
                         @method('PUT')
@@ -24,7 +24,8 @@
                         <div class="card-body">
                             <input type="number" class="form-control @error('unit_price_catalog') is-invalid @enderror"
                                 name="unit_price_catalog" id="inputUnitPriceCatalog"
-                                value="{{ old('unit_price_catalog', $price->unit_price_catalog) }}" min="0">
+                                value="{{ old('unit_price_catalog', $price->unit_price_catalog) }}" min="0"
+                                step="any">
                             @error('unit_price_catalog')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -37,7 +38,7 @@
                         <div class="card-body">
                             <input type="number" class="form-control @error('unit_price_own') is-invalid @enderror"
                                 name="unit_price_own" id="inputUnitPriceOwn"
-                                value="{{ old('unit_price_own', $price->unit_price_own) }}" min="0">
+                                value="{{ old('unit_price_own', $price->unit_price_own) }}" min="0" step="any">
                             @error('unit_price_own')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -52,7 +53,7 @@
                                 class="form-control @error('unit_price_catalog_discount') is-invalid @enderror"
                                 name="unit_price_catalog_discount" id="inputUnitPriceCatalogDiscount"
                                 value="{{ old('unit_price_catalog_discount', $price->unit_price_catalog_discount) }}"
-                                min="0">
+                                min="0" step="any">
                             @error('unit_price_catalog_discount')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -66,8 +67,8 @@
                             <input type="number"
                                 class="form-control @error('unit_price_own_discount') is-invalid @enderror"
                                 name="unit_price_own_discount" id="inputUnitPriceOwnDiscount"
-                                value="{{ old('unit_price_own_discount', $price->unit_price_own_discount) }}"
-                                min="0">
+                                value="{{ old('unit_price_own_discount', $price->unit_price_own_discount) }}" min="0"
+                                step="any">
                             @error('unit_price_own_discount')
                                 <div class="invalid-feedback">
                                     {{ $message }}

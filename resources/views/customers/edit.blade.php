@@ -12,7 +12,7 @@
 
 @section('main')
     <div class="container py-4">
-        <form id="form_customer" novalidate class="needs-validation" method="POST"
+        <form id="form_customer" class="needs-validation" method="POST"
             action="{{ route('customers.update', ['customer' => $customer]) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')

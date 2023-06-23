@@ -21,7 +21,7 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="card">
-                    <form id="form_tshirt_images" novalidate class="needs-validation" method="POST"
+                    <form id="form_tshirt_images" class="needs-validation" method="POST"
                         action="{{ route('tshirt_images.update', ['tshirt_image' => $tshirt_image]) }}">
                         @csrf
                         @method('PUT')

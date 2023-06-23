@@ -3,9 +3,9 @@
 @section('main')
     <div class="container-fluid p-0">
 
-            <a href="javascript:void(0);" onclick="javascript:history.back();">
-                <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
-            </a>
+        <a href="javascript:void(0);" onclick="javascript:history.back();">
+            <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
+        </a>
 
         <div class="row mt-3">
             <h1 class="h3 mb-3"><strong>Detalhes</strong> Encomenda Nº <b> {{ str_pad($order->id, 2, '0', STR_PAD_LEFT) }}
@@ -14,26 +14,31 @@
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 d-flex w-100">
                 <div class="card flex-fill">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Informações da encomenda</h5>
-                </div>
-                <table class="table table-hover my-0 mt-0 text-dark">
-                    <tbody>
-                        <tr>
-                            <td>Estado da encomenda:</td>
-                            <form method="POST" action="{{ route('orders.update', ['order' => $order]) }}" class="needs-validation" novalidate>
-                                @csrf
-                                @method('PUT')
-                                <td class="d-none d-xl-table-cell">
-                                    @include('orders.shared.fields', ['readonlyData' => false, 'userType' => $userType])
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary btn-sm"> Confirmar</button>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Informações da encomenda</h5>
+                    </div>
+                    <table class="table table-hover my-0 mt-0 text-dark">
+                        <tbody>
+                            <tr>
+                                <td>Estado da encomenda:</td>
+                                <form method="POST" action="{{ route('orders.update', ['order' => $order]) }}"
+                                    class="needs-validation">
+                                    @csrf
+                                    @method('PUT')
+                                    <td class="d-none d-xl-table-cell">
+                                        @include('orders.shared.fields', [
+                                            'readonlyData' => false,
+                                            'userType' => $userType,
+                                        ])
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-sm"> Confirmar</button>
                                 </form>
-                                    <a href="{{ route('orders.show', ['order' => $order]) }}" type="submit" class="btn btn-danger btn-sm">Cancelar</a>
-                            </td>
+                                <a href="{{ route('orders.show', ['order' => $order]) }}" type="submit"
+                                    class="btn btn-danger btn-sm">Cancelar</a>
+                                </td>
 
-                        </tr>
+                            </tr>
 
                             <tr>
                                 <td>ID do cliente: </td>
@@ -124,34 +129,34 @@
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-9 d-flex w-100">
                 <div class="card flex-fill">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Items da encomenda</h5>
-                </div>
-                <table class="table table-hover my-0 mt-0 text-dark">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Nome da imagem</th>
-                            <th>Código da cor</th>
-                            <th>Tamanho</th>
-                            <th>Quantidade</th>
-                            <th>Preço Unitário</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($order->orderitems as $orderItem)
-                        <tr>
-                            <td>{{ $orderItem->id }}</td>
-                            <td>{{ $orderItem->tshirtImage->name }}</td>
-                            <td>{{ $orderItem->color_code }}</td>
-                            <td>{{ $orderItem->size }}</td>
-                            <td>{{ $orderItem->qty }}</td>
-                            <td>{{ $orderItem->unit_price }} €</td>
-                            <td>{{ $orderItem->sub_total }} €</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Items da encomenda</h5>
+                    </div>
+                    <table class="table table-hover my-0 mt-0 text-dark">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Nome da imagem</th>
+                                <th>Código da cor</th>
+                                <th>Tamanho</th>
+                                <th>Quantidade</th>
+                                <th>Preço Unitário</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($order->orderitems as $orderItem)
+                                <tr>
+                                    <td>{{ $orderItem->id }}</td>
+                                    <td>{{ $orderItem->tshirtImage->name }}</td>
+                                    <td>{{ $orderItem->color_code }}</td>
+                                    <td>{{ $orderItem->size }}</td>
+                                    <td>{{ $orderItem->qty }}</td>
+                                    <td>{{ $orderItem->unit_price }} €</td>
+                                    <td>{{ $orderItem->sub_total }} €</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

@@ -11,8 +11,8 @@
         <div class="row">
             <h1 class="h3 mb-3"><strong>Criar</strong> Imagem T-Shirt</h1>
         </div>
-        <form id="form_tshirt_images" novalidate class="needs-validation" method="POST"
-            action="{{ route('tshirt_images.store') }}" enctype="multipart/form-data">
+        <form id="form_tshirt_images" class="needs-validation" method="POST" action="{{ route('tshirt_images.store') }}"
+            enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-12 col-lg-6">
