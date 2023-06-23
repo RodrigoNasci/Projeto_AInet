@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <h1> <a href="{{ route('tshirt_images.create') }}" class="btn btn-primary btn-sm">Adicionar nova categoria</a></h1>
+        <h1> <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm">Adicionar nova categoria</a></h1>
 
         <div class="row">
             <div class="col-12 col-lg-8 col-xxl-12">
