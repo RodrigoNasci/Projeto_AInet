@@ -11,14 +11,14 @@ class TshirtImagePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(?User $user): bool
+    public function viewAny(User $user): bool
     {
         return $user->user_type == 'A';
     }
 
-    public function viewMinhas(?User $user): bool
+    public function viewMinhas(User $user): bool
     {
-        return $user->user_type == 'C';
+        return $user->user_type == 'A' || $user->user_type == 'C';
     }
 
     /**

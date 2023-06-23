@@ -13,7 +13,7 @@ class OrderPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'E';
+        return $user->user_type != '';
     }
 
     public function viewEncomendas(User $user): bool
