@@ -55,7 +55,7 @@ class TshirtImagePolicy
      */
     public function delete(User $user, TshirtImage $tshirtImage): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'A' || $user->id === $tshirtImage->customer_id;
     }
 
     /**
