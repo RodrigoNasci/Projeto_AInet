@@ -25,7 +25,11 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-//Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create');
+Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->name('tshirt_images.create')->middleware('can:create,App\Models\TshirtImage');
+Route::get('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')->middleware('can:create,App\Models\TshirtImage');
+
+Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('can:create,App\Models\User');
+Route::get('users', [UserController::class, 'store'])->name('users.store')->middleware('can:create,App\Models\User');
 
 Route::view('home', 'home');
 
