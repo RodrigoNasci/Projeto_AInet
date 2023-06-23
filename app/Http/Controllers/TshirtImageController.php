@@ -133,13 +133,9 @@ class TshirtImageController extends Controller
 
     public function minhasTshirtImages(Request $request): View
     {
-        // Só um utilizador registado é que pode aceder a esta página
-        // Redirecionar para a página de login ou register
-        // (Utilizei um middleware para fazer isto só por enquanto)
-
-        // Apenas mostra as tshirts do user autenticado.
-        // Ainda faltam verificações para o caso de o user não ser um cliente
-        // Porque se não as relações dão null.
+        if ($request->user()->email_verified_at == null) {
+            return view('auth.verify');
+        }
         $tshirt_images = $request->user()->customer->tshirtImages;
         return view('tshirt_images.minhas')->with('tshirt_images', $tshirt_images);
     }
