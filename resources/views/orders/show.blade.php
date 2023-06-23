@@ -81,7 +81,6 @@
                         <tbody>
                             <tr>
                                 <td>Estado da encomenda:</td>
-
                                 <td class="d-none d-xl-table-cell">
                                     @include('orders.shared.fields', ['readonlyData' => true])
                                 </td>

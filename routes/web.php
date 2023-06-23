@@ -68,6 +68,9 @@ Route::resource('tshirt_images', TshirtImageController::class)
 Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')
     ->middleware('can:viewEncomendas,App\Models\Order');
 
+// MIDDLEWARE TODO -> VER A SUA PRÓPRIA ENCOMENDA
+Route::get('encomendas/{order}', [OrderController::class, 'minhaEncomenda'])->name('orders.minha');
+
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura')
     ->middleware('can:viewAny,App\Models\Order');
 
