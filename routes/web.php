@@ -53,7 +53,7 @@ Route::resource('tshirt_images', TshirtImageController::class)
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['create', 'store'])
-    ->middleware('can:create, App\Models\TshirtImage');
+    ->middleware('can:create,App\Models\TshirtImage');
 
 Route::resource('tshirt_images', TshirtImageController::class)
     ->only(['update', 'edit'])
@@ -68,8 +68,8 @@ Route::resource('tshirt_images', TshirtImageController::class)
 Route::get('encomendas', [OrderController::class, 'minhasEncomendas'])->name('orders.minhas')
     ->middleware('can:viewEncomendas,App\Models\Order');
 
-// MIDDLEWARE TODO -> VER A SUA PRÓPRIA ENCOMENDA
-Route::get('encomendas/{order}', [OrderController::class, 'minhaEncomenda'])->name('orders.minha');
+Route::get('encomendas/{order}', [OrderController::class, 'minhaEncomenda'])->name('orders.minha')
+    ->middleware('can:viewEncomendas,App\Models\Order');
 
 Route::get('orders/fatura/{receipt_url?}', [OrderController::class, 'getFatura'])->name('orders.fatura')
     ->middleware('can:viewAny,App\Models\Order');
@@ -160,7 +160,8 @@ Route::resource('users', UserController::class)
     ->middleware('can:view,user');
 
 Route::resource('users', UserController::class)
-    ->only(['create', 'store']);
+    ->only(['create', 'store'])
+    ->middleware('can:create,App\Models\User');
 
 Route::resource('users', UserController::class)
     ->only(['update', 'edit'])

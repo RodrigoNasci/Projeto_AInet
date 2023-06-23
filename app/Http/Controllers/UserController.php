@@ -59,8 +59,9 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function create(User $user): View
+    public function create(): View
     {
+        $user = new User();
         return view('users.create', compact('user'));
     }
 
