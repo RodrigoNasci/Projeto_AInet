@@ -88,8 +88,7 @@ class CustomerController extends Controller
             return $customer;
         });
         $url = route('customers.show', ['customer' => $customer]);
-        $htmlMessage = "Cliente <a href='$url'>#{$customer->user->id}</a>
-                        <strong>\"{$customer->name}\"</strong> foi alterado com sucesso!";
+        $htmlMessage = "Os seus dados foram alterados com sucesso!";
         return redirect()->back()
             ->with('alert-msg', $htmlMessage)
             ->with('alert-type', 'success');

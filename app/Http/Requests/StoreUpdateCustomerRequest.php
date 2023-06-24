@@ -29,7 +29,23 @@ class StoreUpdateCustomerRequest extends FormRequest
             'nif'=>'nullable|digits:9',
             'address'=>'nullable|string|max:60',
             'default_payment_type'=>'nullable|in:VISA,PAYPAL,MC',
-            'default_payment_ref'=>'nullable|string|max:255',
+            'default_payment_ref' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('default_payment_type') === 'VISA' || $this->input('default_payment_type') === 'MC') {
+                        if (!preg_match('/^\d{16}$/', $value)) {
+                            $fail('Se o pagamento é VISA OU MC a referência de pagamento corresponde ao número do
+                            cartão de crédito e deverá ter 16 dígitos.');
+                        }
+                    } elseif ($this->input('default_payment_type') === 'PAYPAL') {
+                        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                            $fail('Se o pagamento é PAYPAL a referência de pagamento deverá ser um email válido.');
+                        }
+                    }
+                },
+            ],
             'name'=>'required|string|max:255',
             'email' => [
                 'required',
