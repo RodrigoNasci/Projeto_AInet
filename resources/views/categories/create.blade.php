@@ -2,12 +2,11 @@
 
 @section('main')
     <div class="container-fluid p-0">
-        <div class="row mb-2">
+        <div class="mb-2">
             <a href="javascript:void(0);" onclick="javascript:history.back();">
                 <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
             </a>
         </div>
-
         <div class="row">
             <h1 class="h3 mb-3"><strong>Criar</strong> nova categoria</h1>
         </div>

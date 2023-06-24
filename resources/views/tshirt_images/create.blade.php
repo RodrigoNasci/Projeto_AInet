@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="container-fluid p-0">
-        <div class="row mb-2">
+        <div class="mb-2">
             <a href="{{ route('tshirt_images.index') }}">
                 <i class="fa fa-arrow-circle-left fa-3x" aria-hidden="true"></i>
             </a>
