@@ -18,7 +18,7 @@ class TshirtImagePolicy
 
     public function viewMinhas(User $user): bool
     {
-        return $user->user_type == 'A' || $user->user_type == 'C';
+        return $user->user_type == 'C';
     }
 
     /**
@@ -39,7 +39,7 @@ class TshirtImagePolicy
 
     public function store(User $user): bool
     {
-        return $user->user_type == 'A'|| $user->user_type == 'C';
+        return $user->user_type == 'A' || $user->user_type == 'C';
     }
 
     /**

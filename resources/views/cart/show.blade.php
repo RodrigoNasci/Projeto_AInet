@@ -67,12 +67,15 @@
 
                                                 <div class="col-md-2 text-nowrap">
                                                     <h6 class="text-muted">Preço Unitario</h6>
-                                                    <h6 class="text-black mb-0">{{ $orderItem->unit_price . '€' }}</h6>
+                                                    <h6 class="text-black mb-0">
+                                                        {{ number_format($orderItem->unit_price, 2, ',', '.') . '€' }}
+                                                    </h6>
                                                 </div>
 
                                                 <div class="col-md-2">
                                                     <h6 class="text-muted">Subtotal</h6>
-                                                    <h6 class="text-black mb-0">{{ $orderItem->sub_total . '€' }}</h6>
+                                                    <h6 class="text-black mb-0">
+                                                        {{ number_format($orderItem->sub_total, 2, ',', '.') . '€' }}</h6>
                                                 </div>
 
                                                 <div class="col-md-1">

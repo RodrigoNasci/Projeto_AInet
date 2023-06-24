@@ -113,7 +113,7 @@ class CartController extends Controller
     }
 
 
-    public function updateCartItem(TshirtImage $tshirt_image, Request $request): RedirectResponse
+    public function updateCartItem(TshirtImage $tshirt_image, CartRequest $request): RedirectResponse
     {
         $orderItemAntigo = new OrderItem();
         $orderItemAntigo->fill(json_decode($request->input('item'), true));

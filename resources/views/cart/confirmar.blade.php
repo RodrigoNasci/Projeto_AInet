@@ -36,13 +36,14 @@
                                 </div>
                                 <div class="col-md-1">
                                     <h6 class="my-0">Price</h6>
-                                    <span class="text-muted">{{ $item->unit_price . '€' }}</span>
+                                    <span
+                                        class="text-muted">{{ number_format($item->unit_price, 2, ',', '.') . '€' }}</span>
                                 </div>
                             </li>
                         @endforeach
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (EUR)</span>
-                            <strong>{{ $total . '€' }}</strong>
+                            <strong>{{ number_format($total, 2, ',', '.') . '€' }}</strong>
                         </li>
                     </ul>
                 </div>
