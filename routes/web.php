@@ -53,7 +53,7 @@ Route::post('tshirt_images', [TshirtImageController::class, 'store'])->name('tsh
 
 
 ///Cart
-Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');       //404 why?
+Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
 
 Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
@@ -84,10 +84,6 @@ Route::middleware('verified')->group(function () {
 
     Route::get('tshirt_images/minhas/{image_url?}', [TshirtImageController::class, 'getPrivateTshirtImage'])->name('tshirt_images.minha')
         ->middleware('can:viewMinhas,App\Models\TshirtImage');
-
-    // Route::resource('tshirt_images', TshirtImageController::class)      //404 not found
-    //     ->only(['create', 'store'])
-    //     ->middleware('can:create,App\Models\TshirtImage');
 
     Route::resource('tshirt_images', TshirtImageController::class)
         ->only(['update', 'edit'])
@@ -218,13 +214,13 @@ Route::middleware('verified')->group(function () {
 
 
     //Categories
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store')
+        ->middleware('can:create,App\Models\Category');
+
     Route::delete('categories/{category}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy')
         ->middleware('can:delete,category');
 
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create')
-        ->middleware('can:create,App\Models\Category');
-
-    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store')       //403 in admins why?
         ->middleware('can:create,App\Models\Category');
 
     Route::resource('categories', CategoryController::class)
