@@ -5,8 +5,8 @@
         <header class="py-5 header_background text-center p-0 m-0">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-left text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this awesome t-shirt designs</p>
+                    <h1 class="display-4 fw-bolder">ImagineShirt</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Catálogo</p>
                 </div>
             </div>
         </header>
