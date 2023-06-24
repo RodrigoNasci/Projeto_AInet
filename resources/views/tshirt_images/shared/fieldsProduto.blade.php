@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div>
     <select class="form-select @error('code') is-invalid @enderror" name="code" id="input-color">
         @foreach ($colors as $color)
             <option value="{{ $color->code }}"
@@ -13,7 +13,8 @@
         </div>
     @enderror
 </div>
-<div class="d-flex mt-2">
+
+<div class="mt-2">
     <select class="form-select @error('size') is-invalid @enderror" name="size" id="inputSize">
         <option value="XS" {{ old('size', $orderItem->size ?? 'size') === 'XS' ? 'selected' : '' }}>XS
         </option>
