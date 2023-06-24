@@ -32,6 +32,7 @@ Route::view('home', 'home');
 
 Auth::routes(['verify' => true]);
 
+///Send receipt mail
 Route::get('orders/sendEmail', [OrderController::class, 'sendEmail'])->middleware('can:update,order');
 
 ///Tshirts
@@ -50,6 +51,24 @@ Route::get('tshirt_images/create', [TshirtImageController::class, 'create'])->na
 Route::post('tshirt_images', [TshirtImageController::class, 'store'])->name('tshirt_images.store')
     ->middleware('can:store,App\Models\TshirtImage');
 
+
+///Cart
+Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');       //404 why?
+
+Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
+
+Route::get('cart', [CartController::class, 'show'])->name('cart.show');
+
+Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
+
+Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateItemQuantity');
+
+Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+
+
+///Verified Mail
 Route::middleware('verified')->group(function () {
 
     Route::resource('tshirt_images', TshirtImageController::class)
@@ -139,22 +158,10 @@ Route::middleware('verified')->group(function () {
 
 
     ///Cart
-    Route::get('cart', [CartController::class, 'show'])->name('cart.show');
-
     Route::get('cart/confirmar', [CartController::class, 'confirmar'])->name('cart.confirmar')
         ->middleware('auth');
 
-    Route::post('cart/{tshirt_image}', [CartController::class, 'addToCart'])->name('cart.add');
 
-    Route::delete('cart', [CartController::class, 'removeFromCart'])->name('cart.remove');
-
-    Route::post('cart/edit', [CartController::class, 'editCartItem'])->name('cart.editCartItem');
-
-    Route::put('cart/{tshirt_image}', [CartController::class, 'updateCartItem'])->name('cart.update');
-
-    Route::put('cart', [CartController::class, 'updateItemQty'])->name('cart.updateItemQuantity');
-
-    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 
 
     ///Dashboard
@@ -174,7 +181,7 @@ Route::middleware('verified')->group(function () {
         ->only(['show'])
         ->middleware('can:view,user');
 
-    Route::resource('users', UserController::class)     //404 not found
+    Route::resource('users', UserController::class)
         ->only(['create', 'store'])
         ->middleware('can:create,App\Models\User');
 
@@ -217,7 +224,7 @@ Route::middleware('verified')->group(function () {
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create')
         ->middleware('can:create,App\Models\Category');
 
-    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store')
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store')       //403 in admins why?
         ->middleware('can:create,App\Models\Category');
 
     Route::resource('categories', CategoryController::class)
