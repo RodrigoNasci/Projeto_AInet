@@ -106,7 +106,7 @@
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" style="cursor: pointer;"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Sair
                                     </a>
