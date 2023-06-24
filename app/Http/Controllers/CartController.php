@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CartRequest;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -46,11 +47,9 @@ class CartController extends Controller
         return view('cart.confirmar', compact('cart', 'customer', 'total'));
     }
 
-    public function addToCart(TshirtImage $tshirt_image, Request $request): RedirectResponse
+    public function addToCart(TshirtImage $tshirt_image, CartRequest $request): RedirectResponse
     {
-        // Fazer proteções no caso do User alterar o código HTML e mudar o valor do input
-        // Só o clientes e anónimos podem adicionar ao carrinho
-        // Fazer as verificações depois com policies ou outra cena qualquer
+
         $orderItem = new OrderItem();
         $orderItem->tshirt_image_id = $tshirt_image->id;
         $orderItem->color_code = $request->code;

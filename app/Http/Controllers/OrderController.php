@@ -264,13 +264,26 @@ class OrderController extends Controller
         }
 
         $order->update($request->all());
+        $emailPath = '';
 
-        if ($order->status == 'canceled') {
-            $emailPath = 'app/emailCanceled.html';
-        } else if ($order->status == 'closed') {
-            $emailPath = 'app/emailClosed.html';
+        switch ($order->status) {
+            case 'canceled':
+                $emailPath = 'app/emailCanceled.html';
+                break;
+            case 'closed':
+                $emailPath = 'app/emailClosed.html';
+                break;
+            default:
+                break;
         }
-        $order->sendMail($order, $emailPath);
+
+        if (!empty($emailPath)) {
+            $order->sendMail($order, $emailPath);
+        }
+
+
+
+
 
         //Se não for um admin redireciona para a lista de encomendas
         if ($request->user()->user_type != 'A' && $request->status == 'closed') {
