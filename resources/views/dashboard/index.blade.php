@@ -76,12 +76,12 @@
                 <div class="bg-white text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Receita</h6>
-                        <form id="formGraph" method="GET" class="form prevent-scroll"
+                        <form id="formGraph2" method="GET" class="form prevent-scroll"
                             action="{{ route('dashboard.index') }}">
                             {{-- Input hidden para mandar a variável para o javascript --}}
                             <input type="hidden" id="jsonRevenuePerMonth" value="{{ $jsonRevenuePerMonth }}">
                             <select class="form-select-sm " name="year" id="year"
-                                onChange="document.getElementById('formGraph').submit()">
+                                onChange="document.getElementById('formGraph2').submit()">
                                 <option value="" {{ old('year', $filterByYearRevenue) === '' ? 'selected' : '' }}>All
                                 </option>
                                 @for ($year = date('Y'); $year >= 2020; $year--)
