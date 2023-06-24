@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'É obrigatório indicar o nome da categoria',
+            'name.string' => 'O nome da categoria deve ser uma string',
+            'name.max' => 'O nome da categoria não deve ter mais de 255 caracteres',
         ];
     }
 }

@@ -73,14 +73,14 @@ class CategoryController extends Controller
                 $newCategory->save();
                 return $newCategory;
                 });
-            $redirect = 'categories.index';
-
 
             $htmlMessage = "Categoria <strong>\"{$category->name}\"</strong> foi criada com sucesso!";
             $alertType = 'success';
+            $redirect = 'categories.index';
         } catch (\Exception $error) {
             $htmlMessage = "Não foi possível criar a categoria!";
             $alertType = 'danger';
+            $redirect = 'categories.index';
         }
         return redirect()->route($redirect)
             ->with('alert-msg', $htmlMessage)
